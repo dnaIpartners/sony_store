@@ -70,10 +70,11 @@ const COUPONS = [
 
 const MILEAGE = { available: 12_500, expiring: 2_000, expiringDate: "2026.09.30" };
 
+// 사진이 있는 제품만 img 를 채운다. 없으면 모델명을 적은 회색 판
 const WISH = [
-  { model: "ILCE-6700", name: "APS-C 미러리스 카메라 α6700", price: 1_890_000 },
-  { model: "SEL70200GM2", name: "FE 70-200mm F2.8 GM OSS II", price: 3_690_000 },
-  { model: "SRS-XB100", name: "휴대용 블루투스 스피커", price: 79_000 },
+  { model: "ILCE-7RM6", name: "α7R VI 풀프레임 미러리스", price: 4_990_000, img: "/asset/sony/ILCE-7RM6.png" },
+  { model: "ILCE-7CM2L", name: "α7C II 렌즈 키트", price: 2_990_000, img: "/asset/sony/ILCE-7CM2L.png" },
+  { model: "SEL70200GM2", name: "FE 70-200mm F2.8 GM OSS II", price: 3_690_000, img: "" },
 ];
 
 // 정품등록 제품 (SCSWarranty + My Sony 나의 제품)
@@ -271,7 +272,9 @@ export default function MyAllPage() {
               {WISH.map((w) => (
                 <li key={w.model}>
                   <a href="#shop-wish">
-                    <span className="ma-wish__thumb" aria-hidden="true">{w.model}</span>
+                    <span className="ma-wish__thumb" aria-hidden="true">
+                      {w.img ? <img src={w.img} alt="" /> : w.model}
+                    </span>
                     <span className="ma-wish__model">{w.model}</span>
                     <span className="ma-wish__name">{w.name}</span>
                     <span className="ma-wish__price">{won(w.price)}<em>원</em></span>
