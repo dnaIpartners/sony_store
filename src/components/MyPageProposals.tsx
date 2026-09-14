@@ -2,11 +2,12 @@ import Link from "next/link";
 
 // 메인 상단 — 마이페이지 4종 제안 요약.
 // 각 안이 무엇에 초점을 뒀는지 한 줄씩. 자세한 건 카드를 눌러 직접 본다.
-// 소요 시간은 2026-09-14 세션의 커밋 시각(16:40 시작 → 19:55, 31 커밋)에서
-// 안별로 묶어 낸 대략값. 푸시·모바일 보정 같은 공통 작업은 합계에만 들어 있다.
+// 소요 시간은 2026-09-14 세션의 커밋 시각에서 낸 대략값. 경과는 첫 작업(약 16:40,
+// 추정)부터 19:55 까지. 17:41→18:51 의 70분은 커밋도 요청도 없어 자리 비움으로
+// 보고 실작업에서 뺐다. 푸시·모바일 보정 같은 공통 작업은 합계에만 들어 있다.
 // 스타일은 src/styles/proposals.css
 
-const SESSION = { date: "2026-09-14", total: "약 3시간 15분", commits: 31, with: "Claude Code" };
+const SESSION = { date: "2026-09-14", active: "약 2시간 10분", elapsed: "3시간 15분", commits: 31, with: "Claude Code" };
 
 const PROPOSALS = [
   {
@@ -63,7 +64,7 @@ export default function MyPageProposals() {
             헤더의 마이페이지 아이콘 4개가 각 안으로 연결됩니다.
           </p>
           <dl className="pp-meta">
-            <div><dt>작업 시간</dt><dd>{SESSION.total}</dd></div>
+            <div><dt>실작업</dt><dd>{SESSION.active}<small>경과 {SESSION.elapsed}</small></dd></div>
             <div><dt>커밋</dt><dd>{SESSION.commits}개</dd></div>
             <div><dt>작업일</dt><dd>{SESSION.date}</dd></div>
             <div><dt>함께</dt><dd>{SESSION.with}</dd></div>

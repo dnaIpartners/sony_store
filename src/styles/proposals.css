@@ -15,6 +15,7 @@
 .pp-meta div { display: flex; align-items: baseline; gap: 10px; }
 .pp-meta dt { font-size: var(--sony-text-xs); font-weight: 700; color: var(--sony-color-gray-600); }
 .pp-meta dd { font-size: var(--sony-text-lg); font-weight: 700; letter-spacing: 0; color: var(--sony-color-gray-900); }
+.pp-meta dd small { margin-left: 8px; font-size: var(--sony-text-xs); font-weight: 400; color: var(--sony-color-gray-500); }
 
 .pp .pp-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 40px; }
 .pp-card { display: flex; flex-direction: column; gap: 10px; height: 100%; padding: 28px 24px 24px; background: var(--sony-color-gray-25); border-top: 3px solid var(--sony-color-gray-900); transition: background-color var(--sony-duration-base) var(--sony-ease-default); }
