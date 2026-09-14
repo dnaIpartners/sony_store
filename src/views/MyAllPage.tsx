@@ -14,9 +14,9 @@ import {
 //   · sony.co.kr/scs/handler/Mypage-Go ................ My Sony 서비스 (A/S·픽업·문의·아카데미)
 //   · sony.co.kr/scs/handler/SCSWarranty-Start ........ 정품등록·보증
 //
-// 원칙: 사용자가 "어느 사이트의 메뉴였는지" 를 몰라도 되게 한다. 그래서 출처가
-// 아니라 사용자의 일 — 쇼핑 / 내 제품 / 서비스 / 활동 / 회원정보 — 으로 묶고,
-// 세 곳에 흩어져 있던 같은 정보(회원, 정품등록, 쿠폰)는 한 번만 보여준다.
+// 탭은 와이어프레임의 회원 메뉴 6개 그대로: 주문/배송 조회 · 정품등록/관리 ·
+// 연장서비스 플랜 EPS · 픽업서비스 신청/내역 · 이벤트관리 · 내가 찜한 소니.
+// 쿠폰·마일리지는 요약 띠에서 스토어 마이페이지로 보낸다.
 // 상단 요약 띠 → 고정 탭 → 섹션. 스타일은 src/styles/my-all.css.
 //
 // sony.co.kr 두 페이지는 로그인 뒤에만 보이므로 구성은 공개된 메뉴 이름을
@@ -32,21 +32,23 @@ const USER = {
 };
 
 const SUMMARY = [
-  { key: "mileage", label: "마일리지", value: "12,500", unit: "M", href: "#shop-mileage" },
-  { key: "coupon", label: "쿠폰", value: "2", unit: "장", href: "#shop-coupon" },
-  { key: "wish", label: "찜", value: "5", unit: "개", href: "#shop-wish" },
-  { key: "order", label: "진행 중 주문", value: "2", unit: "건", href: "#shop-order" },
-  { key: "product", label: "정품등록 제품", value: "3", unit: "대", href: "#product" },
-  { key: "service", label: "진행 중 A/S", value: "1", unit: "건", href: "#service" },
-  { key: "warranty", label: "보증 만료 임박", value: "1", unit: "대", href: "#product", alert: true },
+  { key: "mileage", label: "마일리지", value: "12,500", unit: "M", href: "/my-page#mileage-tit" },
+  { key: "coupon", label: "쿠폰", value: "2", unit: "장", href: "/my-page#coupon-tit" },
+  { key: "wish", label: "찜", value: "3", unit: "개", href: "#wish" },
+  { key: "order", label: "진행 중 주문", value: "2", unit: "건", href: "#order" },
+  { key: "product", label: "정품등록 제품", value: "2", unit: "대", href: "#warranty" },
+  { key: "service", label: "진행 중 A/S", value: "1", unit: "건", href: "#pickup" },
+  { key: "warranty", label: "보증 만료 임박", value: "1", unit: "대", href: "#warranty", alert: true },
 ];
 
+// 와이어프레임 "My Sony에서 할 수 있는 일" 회원 메뉴 6개 = 탭 = 섹션
 const TABS = [
-  { id: "shop", label: "쇼핑", from: "스토어" },
-  { id: "product", label: "내 제품", from: "정품등록" },
-  { id: "service", label: "서비스", from: "My Sony" },
-  { id: "activity", label: "활동", from: "스토어 · My Sony" },
-  { id: "account", label: "회원정보", from: "통합" },
+  { id: "order", label: "주문/배송 조회" },
+  { id: "warranty", label: "정품등록/관리" },
+  { id: "eps", label: "연장서비스 플랜 EPS" },
+  { id: "pickup", label: "픽업서비스 신청/내역" },
+  { id: "event", label: "이벤트관리" },
+  { id: "wish", label: "내가 찜한 소니" },
 ];
 
 // 입금대기 → 결제완료 → 배송준비 → 배송중 → 배송완료
@@ -63,12 +65,7 @@ const ORDERS = [
   { date: "2026.09.02", no: "20260902-0002114", model: "ILCE-7CM2L", name: "α7C II 렌즈 키트", price: 2_990_000, status: "결제완료", on: true },
 ];
 
-const COUPONS = [
-  { price: "5,000", unit: "원", name: "마케팅 수신 동의 5,000원 할인", until: "2026-09-21 23:59:59" },
-  { price: "5", unit: "%", name: "회원가입 감사 5% 할인", until: "2026-09-28 23:59:59" },
-];
 
-const MILEAGE = { available: 12_500, expiring: 2_000, expiringDate: "2026.09.30" };
 
 // 사진이 있는 제품만 img 를 채운다. 없으면 모델명을 적은 회색 판
 const WISH = [
@@ -106,10 +103,6 @@ const ACADEMY = [
 const EVENTS = [
   { title: "α7R VI 런칭 체험단", date: "2026.09.05", status: "응모 완료" },
   { title: "정품등록 감사 이벤트 9월", date: "2026.09.10", status: "당첨" },
-];
-const INQUIRIES = [
-  { kind: "1:1 문의", title: "정품등록 시리얼 인식 오류", date: "2026.09.09", status: "답변 완료" },
-  { kind: "상품 Q&A", title: "SEL70200GM2 후드 호환 문의", date: "2026.08.28", status: "답변 완료" },
 ];
 
 const won = (n: number) => n.toLocaleString("ko-KR");
@@ -154,6 +147,9 @@ export default function MyAllPage() {
               </li>
             ))}
           </ul>
+          <Link href="/my-page/member" className="ma-btn ma-btn--line ma-btn--sm ma-me__edit">
+            회원정보 수정
+          </Link>
         </div>
       </section>
 
@@ -163,10 +159,7 @@ export default function MyAllPage() {
           <ul>
             {TABS.map((t) => (
               <li key={t.id}>
-                <a href={`#${t.id}`}>
-                  {t.label}
-                  <small>{t.from}</small>
-                </a>
+                <a href={`#${t.id}`}>{t.label}</a>
               </li>
             ))}
           </ul>
@@ -174,208 +167,185 @@ export default function MyAllPage() {
       </nav>
 
       <div className="ma-inner">
-        {/* ══ 쇼핑 ═══════════════════════════════════════════ */}
-        <section className="ma-group" id="shop" aria-labelledby="ma-shop">
+        {/* ══ 1. 주문/배송 조회 ═══════════════════════════════ */}
+        <section className="ma-group" id="order" aria-labelledby="ma-order">
           <div className="ma-group__head">
-            <h2 id="ma-shop">쇼핑</h2>
-            <p>스토어 마이페이지에서 가져왔습니다 — 주문·배송, 쿠폰, 마일리지, 찜.</p>
-          </div>
-
-          {/* 주문/배송 */}
-          <div className="ma-sec" id="shop-order">
-            <div className="ma-sec__head">
-              <h3>주문/배송</h3>
-              <div className="ma-sec__actions">
-                <Link href="/my-page/order-list" className="ma-btn ma-btn--line">구매 내역 조회</Link>
-                <button type="button" className="ma-btn ma-btn--line">배송지 관리</button>
-              </div>
+            <h2 id="ma-order">주문/배송 조회</h2>
+            <div className="ma-sec__actions">
+              <Link href="/my-page/order-list" className="ma-btn ma-btn--line">전체 구매 내역</Link>
+              <button type="button" className="ma-btn ma-btn--line">배송지 관리</button>
             </div>
-            <ol className="ma-steps">
-              {ORDER_STEPS.map((s) => (
-                <li key={s.label} className={s.count ? "on" : undefined}>
-                  <s.Icon className="ma-steps__icon" />
+          </div>
+          <ol className="ma-steps">
+            {ORDER_STEPS.map((s) => (
+              <li key={s.label} className={s.count ? "on" : undefined}>
+                <s.Icon className="ma-steps__icon" />
+                <span className="ma-steps__text">
                   <span className="ma-steps__label">{s.label}</span>
                   <span className="ma-steps__count">{s.count}<em>건</em></span>
-                </li>
+                </span>
+              </li>
+            ))}
+          </ol>
+          <table className="ma-table">
+            <thead>
+              <tr><th>주문일 / 번호</th><th>상품</th><th>금액</th><th>상태</th><th aria-label="액션" /></tr>
+            </thead>
+            <tbody>
+              {ORDERS.map((o) => (
+                <tr key={o.no}>
+                  <td><span>{o.date}</span><small>{o.no}</small></td>
+                  <td><strong>{o.model}</strong><small>{o.name}</small></td>
+                  <td className="num">{won(o.price)}원</td>
+                  <td><b className={o.on ? "on" : undefined}>{o.status}</b></td>
+                  <td className="act">
+                    <Link href="/my-page/order-list" className="ma-btn ma-btn--xs">
+                      {o.status === "배송중" ? "배송조회" : "주문상세"}
+                    </Link>
+                  </td>
+                </tr>
               ))}
-            </ol>
-            <table className="ma-table">
-              <thead>
-                <tr><th>주문일 / 번호</th><th>상품</th><th>금액</th><th>상태</th><th aria-label="액션" /></tr>
-              </thead>
+            </tbody>
+          </table>
+          <ul className="ma-notes">
+            <li>구매확정이 완료된 주문은 진행 중인 주문에 포함되지 않으며, 진행 상태에 따라 배송지 변경, 취소, 교환 반품 신청이 가능합니다.</li>
+          </ul>
+        </section>
+
+        {/* ══ 2. 정품등록/관리 ═══════════════════════════════ */}
+        <section className="ma-group" id="warranty" aria-labelledby="ma-warranty">
+          <div className="ma-group__head">
+            <h2 id="ma-warranty">정품등록/관리 <span className="ma-count">{PRODUCTS.filter((p) => p.status !== "미등록").length}</span></h2>
+            <div className="ma-sec__actions">
+              <a
+                href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start?asa=Sa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ma-btn ma-btn--dark"
+              >
+                정품등록하기
+              </a>
+            </div>
+          </div>
+          <ul className="ma-products">
+            {PRODUCTS.map((p) => (
+              <li key={p.model} className={`ma-product ma-product--${p.status === "보증중" ? "ok" : p.status === "만료 임박" ? "soon" : "none"}`}>
+                <div className="ma-product__img">
+                  {p.img ? <img src={p.img} alt="" /> : <span aria-hidden="true">{p.model}</span>}
+                </div>
+                <div className="ma-product__body">
+                  <p className="ma-product__status">{p.status}</p>
+                  <p className="ma-product__model">{p.model}</p>
+                  <p className="ma-product__name">{p.name}</p>
+                  <dl className="ma-product__meta">
+                    <div><dt>시리얼</dt><dd>{p.serial}</dd></div>
+                    <div><dt>구매일</dt><dd>{p.bought}</dd></div>
+                    <div><dt>등록일</dt><dd>{p.registered}</dd></div>
+                    <div><dt>보증 만료</dt><dd>{p.warrantyEnd}</dd></div>
+                    <div><dt>연장 보증</dt><dd>{p.care}</dd></div>
+                  </dl>
+                </div>
+                <div className="ma-product__actions">
+                  {p.status === "미등록" ? (
+                    <a
+                      href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start?asa=Sa"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ma-btn ma-btn--primary ma-btn--sm"
+                    >
+                      지금 등록하고 10% 쿠폰
+                    </a>
+                  ) : (
+                    <>
+                      <a href="#pickup" className="ma-btn ma-btn--line ma-btn--sm">A/S 신청</a>
+                      {p.care === "-" ? (
+                        <a href="#eps" className="ma-btn ma-btn--line ma-btn--sm">보증 연장</a>
+                      ) : null}
+                    </>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+          <ul className="ma-notes">
+            <li>정품등록 후 발급되는 10% 할인쿠폰은 <Link href="/my-page#coupon-tit">쿠폰</Link>에 바로 표시됩니다.</li>
+            <li>보증 만료 30일 전부터 ‘만료 임박’으로 표시되며, 만료 전에 <a href="#eps">연장서비스 플랜</a>으로 연장할 수 있습니다.</li>
+            <li>구매일·보증기간이 실제와 다르면 보증기간 수정요청을 남겨주세요.</li>
+          </ul>
+        </section>
+
+        {/* ══ 3. 연장서비스 플랜 EPS ═════════════════════════ */}
+        <section className="ma-group" id="eps" aria-labelledby="ma-eps">
+          <div className="ma-group__head">
+            <h2 id="ma-eps">연장서비스 플랜 EPS</h2>
+            <div className="ma-sec__actions">
+              <Link href="/mysonycare" className="ma-btn ma-btn--dark">플랜 가입하기</Link>
+              <Link href="/mysonycare" className="ma-more">My Sony Care 안내</Link>
+            </div>
+          </div>
+          <table className="ma-table">
+            <thead><tr><th>플랜</th><th>대상 제품</th><th>만료</th><th>상태</th><th aria-label="액션" /></tr></thead>
+            <tbody>
+              {PLANS.map((p) => (
+                <tr key={p.plan}>
+                  <td><strong>{p.plan}</strong></td>
+                  <td>{p.model}</td>
+                  <td>{p.until}</td>
+                  <td><b className={p.status === "가입중" ? "on" : undefined}>{p.status}</b></td>
+                  <td className="act">
+                    {p.status === "가입중" ? (
+                      <Link href="/mysonycare" className="ma-btn ma-btn--xs">보증서 보기</Link>
+                    ) : (
+                      <Link href="/mysonycare" className="ma-btn ma-btn--xs">가입하기</Link>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <ul className="ma-notes">
+            <li>EPS(Extended Protection Service)는 제조사 보증이 끝난 뒤에도 무상수리를 연장하는 소니 공식 플랜입니다.</li>
+            <li>정품등록된 제품만 가입할 수 있으며, 보증 만료 전에 가입해야 합니다.</li>
+          </ul>
+        </section>
+
+        {/* ══ 4. 픽업서비스 신청/내역 ═════════════════════════ */}
+        <section className="ma-group" id="pickup" aria-labelledby="ma-pickup">
+          <div className="ma-group__head">
+            <h2 id="ma-pickup">픽업서비스 신청/내역</h2>
+            <div className="ma-sec__actions">
+              <Link href="/my-sony/pickup" className="ma-btn ma-btn--dark">픽업 서비스 신청</Link>
+              <a
+                href="https://www.sony.co.kr/scs/handler/SCSReservation-Start"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ma-btn ma-btn--line"
+              >
+                센터 방문 예약
+              </a>
+            </div>
+          </div>
+
+          <div className="ma-sec">
+            <div className="ma-sec__head"><h3>픽업 내역</h3></div>
+            <table className="ma-table ma-table--compact">
+              <thead><tr><th>접수번호</th><th>제품</th><th>수거일</th><th>택배사</th><th>상태</th></tr></thead>
               <tbody>
-                {ORDERS.map((o) => (
-                  <tr key={o.no}>
-                    <td><span>{o.date}</span><small>{o.no}</small></td>
-                    <td><strong>{o.model}</strong><small>{o.name}</small></td>
-                    <td className="num">{won(o.price)}원</td>
-                    <td><b className={o.on ? "on" : undefined}>{o.status}</b></td>
-                    <td className="act">
-                      <Link href="/my-page/order-list" className="ma-btn ma-btn--xs">
-                        {o.status === "배송중" ? "배송조회" : "주문상세"}
-                      </Link>
-                    </td>
+                {PICKUPS.map((p) => (
+                  <tr key={p.no}>
+                    <td><span>{p.no}</span></td>
+                    <td><strong>{p.model}</strong></td>
+                    <td>{p.pickupDate}</td>
+                    <td>{p.carrier}</td>
+                    <td><b className="on">{p.status}</b></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          {/* 쿠폰 + 마일리지 */}
-          <div className="ma-cols">
-            <div className="ma-sec" id="shop-coupon">
-              <div className="ma-sec__head">
-                <h3>쿠폰 <span className="ma-count">{COUPONS.length}</span></h3>
-                <Link href="/my-page#coupon-tit" className="ma-more">전체보기</Link>
-              </div>
-              <ul className="ma-coupons">
-                {COUPONS.map((c) => (
-                  <li key={c.name} className="ma-coupon">
-                    <div className="ma-coupon__body">
-                      <p className="ma-coupon__price"><strong>{c.price}</strong>{c.unit}</p>
-                      <p className="ma-coupon__name">{c.name}</p>
-                      <p className="ma-coupon__date">유효기간 : {c.until} 까지</p>
-                    </div>
-                    <span className="ma-coupon__stub" aria-hidden="true"><span>COUPON</span></span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="ma-sec" id="shop-mileage">
-              <div className="ma-sec__head">
-                <h3>마일리지</h3>
-                <Link href="/my-page#mileage-tit" className="ma-more">내역 조회</Link>
-              </div>
-              <div className="ma-mileage">
-                <p className="ma-mileage__main">
-                  사용 가능 <strong>{won(MILEAGE.available)}</strong>M
-                </p>
-                <p className="ma-mileage__sub">
-                  <b>{won(MILEAGE.expiring)}M</b> 이 {MILEAGE.expiringDate} 소멸 예정
-                </p>
-                <ul className="ma-mileage__tips">
-                  <li>구매 시 결제금액의 2% 적립 (VIP 4%)</li>
-                  <li>5,000M 이상이면 현금처럼 사용</li>
-                  <li>서비스센터 수리비 결제에도 사용 가능</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* 찜 */}
-          <div className="ma-sec" id="shop-wish">
-            <div className="ma-sec__head">
-              <h3>찜 <span className="ma-count">{WISH.length}</span></h3>
-              <Link href="/my-page#wish-tit" className="ma-more">전체보기</Link>
-            </div>
-            <ul className="ma-wish">
-              {WISH.map((w) => (
-                <li key={w.model}>
-                  <a href="#shop-wish">
-                    <span className="ma-wish__thumb" aria-hidden="true">
-                      {w.img ? <img src={w.img} alt="" /> : w.model}
-                    </span>
-                    <span className="ma-wish__model">{w.model}</span>
-                    <span className="ma-wish__name">{w.name}</span>
-                    <span className="ma-wish__price">{won(w.price)}<em>원</em></span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* ══ 내 제품 ═════════════════════════════════════════ */}
-        <section className="ma-group" id="product" aria-labelledby="ma-product">
-          <div className="ma-group__head">
-            <h2 id="ma-product">내 제품</h2>
-            <p>정품등록(SCSWarranty)과 My Sony 나의 제품을 합쳤습니다. 구매한 제품은 등록 전이라도 여기에 먼저 보입니다.</p>
-          </div>
-
           <div className="ma-sec">
-            <div className="ma-sec__head">
-              <h3>정품등록 제품 <span className="ma-count">{PRODUCTS.filter((p) => p.status !== "미등록").length}</span></h3>
-              <div className="ma-sec__actions">
-                <a
-                  href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start?asa=Sa"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ma-btn ma-btn--dark"
-                >
-                  정품등록하기
-                </a>
-              </div>
-            </div>
-            <ul className="ma-products">
-              {PRODUCTS.map((p) => (
-                <li key={p.model} className={`ma-product ma-product--${p.status === "보증중" ? "ok" : p.status === "만료 임박" ? "soon" : "none"}`}>
-                  <div className="ma-product__img">
-                    {p.img ? <img src={p.img} alt="" /> : <span aria-hidden="true">{p.model}</span>}
-                  </div>
-                  <div className="ma-product__body">
-                    <p className="ma-product__status">{p.status}</p>
-                    <p className="ma-product__model">{p.model}</p>
-                    <p className="ma-product__name">{p.name}</p>
-                    <dl className="ma-product__meta">
-                      <div><dt>시리얼</dt><dd>{p.serial}</dd></div>
-                      <div><dt>구매일</dt><dd>{p.bought}</dd></div>
-                      <div><dt>등록일</dt><dd>{p.registered}</dd></div>
-                      <div><dt>보증 만료</dt><dd>{p.warrantyEnd}</dd></div>
-                      <div><dt>연장 보증</dt><dd>{p.care}</dd></div>
-                    </dl>
-                  </div>
-                  <div className="ma-product__actions">
-                    {p.status === "미등록" ? (
-                      <a
-                        href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start?asa=Sa"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="ma-btn ma-btn--primary ma-btn--sm"
-                      >
-                        지금 등록하고 10% 쿠폰
-                      </a>
-                    ) : (
-                      <>
-                        <a href="#service" className="ma-btn ma-btn--line ma-btn--sm">A/S 신청</a>
-                        {p.care === "-" ? (
-                          <Link href="/mysonycare" className="ma-btn ma-btn--line ma-btn--sm">보증 연장</Link>
-                        ) : null}
-                      </>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <ul className="ma-notes">
-              <li>정품등록 후 발급되는 10% 할인쿠폰은 <a href="#shop-coupon">쿠폰</a>에 바로 표시됩니다.</li>
-              <li>보증 만료 30일 전부터 ‘만료 임박’으로 표시되며, 만료 전에 My Sony Care 로 연장할 수 있습니다.</li>
-              <li>구매일·보증기간이 실제와 다르면 <a href="#activity-inquiry">보증기간 수정요청</a>을 남겨주세요.</li>
-            </ul>
-          </div>
-        </section>
-
-        {/* ══ 서비스 ═════════════════════════════════════════ */}
-        <section className="ma-group" id="service" aria-labelledby="ma-service">
-          <div className="ma-group__head">
-            <h2 id="ma-service">서비스</h2>
-            <p>My Sony 서비스 마이페이지 — A/S 접수, 픽업, 연장 보증 플랜.</p>
-          </div>
-
-          <div className="ma-sec">
-            <div className="ma-sec__head">
-              <h3>A/S 접수 내역</h3>
-              <div className="ma-sec__actions">
-                <Link href="/my-sony/pickup" className="ma-btn ma-btn--dark">픽업 서비스 신청</Link>
-                <a
-                  href="https://www.sony.co.kr/scs/handler/SCSReservation-Start"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ma-btn ma-btn--line"
-                >
-                  센터 방문 예약
-                </a>
-              </div>
-            </div>
+            <div className="ma-sec__head"><h3>A/S 진행 현황</h3></div>
             <ul className="ma-services">
               {SERVICES.map((s) => (
                 <li key={s.no} className="ma-service">
@@ -399,51 +369,26 @@ export default function MyAllPage() {
               ))}
             </ul>
           </div>
-
-          <div className="ma-cols">
-            <div className="ma-sec">
-              <div className="ma-sec__head"><h3>픽업 서비스</h3></div>
-              <table className="ma-table ma-table--compact">
-                <thead><tr><th>접수번호</th><th>제품</th><th>수거일</th><th>상태</th></tr></thead>
-                <tbody>
-                  {PICKUPS.map((p) => (
-                    <tr key={p.no}>
-                      <td><span>{p.no}</span><small>{p.carrier}</small></td>
-                      <td><strong>{p.model}</strong></td>
-                      <td>{p.pickupDate}</td>
-                      <td><b className="on">{p.status}</b></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="ma-sec">
-              <div className="ma-sec__head">
-                <h3>연장 보증 플랜</h3>
-                <Link href="/mysonycare" className="ma-more">My Sony Care 안내</Link>
-              </div>
-              <table className="ma-table ma-table--compact">
-                <thead><tr><th>플랜</th><th>대상 제품</th><th>만료</th><th>상태</th></tr></thead>
-                <tbody>
-                  {PLANS.map((p) => (
-                    <tr key={p.plan}>
-                      <td><strong>{p.plan}</strong></td>
-                      <td>{p.model}</td>
-                      <td>{p.until}</td>
-                      <td><b className={p.status === "가입중" ? "on" : undefined}>{p.status}</b></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </section>
 
-        {/* ══ 활동 ═══════════════════════════════════════════ */}
-        <section className="ma-group" id="activity" aria-labelledby="ma-activity">
+        {/* ══ 5. 이벤트관리 ═════════════════════════════════ */}
+        <section className="ma-group" id="event" aria-labelledby="ma-event">
           <div className="ma-group__head">
-            <h2 id="ma-activity">활동</h2>
-            <p>아카데미 수강, 이벤트 응모, 문의 — 스토어와 My Sony 양쪽에 있던 것.</p>
+            <h2 id="ma-event">이벤트관리</h2>
+            <Link href="/event/list?tab=all" className="ma-more">진행 중인 이벤트</Link>
+          </div>
+
+          <div className="ma-sec">
+            <div className="ma-sec__head"><h3>응모 내역</h3></div>
+            <ul className="ma-list">
+              {EVENTS.map((e) => (
+                <li key={e.title}>
+                  <span className="ma-list__title">{e.title}</span>
+                  <span className="ma-list__date">{e.date}</span>
+                  <b className={e.status === "당첨" ? "on" : undefined}>{e.status}</b>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="ma-sec">
@@ -473,60 +418,31 @@ export default function MyAllPage() {
               ))}
             </ul>
           </div>
-
-          <div className="ma-cols">
-            <div className="ma-sec">
-              <div className="ma-sec__head"><h3>이벤트 응모</h3></div>
-              <ul className="ma-list">
-                {EVENTS.map((e) => (
-                  <li key={e.title}>
-                    <span className="ma-list__title">{e.title}</span>
-                    <span className="ma-list__date">{e.date}</span>
-                    <b className={e.status === "당첨" ? "on" : undefined}>{e.status}</b>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="ma-sec" id="activity-inquiry">
-              <div className="ma-sec__head">
-                <h3>문의 내역</h3>
-                <button type="button" className="ma-btn ma-btn--line ma-btn--sm">1:1 문의하기</button>
-              </div>
-              <ul className="ma-list">
-                {INQUIRIES.map((q) => (
-                  <li key={q.title}>
-                    <span className="ma-list__kind">{q.kind}</span>
-                    <span className="ma-list__title">{q.title}</span>
-                    <span className="ma-list__date">{q.date}</span>
-                    <b>{q.status}</b>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
         </section>
 
-        {/* ══ 회원정보 ═══════════════════════════════════════ */}
-        <section className="ma-group" id="account" aria-labelledby="ma-account">
+        {/* ══ 6. 내가 찜한 소니 ═════════════════════════════ */}
+        <section className="ma-group" id="wish" aria-labelledby="ma-wish">
           <div className="ma-group__head">
-            <h2 id="ma-account">회원정보</h2>
-            <p>스토어 회원과 소니 통합회원을 하나로. 한 번 수정하면 세 곳에 모두 반영됩니다.</p>
-          </div>
-          <div className="ma-sec">
-            <dl className="ma-account">
-              <div><dt>이름</dt><dd>{USER.name}</dd></div>
-              <div><dt>아이디</dt><dd>sony****@example.com</dd></div>
-              <div><dt>휴대폰</dt><dd>010-****-1234</dd></div>
-              <div><dt>통합회원</dt><dd>{USER.unified ? "전환 완료 — 스토어 · My Sony · 알파아카데미 공용" : "미전환"}</dd></div>
-              <div><dt>기본 배송지</dt><dd>서울특별시 강남구 테헤란로 ***, 12층</dd></div>
-              <div><dt>마케팅 수신</dt><dd>이메일 동의 · SMS 동의 · 앱 푸시 미동의</dd></div>
-            </dl>
-            <div className="ma-sec__actions ma-sec__actions--end">
-              <Link href="/my-page/member" className="ma-btn ma-btn--dark">회원정보 수정</Link>
-              <button type="button" className="ma-btn ma-btn--line">배송지 관리</button>
-              <button type="button" className="ma-btn ma-btn--line">비밀번호 변경</button>
+            <h2 id="ma-wish">내가 찜한 소니 <span className="ma-count">{WISH.length}</span></h2>
+            <div className="ma-sec__actions">
+              <button type="button" className="ma-btn ma-btn--line">선택 삭제</button>
+              <button type="button" className="ma-btn ma-btn--dark">선택 제품 장바구니 담기</button>
             </div>
           </div>
+          <ul className="ma-wish">
+            {WISH.map((w) => (
+              <li key={w.model}>
+                <a href="#wish">
+                  <span className="ma-wish__thumb" aria-hidden="true">
+                    {w.img ? <img src={w.img} alt="" /> : w.model}
+                  </span>
+                  <span className="ma-wish__model">{w.model}</span>
+                  <span className="ma-wish__name">{w.name}</span>
+                  <span className="ma-wish__price">{won(w.price)}<em>원</em></span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </main>
