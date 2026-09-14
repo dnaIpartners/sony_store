@@ -74,7 +74,7 @@ const MILEAGE = { available: 12_500, expiring: 2_000, expiringDate: "2026.09.30"
 const WISH = [
   { model: "ILCE-7RM6", name: "α7R VI 풀프레임 미러리스", price: 4_990_000, img: "/asset/sony/ILCE-7RM6.png" },
   { model: "ILCE-7CM2L", name: "α7C II 렌즈 키트", price: 2_990_000, img: "/asset/sony/ILCE-7CM2L.png" },
-  { model: "SEL70200GM2", name: "FE 70-200mm F2.8 GM OSS II", price: 3_690_000, img: "" },
+  { model: "SEL70200GM2", name: "FE 70-200mm F2.8 GM OSS II", price: 3_690_000, img: "/asset/sony/102265974_1.png" },
 ];
 
 // 정품등록 제품 (SCSWarranty + My Sony 나의 제품)
