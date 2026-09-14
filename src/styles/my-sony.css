@@ -16,12 +16,12 @@
   word-break: keep-all;
   padding-bottom: var(--sony-layout-cmpnt-gap);
 }
-.ms p, .ms h1, .ms h2, .ms dl, .ms dd { margin: 0; }
-.ms ul, .ms ol { margin: 0; padding: 0; list-style: none; }
-.ms a { color: inherit; text-decoration: none; }
-.ms button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-.ms em { font-style: normal; }
-.ms strong { font-weight: 700; color: var(--sony-color-gray-900); }
+:where(.ms) p, :where(.ms) h1, :where(.ms) h2, :where(.ms) dl, :where(.ms) dd { margin: 0; }
+:where(.ms) ul, :where(.ms) ol { margin: 0; padding: 0; list-style: none; }
+:where(.ms) a { color: inherit; text-decoration: none; }
+:where(.ms) button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:where(.ms) em { font-style: normal; }
+:where(.ms) strong { font-weight: 700; color: var(--sony-color-gray-900); }
 
 .ms-inner {
   max-width: var(--sony-layout-width);

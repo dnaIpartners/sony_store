@@ -5,9 +5,9 @@
    ───────────────────────────────────────────────────────────── */
 .msl { position: relative; min-width: 0; }
 .msl--band { padding: 24px 72px; background: var(--sony-color-gray-100); }
-.msl ul { margin: 0; padding: 0; list-style: none; }
-.msl p { margin: 0; }
-.msl a { color: inherit; text-decoration: none; }
+:where(.msl) ul { margin: 0; padding: 0; list-style: none; }
+:where(.msl) p { margin: 0; }
+:where(.msl) a { color: inherit; text-decoration: none; }
 .msl__track {
   display: flex;
   gap: 24px;
