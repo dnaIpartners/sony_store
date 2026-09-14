@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 // Sony Store KR 헤더(GNB).
 //
@@ -13,6 +14,8 @@ import Link from "next/link";
 //   · 탭 가로 스크롤 — overflow-x: auto
 //
 // 스크롤을 내리면 숨고(header--invisible) 올리면 다시 나온다.
+// 마이페이지 계열(/my*)에서는 숨기지 않고 늘 고정한다 — 고정 탭·메뉴가 헤더
+// 바로 아래 붙어 있어서 헤더가 움직이면 화면이 어색해진다.
 
 const SEARCH_KEYWORDS = [
   "헤드폰",
@@ -111,9 +114,15 @@ export default function SonyHeader() {
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const lastY = useRef(0);
+  const pathname = usePathname();
+  const pinned = pathname === "/my" || pathname.startsWith("/my-") || pathname.startsWith("/my/");
 
-  // 내리면 숨기고 올리면 보인다. 맨 위 근처에서는 늘 보인다
+  // 내리면 숨기고 올리면 보인다. 맨 위 근처에서는 늘 보인다. 마이페이지는 고정
   useEffect(() => {
+    if (pinned) {
+      setHidden(false);
+      return;
+    }
     let raf = 0;
     function onScroll() {
       if (raf) return;
@@ -129,7 +138,7 @@ export default function SonyHeader() {
       if (raf) cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [pinned]);
 
   return (
     <div

@@ -57,7 +57,15 @@
 
 /* ── 본문: 메뉴 + 격자 ───────────────────────────────────── */
 .md-body { display: flex; gap: 40px; align-items: flex-start; padding-top: 32px; }
-.md-menu { flex: 0 0 200px; position: sticky; top: calc(var(--sony-header-height) + 24px); }
+.md-menu {
+  flex: 0 0 200px;
+  position: sticky;
+  top: calc(var(--sony-header-height) + 24px);
+  /* 헤더(.header)와 같은 타이밍으로 움직인다 */
+  transition: top var(--sony-duration-base) var(--sony-ease-in-out) 0.1s;
+}
+/* 헤더가 스크롤 다운으로 숨으면(.header--invisible) 메뉴도 위로 따라간다 */
+.header--invisible + div .md-menu { top: 24px; }
 .md-menu li a {
   display: flex;
   align-items: center;
