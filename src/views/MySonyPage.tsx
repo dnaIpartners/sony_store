@@ -55,7 +55,9 @@ const ACADEMY = [
   { title: "[제품 사용법] 알파 7R V - 1강", classDate: "2026.09.18", applyDate: "2026.09.11", status: "접수 후 결제완료" },
 ];
 
-const MY_PRODUCTS = [{ model: "ILCE-7RM6", copy: "초고해상도의 독주" }];
+const MY_PRODUCTS = [
+  { model: "ILCE-7RM6", copy: "초고해상도의 독주", img: "/asset/sony/ILCE-7RM6.png" },
+];
 
 const BANNERS = [
   { title: "마케팅 수신 동의하면\n5,000원 할인!", href: "/my-page/member" },
@@ -216,8 +218,8 @@ export default function MySonyPage() {
             {MY_PRODUCTS.map((p) => (
               <li key={p.model} className="ms-card ms-card--product">
                 <Link href="/my-sony/products">
-                  <div className="ms-product__img" aria-hidden="true">
-                    <span>{p.model}</span>
+                  <div className="ms-product__img">
+                    <img src={p.img} alt={p.model} />
                   </div>
                   <p className="ms-product__model">{p.model}</p>
                   <p className="ms-product__copy">{p.copy}</p>

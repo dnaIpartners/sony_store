@@ -252,12 +252,10 @@
 .ms-product__img {
   display: grid;
   place-items: center;
-  height: 180px;
-  margin-bottom: 40px;
-  background: var(--sony-surface-soft);
-  border-radius: var(--sony-radius-md);
+  height: 220px;
+  margin-bottom: 32px;
 }
-.ms-product__img span { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: var(--sony-text-xs); letter-spacing: 0; color: var(--sony-color-gray-400); }
+.ms-product__img img { max-height: 100%; width: auto; object-fit: contain; }
 .ms-product__model { font-size: var(--sony-text-xl); font-weight: 700; letter-spacing: 0; color: var(--sony-color-gray-900); }
 .ms-product__copy { margin-top: 8px; font-size: var(--sony-text-lg); color: var(--sony-color-gray-600); }
 
@@ -363,7 +361,7 @@
   .ms-card__cta-copy { font-size: var(--sony-text-md); }
   .ms-btn--pill { min-width: 0; width: 100%; }
   .ms-card--product a { padding: 20px; }
-  .ms-product__img { height: 140px; margin-bottom: 16px; }
+  .ms-product__img { height: 160px; margin-bottom: 16px; }
 
   .ms-banner { margin-top: 32px; }
   .ms-banner__viewport { margin-top: 24px; }
