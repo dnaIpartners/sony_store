@@ -136,47 +136,8 @@
 .ms-stat--grade .ms-stat__value { letter-spacing: 0.02em; }
 .ms-stat .ms-link { margin-top: 14px; }
 
-/* 전용몰 슬라이더 */
-.ms-malls { grid-area: malls; position: relative; }
-.ms-malls__track {
-  display: flex;
-  gap: 24px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.ms-malls__track::-webkit-scrollbar { display: none; }
-.ms-card--mall {
-  flex: 0 0 calc((100% - 48px) / 3);
-  scroll-snap-align: start;
-  min-height: 270px;
-}
-.ms-card--mall a { display: flex; flex-direction: column; justify-content: center; gap: 24px; height: 100%; padding: 32px; }
-.ms-mall__title { font-size: var(--sony-text-lg); font-weight: 700; color: var(--sony-color-gray-900); }
-.ms-mall__desc { font-size: var(--sony-text-md); color: var(--sony-color-gray-800); }
-.ms-malls__nav {
-  position: absolute;
-  top: 50%;
-  width: 40px;
-  height: 60px;
-  transform: translateY(-50%);
-}
-.ms-malls__nav::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 22px;
-  height: 22px;
-  border-top: 2px solid var(--sony-color-gray-400);
-  border-right: 2px solid var(--sony-color-gray-400);
-}
-.ms-malls__nav:hover::before { border-color: var(--sony-color-gray-900); }
-.ms-malls__nav--prev { left: -48px; }
-.ms-malls__nav--prev::before { transform: translate(-30%, -50%) rotate(-135deg); }
-.ms-malls__nav--next { right: -48px; }
-.ms-malls__nav--next::before { transform: translate(-70%, -50%) rotate(45deg); }
+/* 전용몰 슬라이더 → src/styles/mall-slider.css (.msl) */
+.ms-malls { grid-area: malls; }
 
 /* ── 섹션 ──────────────────────────────────────────────────── */
 .ms-sec { padding-top: 96px; }
@@ -344,8 +305,6 @@
     gap: 32px;
     padding: 32px 24px;
   }
-  .ms-malls__nav { display: none; }
-  .ms-card--mall { flex-basis: calc((100% - 24px) / 2); }
   .ms-steps { gap: 12px; }
   .ms-step__label { min-height: 100px; }
   .ms-cards--academy:not(:hover) > li:first-child,
@@ -374,8 +333,6 @@
   .ms-stat { align-items: center; gap: 14px; }
   .ms-stat__icon { width: 44px; height: 44px; font-size: 22px; line-height: 44px; }
   .ms-stat .ms-link { margin-top: 4px; font-size: var(--sony-text-sm); }
-  .ms-card--mall { flex-basis: 80%; min-height: 0; }
-  .ms-card--mall a { padding: 24px; gap: 12px; }
 
   .ms-sec { padding-top: 56px; }
   .ms-sec__head { padding-bottom: 16px; }

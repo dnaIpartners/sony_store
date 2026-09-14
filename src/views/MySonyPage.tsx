@@ -1,6 +1,6 @@
 "use client";
-import { useRef } from "react";
 import Link from "next/link";
+import MallSlider from "@/src/components/MallSlider";
 import {
   IconDeposit,
   IconPaid,
@@ -159,7 +159,9 @@ export default function MySonyPage() {
             ))}
           </ul>
 
-          <MallSlider />
+          <div className="ms-malls">
+            <MallSlider items={MALLS} tone="panel" />
+          </div>
         </section>
 
         {/* ── 주문/배송 ────────────────────────────────────── */}
@@ -331,33 +333,5 @@ export default function MySonyPage() {
         </section>
       </div>
     </main>
-  );
-}
-
-/** 전용몰 카드 슬라이더. 화살표를 누르면 카드 한 장 폭만큼 민다 */
-function MallSlider() {
-  const ref = useRef<HTMLUListElement>(null);
-  function slide(dir: 1 | -1) {
-    const el = ref.current;
-    if (!el) return;
-    const card = el.firstElementChild as HTMLElement | null;
-    const step = card ? card.offsetWidth + 24 : el.clientWidth;
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
-  }
-  return (
-    <div className="ms-malls">
-      <ul className="ms-malls__track" ref={ref}>
-        {MALLS.map((m) => (
-          <li key={m.title} className="ms-card ms-card--mall">
-            <Link href={m.href}>
-              <p className="ms-mall__title">{m.title}</p>
-              <p className="ms-mall__desc">{m.desc}</p>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <button type="button" className="ms-malls__nav ms-malls__nav--prev" aria-label="이전" onClick={() => slide(-1)} />
-      <button type="button" className="ms-malls__nav ms-malls__nav--next" aria-label="다음" onClick={() => slide(1)} />
-    </div>
   );
 }

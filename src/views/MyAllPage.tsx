@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MallSlider from "@/src/components/MallSlider";
 import {
   IconDeposit,
   IconPaid,
@@ -110,6 +111,13 @@ const ACADEMY = [
   { title: "[건축 사진] 도시의 선과 면을 담다 - 1강", img: encodeURI("/asset/sony/건물.png"), date: "2026.09.18", status: "결제완료" },
   { title: "[인물 사진] 자연광 포트레이트 - 2강", img: encodeURI("/asset/sony/인물.png"), date: "2026.09.25", status: "결제완료" },
   { title: "[풍경 사진] 골든아워 장노출 - 1강", img: encodeURI("/asset/sony/풍경.png"), date: "2026.10.02", status: "접수 대기" },
+];
+// 진행 중인 전용몰·이벤트 (new 마이페이지와 같은 목록)
+const MALLS = [
+  { title: "소니스토어 학생 전용몰", desc: "학생을 위한 스페셜 할인 혜택!", href: "/event/student" },
+  { title: "크리에이터 전용몰", desc: "크리에이터 인증 시, 특별 할인가로 소니 제품을 만나 보실 수 있습니다.", href: "/event/creator" },
+  { title: "세상에서 가장 아름다운 날을 담다.", desc: "Wedding Seminar 특별 할인 혜택!", href: "/event/wedding" },
+  { title: "기업구매 전용몰", desc: "법인·단체 구매 시 별도 견적 상담을 받으세요.", href: "/agreement" },
 ];
 const EVENTS = [
   { title: "α7R VI 런칭 체험단", date: "2026.09.05", status: "응모 완료" },
@@ -412,6 +420,13 @@ export default function MyAllPage() {
           <div className="ma-group__head">
             <h2 id="ma-event">이벤트관리</h2>
             <Link href="/event/list?tab=all" className="ma-more">진행 중인 이벤트</Link>
+          </div>
+
+          <div className="ma-sec">
+            <div className="ma-sec__head"><h3>진행 중인 전용몰 · 이벤트</h3></div>
+            <div className="ma-malls">
+              <MallSlider items={MALLS} tone="band" />
+            </div>
           </div>
 
           <div className="ma-sec">

@@ -1,0 +1,57 @@
+/* ─────────────────────────────────────────────────────────────
+   전용몰·이벤트 카드 슬라이더 (src/components/MallSlider.tsx)
+   tone=panel : 회색 패널 안에 놓일 때(/my-sony) — 바탕 없음
+   tone=band  : 흰 바탕 위에 놓일 때(/my)     — 회색 띠를 깔고 그 안에 카드
+   ───────────────────────────────────────────────────────────── */
+.msl { position: relative; }
+.msl--band { padding: 24px 72px; background: var(--sony-color-gray-100); }
+.msl ul { margin: 0; padding: 0; list-style: none; }
+.msl p { margin: 0; }
+.msl a { color: inherit; text-decoration: none; }
+.msl__track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.msl__track::-webkit-scrollbar { display: none; }
+.msl__card {
+  flex: 0 0 calc((100% - 48px) / 3);
+  min-height: 270px;
+  scroll-snap-align: start;
+  background: var(--sony-color-gray-25);
+}
+.msl__card a { display: flex; flex-direction: column; justify-content: center; gap: 24px; height: 100%; padding: 32px; }
+.msl__title { font-size: var(--sony-text-lg); font-weight: 700; color: var(--sony-color-gray-900); }
+.msl__desc { font-size: var(--sony-text-md); line-height: 1.5; color: var(--sony-color-gray-800); }
+.msl__nav { position: absolute; top: 50%; width: 40px; height: 60px; transform: translateY(-50%); background: none; border: 0; padding: 0; cursor: pointer; }
+.msl__nav::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  border-top: 2px solid var(--sony-color-gray-400);
+  border-right: 2px solid var(--sony-color-gray-400);
+}
+.msl__nav:hover::before { border-color: var(--sony-color-gray-900); }
+.msl--panel .msl__nav--prev { left: -48px; }
+.msl--panel .msl__nav--next { right: -48px; }
+.msl--band .msl__nav--prev { left: 16px; }
+.msl--band .msl__nav--next { right: 16px; }
+.msl__nav--prev::before { transform: translate(-30%, -50%) rotate(-135deg); }
+.msl__nav--next::before { transform: translate(-70%, -50%) rotate(45deg); }
+
+@media screen and (max-width: 1280px) {
+  .msl__nav { display: none; }
+  .msl--band { padding: 20px; }
+  .msl__card { flex-basis: calc((100% - 24px) / 2); }
+}
+@media screen and (max-width: 640px) {
+  .msl--band { padding: 16px; }
+  .msl__card { flex-basis: 80%; min-height: 0; }
+  .msl__card a { padding: 24px; gap: 12px; }
+}
