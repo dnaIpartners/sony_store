@@ -2,12 +2,22 @@ import Link from "next/link";
 
 // 메인 상단 — 마이페이지 4종 제안 요약.
 // 각 안이 무엇에 초점을 뒀는지 한 줄씩. 자세한 건 카드를 눌러 직접 본다.
-// 소요 시간은 2026-09-14 세션의 커밋 시각에서 낸 대략값. 경과는 첫 작업(약 16:40,
-// 추정)부터 19:55 까지. 17:41→18:51 의 70분은 커밋도 요청도 없어 자리 비움으로
-// 보고 실작업에서 뺐다. 푸시·모바일 보정 같은 공통 작업은 합계에만 들어 있다.
-// 스타일은 src/styles/proposals.css
-
-const SESSION = { date: "2026-09-14", active: "약 2시간 10분", elapsed: "3시간 15분", commits: 31, with: "Claude Code" };
+// 시간 산정 (2026-09-14 세션, 커밋 시각과 대화 기록 기준 — 대략값)
+//   입력 시간  사용자가 요청을 적은 시간. 요청 약 55건 × 평균 20초 ≈ 20분
+//   처리 시간  Claude 가 읽고·만들고·확인하고·커밋한 시간. 실작업 2시간 10분 − 입력
+//   자리 비움  17:41→18:51 의 70분. 요청도 커밋도 없음 — 다른 업무를 본 시간
+//   경과       첫 작업(약 16:40, 추정)부터 마지막 커밋 19:55 까지
+// 카드의 소요는 안별 처리 시간. 공통 작업(푸시·모바일 보정)은 합계에만.
+const SESSION = {
+  date: "2026-09-14",
+  input: "약 20분",
+  processing: "약 1시간 50분",
+  away: "70분",
+  elapsed: "3시간 15분",
+  requests: 55,
+  commits: 31,
+  inputShare: 15, // 입력 : 처리 ≈ 15 : 85
+};
 
 const PROPOSALS = [
   {
@@ -61,14 +71,26 @@ export default function MyPageProposals() {
           <h2 className="pp-title" id="pp-title">마이페이지 4안</h2>
           <p className="pp-lead">
             현행 재현에서 출발해, 시안 구현 → 세 페이지 통합 → 개인화까지 단계적으로 확장한 제안입니다.
-            헤더의 마이페이지 아이콘 4개가 각 안으로 연결됩니다.
+            요청은 한 줄씩 적고, 만드는 동안은 다른 업무를 봤습니다. 헤더의 마이페이지 아이콘 4개가 각 안으로 연결됩니다.
           </p>
           <dl className="pp-meta">
-            <div><dt>실작업</dt><dd>{SESSION.active}<small>경과 {SESSION.elapsed}</small></dd></div>
+            <div className="pp-meta__main">
+              <dt>입력 시간 <small>사용자</small></dt>
+              <dd>{SESSION.input}</dd>
+            </div>
+            <div className="pp-meta__main">
+              <dt>처리 시간 <small>Claude</small></dt>
+              <dd>{SESSION.processing}</dd>
+            </div>
+            <div><dt>요청</dt><dd>{SESSION.requests}건</dd></div>
             <div><dt>커밋</dt><dd>{SESSION.commits}개</dd></div>
-            <div><dt>작업일</dt><dd>{SESSION.date}</dd></div>
-            <div><dt>함께</dt><dd>{SESSION.with}</dd></div>
+            <div><dt>자리 비움</dt><dd>{SESSION.away}</dd></div>
+            <div><dt>경과</dt><dd>{SESSION.elapsed}</dd></div>
           </dl>
+          <div className="pp-ratio" role="img" aria-label={`입력 ${SESSION.inputShare}%, 처리 ${100 - SESSION.inputShare}%`}>
+            <span className="pp-ratio__input" style={{ width: `${SESSION.inputShare}%` }}>입력</span>
+            <span className="pp-ratio__proc">처리 — 요청을 남기고 다른 업무를 보는 동안</span>
+          </div>
         </div>
         <ol className="pp-list">
           {PROPOSALS.map((p) => (
