@@ -191,34 +191,34 @@
 .ms-sec__more { position: absolute; right: 0; top: 48px; }
 
 /* ── 주문/배송 5칸 ─────────────────────────────────────────── */
-.ms-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px; }
+.ms-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
 .ms-step { display: flex; flex-direction: column; background: var(--sony-color-gray-25); overflow: hidden; }
 .ms-step__label {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 28px;
-  min-height: 250px;
-  padding-bottom: 28px;
+  gap: 14px;
+  min-height: 120px;
+  padding-bottom: 16px;
   background: var(--ms-panel-bg);
-  font-size: var(--sony-text-xl);
+  font-size: var(--sony-text-md);
   font-weight: 700;
   color: var(--sony-color-gray-900);
 }
-.ms-step__icon { width: 72px; height: 72px; color: var(--sony-color-gray-900); }
+.ms-step__icon { width: 44px; height: 44px; color: var(--sony-color-gray-900); }
 .ms-step.on .ms-step__icon { color: var(--sony-color-primary); }
 .ms-step__count {
   display: block;
-  padding: 36px 0;
+  padding: 16px 0;
   text-align: center;
-  font-size: var(--sony-text-4xl);
+  font-size: var(--sony-text-2xl);
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1;
   color: var(--sony-color-gray-900);
 }
-.ms-step.on .ms-step__count { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+.ms-step.on .ms-step__count { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
 .ms-step.on a.ms-step__count:hover { color: var(--sony-color-primary); }
 
 /* ── 카드 그리드 (아카데미 · 나의 소니) ─────────────────────── */
@@ -325,8 +325,8 @@
   }
   .ms-malls__nav { display: none; }
   .ms-card--mall { flex-basis: calc((100% - 24px) / 2); }
-  .ms-steps { gap: 16px; }
-  .ms-step__label { min-height: 160px; }
+  .ms-steps { gap: 12px; }
+  .ms-step__label { min-height: 100px; }
   .ms-cards--academy { grid-template-columns: repeat(2, 1fr); }
   .ms-cards--academy .ms-card--empty { display: none; }
   .ms-cards--mine { grid-template-columns: repeat(2, 1fr); }
@@ -359,9 +359,9 @@
   .ms-sec__head { padding-bottom: 16px; }
   .ms-sec__more { position: static; display: inline-flex; margin-top: 8px; }
   .ms-steps { grid-template-columns: repeat(5, 1fr); gap: 6px; }
-  .ms-step__label { min-height: 72px; gap: 6px; padding-bottom: 10px; font-size: var(--sony-text-xs); }
-  .ms-step__icon { width: 28px; height: 28px; }
-  .ms-step__count { padding: 14px 0; font-size: var(--sony-text-2xl); }
+  .ms-step__label { min-height: 64px; gap: 6px; padding-bottom: 8px; font-size: var(--sony-text-xs); }
+  .ms-step__icon { width: 24px; height: 24px; }
+  .ms-step__count { padding: 10px 0; font-size: var(--sony-text-lg); }
 
   .ms-cards { gap: 16px; }
   .ms-cards--academy, .ms-cards--mine { grid-template-columns: 1fr; }
