@@ -33,6 +33,12 @@ const ACTION_LINKS = [
     label: "new 마이페이지",
   },
   {
+    key: "myAll",
+    href: "/my",
+    icon: "ic_myall",
+    label: "통합 마이페이지",
+  },
+  {
     key: "order",
     href: "/my-page/order-list",
     icon: "ic_order",

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- 통합 마이페이지: 사람 + 오른쪽 아래 카드 묶음(쇼핑·제품·서비스) -->
+  <circle cx="10" cy="7.5" r="3.5"/>
+  <path d="M3 20.5c1.4-3.6 4-5.5 7-5.5 1 0 2 .2 2.8.6"/>
+  <rect x="14" y="13" width="7.5" height="7.5" rx="1"/>
+  <path d="M15.8 16.8h4M17.8 14.8v4"/>
+</svg>
