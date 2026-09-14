@@ -1,0 +1,224 @@
+/* ─────────────────────────────────────────────────────────────
+   My Sony 대시보드 (src/views/MyDashPage.tsx)
+   왼쪽 메뉴 + 오른쪽 12칸 위젯 격자. 위젯은 연한 바탕(#fbfbfb)으로만 구분 —
+   가이드대로 각지고 테두리·그림자 없음. 쿠폰만 라운드 + 테두리.
+   --sony-* 만 참조한다. 브레이크포인트 1280 / 640.
+   ───────────────────────────────────────────────────────────── */
+
+.md {
+  --md-surface: var(--sony-color-gray-25);
+  background: var(--sony-surface-page);
+  color: var(--sony-color-gray-700);
+  font-size: var(--sony-text-base);
+  line-height: var(--sony-leading-normal);
+  letter-spacing: var(--sony-tracking-tight);
+  word-break: keep-all;
+  padding-bottom: var(--sony-layout-cmpnt-gap);
+}
+.md p, .md h1, .md h2 { margin: 0; }
+.md ul, .md ol { margin: 0; padding: 0; list-style: none; }
+.md a { color: inherit; text-decoration: none; }
+.md em, .md i { font-style: normal; }
+.md strong { font-weight: 700; color: var(--sony-color-gray-900); }
+.md-inner { max-width: var(--sony-layout-width); margin: 0 auto; padding: 0 var(--sony-layout-padding-x); }
+
+/* ── 버튼 · 링크 ─────────────────────────────────────────── */
+.md .md-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 18px;
+  font-size: var(--sony-text-sm);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background-color var(--sony-duration-base) var(--sony-ease-default), color var(--sony-duration-base) var(--sony-ease-default);
+}
+.md .md-btn--dark { background: var(--sony-color-gray-900); color: var(--sony-color-white); }
+.md .md-btn--dark:hover { background: var(--sony-color-black); }
+.md .md-btn--line { background: var(--sony-color-white); color: var(--sony-color-gray-900); border: 1px solid var(--sony-color-gray-900); }
+.md .md-btn--line:hover { background: var(--sony-color-gray-900); color: var(--sony-color-white); }
+.md .md-more { font-size: var(--sony-text-xs); font-weight: 500; color: var(--sony-color-gray-600); text-decoration: underline; text-underline-offset: 3px; }
+.md .md-more:hover { color: var(--sony-color-gray-900); }
+.md-count { margin-left: 4px; color: var(--sony-color-primary); }
+.md-badge { display: inline-block; height: 20px; padding: 0 8px; line-height: 20px; background: var(--sony-color-gray-900); color: var(--sony-color-white); font-size: var(--sony-text-2xs); font-weight: 700; letter-spacing: 0.04em; vertical-align: middle; }
+.md-badge--line { background: var(--sony-color-white); color: var(--sony-color-primary); border: 1px solid var(--sony-color-primary); line-height: 18px; }
+
+/* ── 머리 ──────────────────────────────────────────────────── */
+.md-head { background: var(--sony-surface-soft); border-bottom: 1px solid var(--sony-border-subtle); }
+.md-head__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 28px; padding-bottom: 28px; }
+.md-me { display: flex; align-items: center; gap: 18px; }
+.md-me__avatar { flex-shrink: 0; width: 56px; height: 56px; border-radius: var(--sony-radius-full); background: var(--sony-color-gray-900); display: grid; place-items: center; }
+.md-me__avatar img { width: 28px; height: 28px; }
+.md-me__name { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; font-size: var(--sony-text-2xl); font-weight: 700; letter-spacing: var(--sony-tracking-title); color: var(--sony-color-gray-900); }
+.md-me__sub { margin-top: 4px; font-size: var(--sony-text-sm); color: var(--sony-color-gray-600); }
+.md-quick { display: flex; gap: 8px; }
+
+/* ── 본문: 메뉴 + 격자 ───────────────────────────────────── */
+.md-body { display: flex; gap: 40px; align-items: flex-start; padding-top: 32px; }
+.md-menu { flex: 0 0 200px; position: sticky; top: calc(var(--sony-header-height) + 24px); }
+.md-menu li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  font-size: var(--sony-text-base);
+  font-weight: 500;
+  color: var(--sony-color-gray-800);
+  border-left: 2px solid transparent;
+  transition: background-color var(--sony-duration-fast) var(--sony-ease-default);
+}
+.md-menu li a:hover { background: var(--md-surface); border-left-color: var(--sony-color-gray-900); color: var(--sony-color-gray-900); font-weight: 700; }
+.md-menu__count { min-width: 20px; height: 20px; padding: 0 6px; border-radius: var(--sony-radius-pill); background: var(--sony-color-primary); color: var(--sony-color-white); font-size: var(--sony-text-2xs); font-weight: 700; line-height: 20px; text-align: center; letter-spacing: 0; }
+.md-menu__alt { display: block; margin-top: 20px; padding: 12px 14px; font-size: var(--sony-text-xs); color: var(--sony-color-gray-600); border-top: 1px solid var(--sony-border-default); }
+.md-menu__alt small { margin-left: 4px; font-family: ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0; }
+.md-menu__alt:hover { color: var(--sony-color-gray-900); }
+
+.md-grid { flex: 1 1 0; min-width: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px; }
+.md-span-4 { grid-column: span 4; }
+.md-span-6 { grid-column: span 6; }
+.md-span-8 { grid-column: span 8; }
+
+/* ── 위젯 공통 ─────────────────────────────────────────────── */
+.md-w { display: flex; flex-direction: column; min-width: 0; padding: 22px 24px 24px; background: var(--md-surface); scroll-margin-top: calc(var(--sony-header-height) + 24px); }
+.md-w--flat { padding: 22px 0 0; background: none; }
+.md-w--flat .md-w__head { padding: 0; }
+.md-w__head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.md-w__head h2 { font-size: var(--sony-text-md); font-weight: 700; color: var(--sony-color-gray-900); }
+
+/* 공통 행 목록 */
+.md-rows { margin-top: auto; }
+.md-rows li { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--sony-border-subtle); font-size: var(--sony-text-sm); }
+.md-rows--tight li { padding: 9px 0; font-size: var(--sony-text-xs); }
+.md-rows--pad { padding: 0 24px; background: var(--md-surface); }
+.md-rows__date { flex-shrink: 0; letter-spacing: 0; color: var(--sony-color-gray-600); }
+.md-rows__main { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--sony-color-gray-800); }
+.md-rows__main strong { margin-right: 4px; }
+.md-rows__num { flex-shrink: 0; font-weight: 700; letter-spacing: 0; color: var(--sony-color-gray-900); }
+.md-rows__state { flex-shrink: 0; font-weight: 700; color: var(--sony-color-gray-900); white-space: nowrap; }
+.md-rows__state.on { color: var(--sony-color-primary); }
+
+/* ── 할 일 ─────────────────────────────────────────────────── */
+.md-w--todo { background: var(--sony-color-gray-900); color: var(--sony-color-gray-300); }
+.md-w--todo .md-w__head h2 { color: var(--sony-color-white); }
+.md-w--todo .md-count { color: var(--sony-color-accent-lit, #93affe); }
+.md-todo__item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--sony-color-neutral-70); }
+.md-todo__item::before { content: ""; flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--sony-color-neutral-40); }
+.md-todo__item--warn::before { background: var(--sony-color-sale); }
+.md-todo__text { flex: 1 1 0; min-width: 0; font-size: var(--sony-text-sm); line-height: 1.4; color: var(--sony-color-white); }
+.md .md-todo__action { flex-shrink: 0; height: 26px; padding: 0 10px; line-height: 26px; background: var(--sony-color-white); color: var(--sony-color-gray-900); font-size: var(--sony-text-2xs); font-weight: 700; white-space: nowrap; }
+.md .md-todo__action:hover { background: var(--sony-color-primary); color: var(--sony-color-white); }
+
+/* ── 주문 단계 ─────────────────────────────────────────────── */
+.md-steps { display: grid; grid-template-columns: repeat(5, 1fr); margin-bottom: 8px; }
+.md-steps li { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0 14px; color: var(--sony-color-gray-500); }
+.md-steps__icon { width: 34px; height: 34px; color: var(--sony-color-gray-400); --ms-panel-bg: var(--md-surface); }
+.md-steps__label { font-size: var(--sony-text-xs); }
+.md-steps__count { font-size: var(--sony-text-xl); font-weight: 300; letter-spacing: 0; line-height: 1; color: var(--sony-color-gray-400); }
+.md-steps li.on { color: var(--sony-color-gray-900); }
+.md-steps li.on .md-steps__icon { color: var(--sony-color-gray-900); }
+.md-steps li.on .md-steps__label { font-weight: 700; }
+.md-steps li.on .md-steps__count { font-weight: 700; color: var(--sony-color-primary); }
+
+/* ── 내 제품 ───────────────────────────────────────────────── */
+.md-product { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-top: 1px solid var(--sony-border-subtle); }
+.md-products li:first-child { border-top: 0; padding-top: 0; }
+.md-product__img { flex-shrink: 0; display: grid; place-items: center; width: 64px; height: 48px; }
+.md-product__img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.md-product__img i { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; letter-spacing: 0; color: var(--sony-color-gray-400); }
+.md-product__body { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.md-product__body small { font-size: var(--sony-text-xs); letter-spacing: 0; color: var(--sony-color-gray-600); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.md-product__status { flex-shrink: 0; font-size: var(--sony-text-xs); font-weight: 700; padding-left: 10px; border-left: 3px solid var(--sony-color-gray-300); color: var(--sony-color-gray-600); }
+.md-product--ok .md-product__status { border-left-color: var(--sony-color-primary); color: var(--sony-color-primary); }
+.md-product--soon .md-product__status { border-left-color: var(--sony-color-sale); color: var(--sony-color-sale); }
+
+/* ── A/S 진행 ──────────────────────────────────────────────── */
+.md-service__no { font-size: var(--sony-text-xs); letter-spacing: 0; color: var(--sony-color-gray-600); }
+.md-service__title { margin-top: 4px; font-size: var(--sony-text-base); color: var(--sony-color-gray-900); }
+.md .md-progress { display: flex; margin: 20px 0 16px; }
+.md-progress li { position: relative; flex: 1 1 0; padding-top: 16px; text-align: center; font-size: var(--sony-text-2xs); color: var(--sony-color-gray-400); }
+.md-progress li::before { content: ""; position: absolute; left: 0; right: 0; top: 5px; height: 2px; background: var(--sony-color-gray-200); }
+.md-progress li::after { content: ""; position: absolute; left: 50%; top: 0; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--md-surface); border: 2px solid var(--sony-color-gray-300); box-sizing: border-box; }
+.md-progress li:first-child::before { left: 50%; }
+.md-progress li:last-child::before { right: 50%; }
+.md-progress li.done::before { background: var(--sony-color-primary); }
+.md-progress li.now::before { background: linear-gradient(to right, var(--sony-color-primary) 50%, var(--sony-color-gray-200) 50%); }
+.md-progress li.done::after { background: var(--sony-color-primary); border-color: var(--sony-color-primary); }
+.md-progress li.now::after { border-color: var(--sony-color-primary); border-width: 3px; }
+.md-progress li.done, .md-progress li.now { color: var(--sony-color-gray-900); }
+.md-progress li.now { font-weight: 700; }
+
+/* ── 쿠폰 (라운드 + 테두리 유지) ─────────────────────────────── */
+.md-coupons { display: flex; flex-direction: column; gap: 10px; }
+.md-coupon { display: flex; min-height: 84px; border: 1px solid var(--sony-color-gray-300); border-radius: var(--sony-radius-md); background: var(--sony-color-white); overflow: hidden; }
+.md-coupon__body { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 3px; padding: 12px 16px; }
+.md-coupon__price { font-size: var(--sony-text-sm); font-weight: 700; letter-spacing: 0; line-height: 1; color: var(--sony-color-primary); }
+.md-coupon__price strong { font-size: var(--sony-text-2xl); color: var(--sony-color-primary); }
+.md-coupon__name { font-size: var(--sony-text-xs); font-weight: 700; color: var(--sony-color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.md-coupon__body small { font-size: 11px; letter-spacing: 0; color: var(--sony-color-gray-600); }
+.md-coupon__stub {
+  position: relative;
+  flex: 0 0 40px;
+  border-radius: 0 var(--sony-radius-md) var(--sony-radius-md) 0;
+  background: var(--sony-color-primary);
+  color: var(--sony-color-white);
+  -webkit-mask: radial-gradient(circle at 0 50%, transparent 4px, #000 4.5px) 0 0 / 100% 12px repeat-y;
+  mask: radial-gradient(circle at 0 50%, transparent 4px, #000 4.5px) 0 0 / 100% 12px repeat-y;
+}
+.md-coupon__stub span { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(90deg); font-size: 9px; font-weight: 700; letter-spacing: 0.1em; white-space: nowrap; }
+
+/* ── 마일리지 ──────────────────────────────────────────────── */
+.md-mileage { display: flex; flex-direction: column; gap: 6px; padding-bottom: 16px; }
+.md-mileage__label { font-size: var(--sony-text-xs); color: var(--sony-color-gray-600); }
+.md-mileage__value { font-size: var(--sony-text-3xl); font-weight: 700; letter-spacing: 0; line-height: 1; color: var(--sony-color-gray-900); }
+.md-mileage__value em { margin-left: 2px; font-size: var(--sony-text-base); font-weight: 500; }
+.md-mileage small { font-size: var(--sony-text-xs); color: var(--sony-color-gray-600); }
+.md-mileage small i { font-weight: 700; color: var(--sony-color-sale); }
+
+/* ── 찜 ────────────────────────────────────────────────────── */
+.md-wish { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.md-wish a { display: flex; flex-direction: column; gap: 4px; }
+.md-wish__thumb { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 1; overflow: hidden; background: var(--sony-color-white); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; letter-spacing: 0; color: var(--sony-color-gray-400); }
+.md-wish__thumb img { position: absolute; inset: -8%; width: 116%; height: 116%; object-fit: contain; }
+.md-wish__model { font-size: var(--sony-text-2xs); font-weight: 700; letter-spacing: 0; color: var(--sony-color-gray-600); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.md-wish__price { font-size: var(--sony-text-sm); font-weight: 700; letter-spacing: 0; color: var(--sony-color-gray-900); }
+
+/* ── 아카데미 ──────────────────────────────────────────────── */
+.md-academy { display: flex; flex-direction: column; margin-bottom: 8px; }
+.md-academy__thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; }
+.md-academy__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.md-academy__body { display: flex; flex-direction: column; gap: 4px; padding: 12px 0 4px; }
+.md-academy__body strong { font-size: var(--sony-text-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.md-academy__body small { font-size: var(--sony-text-xs); letter-spacing: 0; color: var(--sony-color-gray-600); }
+
+/* ── 태블릿 이하 ───────────────────────────────────────────── */
+@media screen and (max-width: 1280px) {
+  .md-head__inner { flex-direction: column; align-items: flex-start; }
+  .md-body { flex-direction: column; gap: 24px; }
+  .md-menu { position: static; flex: none; width: 100%; }
+  .md-menu ul { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+  .md-menu ul::-webkit-scrollbar { display: none; }
+  .md-menu li a { padding: 0 12px; height: 34px; border: 1px solid var(--sony-border-default); border-left-width: 1px; border-radius: var(--sony-radius-pill); font-size: var(--sony-text-sm); white-space: nowrap; gap: 6px; }
+  .md-menu li a:hover { background: var(--sony-color-gray-900); color: var(--sony-color-white); font-weight: 500; }
+  .md-menu__alt { display: none; }
+  .md-span-4, .md-span-6, .md-span-8 { grid-column: span 6; }
+  .md-w--todo, .md-w--flat { grid-column: span 12; }
+}
+
+/* ── 모바일 ────────────────────────────────────────────────── */
+@media screen and (max-width: 640px) {
+  .md-head__inner { padding-top: 20px; padding-bottom: 20px; gap: 16px; }
+  .md-me__name { font-size: var(--sony-text-xl); }
+  .md-quick { flex-wrap: wrap; }
+  .md-quick .md-btn { flex: 1 1 auto; }
+  .md-body { padding-top: 20px; }
+  .md-grid { gap: 12px; }
+  .md-span-4, .md-span-6, .md-span-8 { grid-column: span 12; }
+  .md-w { padding: 18px 16px 20px; }
+  .md-steps li { padding: 4px 0 10px; }
+  .md-steps__icon { width: 26px; height: 26px; }
+  .md-steps__label { font-size: var(--sony-text-2xs); }
+  .md-rows--pad { padding: 0 16px; }
+  .md-todo__action { display: none; }
+}

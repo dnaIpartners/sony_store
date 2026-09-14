@@ -39,6 +39,12 @@ const ACTION_LINKS = [
     label: "통합 마이페이지",
   },
   {
+    key: "myDash",
+    href: "/my-dash",
+    icon: "ic_mydash",
+    label: "대시보드",
+  },
+  {
     key: "order",
     href: "/my-page/order-list",
     icon: "ic_order",
