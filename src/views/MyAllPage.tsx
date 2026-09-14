@@ -69,8 +69,14 @@ const ORDERS = [
 
 // 사진이 있는 제품만 img 를 채운다. 없으면 모델명을 적은 회색 판
 const COUPONS = [
-  { price: "5,000", unit: "원", name: "마케팅 수신 동의 5,000원 할인", until: "2026-09-21 23:59:59" },
-  { price: "5", unit: "%", name: "회원가입 감사 5% 할인", until: "2026-09-28 23:59:59" },
+  {
+    price: "5,000", unit: "원", name: "마케팅 수신 동의 5,000원 할인", until: "2026-09-21 23:59:59",
+    info: "*발급대상 : 마케팅 수신 동의 고객\n*적용제품 : 3만원 이상의 소니스토어 전 제품 (단, My Sony Care 제외)\n*발급일로부터 7일간 자유롭게 사용 가능",
+  },
+  {
+    price: "5", unit: "%", name: "회원가입 감사 5% 할인", until: "2026-09-28 23:59:59",
+    info: "*발급대상 : 신규 회원 가입 고객\n*적용제품 : 3만원 이상의 소니스토어 전 제품 (단, My Sony Care 제외)\n*최대할인 : 100,000원\n*발급일로부터 14일간 자유롭게 사용 가능",
+  },
 ];
 
 const WISH = [
@@ -167,13 +173,16 @@ export default function MyAllPage() {
           </div>
           <ul className="ma-coupons">
             {COUPONS.map((c) => (
-              <li key={c.name} className="ma-coupon">
-                <div className="ma-coupon__body">
-                  <p className="ma-coupon__price"><strong>{c.price}</strong>{c.unit}</p>
-                  <p className="ma-coupon__name">{c.name}</p>
-                  <p className="ma-coupon__date">유효기간 : {c.until} 까지</p>
+              <li key={c.name}>
+                <div className="ma-coupon">
+                  <div className="ma-coupon__body">
+                    <p className="ma-coupon__price"><strong>{c.price}</strong>{c.unit}</p>
+                    <p className="ma-coupon__name">{c.name}</p>
+                    <p className="ma-coupon__date">유효기간 : {c.until} 까지</p>
+                  </div>
+                  <span className="ma-coupon__stub" aria-hidden="true"><span>COUPON</span></span>
                 </div>
-                <span className="ma-coupon__stub" aria-hidden="true"><span>COUPON</span></span>
+                <p className="ma-coupon__info">{c.info}</p>
               </li>
             ))}
           </ul>

@@ -1,6 +1,13 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import {
+  IconDeposit,
+  IconPaid,
+  IconPacking,
+  IconShipping,
+  IconDelivered,
+} from "@/src/components/OrderStepIcons";
 
 // Sony Store KR 마이페이지.
 //
@@ -9,7 +16,7 @@ import Link from "next/link";
 //
 // 원본이 라이브러리로 하던 것은 직접 만든다:
 //   · tui-datepicker → 읽기전용 인풋. 3개월/6개월/1년 탭이 기간을 채운다
-//   · 쿠폰 상세 펼침(.coupon_info) → li 에 .on 을 붙였다 뗐다 한다
+//   · 쿠폰 상세(.coupon_info) 는 접지 않고 카드 아래 항상 보인다
 //   · 배송지 관리 / 장바구니 팝업 → 버튼만 있고 열리는 것은 없다
 //
 // 데이터는 전부 이 파일 안의 더미다.
@@ -24,9 +31,13 @@ const USER = {
 };
 
 // 입금대기 → 결제완료 → 배송준비 → 배송중 → 배송완료
-const ORDER_STEPS = ["입금대기", "결제완료", "배송준비", "배송중", "배송완료"].map(
-  (label, i) => ({ step: i + 1, label, count: 0 }),
-);
+const ORDER_STEPS = [
+  { step: 1, label: "입금대기", count: 0, Icon: IconDeposit },
+  { step: 2, label: "결제완료", count: 0, Icon: IconPaid },
+  { step: 3, label: "배송준비", count: 0, Icon: IconPacking },
+  { step: 4, label: "배송중", count: 0, Icon: IconShipping },
+  { step: 5, label: "배송완료", count: 0, Icon: IconDelivered },
+];
 
 const DATE_TABS = [
   { label: "3개월", months: 3 },
@@ -162,6 +173,7 @@ export default function MyPage() {
                 {ORDER_STEPS.map((s) => (
                   <li key={s.step} className={`step_${s.step}${s.count ? " on" : ""}`}>
                     <div className="ship_box">
+                      <i className="ico" aria-hidden="true"><s.Icon /></i>
                       <span className="ico_txt">{s.label}</span>
                       <button className="val_txt" type="button">
                         <span className="val">{s.count}</span>
@@ -378,43 +390,31 @@ function MileageInquiry() {
   );
 }
 
-/** 쿠폰 목록. 아이콘을 누르면 .coupon_info 가 펼쳐진다 */
+/** 쿠폰 목록. 상세(.coupon_info)는 카드 아래에 항상 보인다 */
 function CouponList() {
-  const [open, setOpen] = useState<number | null>(null);
   if (!COUPONS.length) return null;
 
   return (
     <div className="coupon_inner on">
       <ul className="coupon_list">
-        {COUPONS.map((c, i) => {
-          const isOpen = open === i;
-          return (
-            <li key={c.name} className={isOpen ? "on" : undefined}>
-              <div className="coupon_item_wrap">
-                <div className="coupon_item">
-                  <p className="coupon_price">
-                    <strong>{c.price}</strong>
-                    {c.unit}
-                  </p>
-                  <p className="coupon_name">{c.name}</p>
-                  <p className="coupon_date">유효기간 : {c.until} 까지</p>
-                </div>
-                <button
-                  type="button"
-                  className={`coupon_icon ${isOpen ? "icon_up" : "icon_down"}`}
-                  aria-expanded={isOpen}
-                  aria-label={isOpen ? "쿠폰 상세 접기" : "쿠폰 상세 보기"}
-                  onClick={() => setOpen(isOpen ? null : i)}
-                >
-                  <span aria-hidden="true">COUPON</span>
-                </button>
+        {COUPONS.map((c) => (
+          <li key={c.name}>
+            <div className="coupon_item_wrap">
+              <div className="coupon_item">
+                <p className="coupon_price">
+                  <strong>{c.price}</strong>
+                  {c.unit}
+                </p>
+                <p className="coupon_name">{c.name}</p>
+                <p className="coupon_date">유효기간 : {c.until} 까지</p>
               </div>
-              <div className="coupon_info" hidden={!isOpen}>
-                {c.info}
-              </div>
-            </li>
-          );
-        })}
+              <span className="coupon_icon" aria-hidden="true">
+                <span>COUPON</span>
+              </span>
+            </div>
+            <div className="coupon_info">{c.info}</div>
+          </li>
+        ))}
       </ul>
     </div>
   );

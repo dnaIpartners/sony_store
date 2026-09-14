@@ -1,13 +1,17 @@
 /* ─────────────────────────────────────────────────────────────
    마이페이지 (src/views/MyPage.tsx)
    클래스 이름은 store.sony.co.kr/my-page 의 .my_wrap 원본 그대로.
+   시각은 실제 페이지 캡처(2026-09-14)를 따른다: 940px 한 단, 가운데 제목,
+   검정 회원 바, 연한 청회색 박스, 12~13px 본문. 쿠폰만 라운드 + 테두리.
    값은 tokens.css 의 --sony-* 만 참조한다. 브레이크포인트 1280 / 640.
    ───────────────────────────────────────────────────────────── */
 
 .my_wrap {
+  --mp-width: 940px;
+  --mp-box: #f4f7fa;              /* 원본의 연한 청회색 박스 = --sony-surface-soft */
   background: var(--sony-surface-page);
   color: var(--sony-color-gray-700);
-  font-size: var(--sony-text-base);
+  font-size: var(--sony-text-sm);
   line-height: var(--sony-leading-normal);
   letter-spacing: var(--sony-tracking-tight);
   word-break: keep-all;
@@ -23,105 +27,117 @@
 .my_wrap .mo_only { display: none; }
 .my_wrap .under_line { text-decoration: underline; text-underline-offset: 3px; }
 
-/* ── 공통: 버튼 ─────────────────────────────────────────────── */
+/* ── 공통: 버튼 (원본 .button.button-s = 28px 소형) ─────────── */
 .my_wrap .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--sony-btn-min-width);
-  min-height: var(--sony-btn-height-xl);
+  min-height: var(--sony-btn-height-md);
   padding: 0 var(--sony-btn-padding-x);
-  font-size: var(--sony-text-md);
+  font-size: var(--sony-text-base);
   font-weight: 700;
   line-height: 1;
   border-radius: var(--sony-radius-none);
   transition: background-color var(--sony-duration-base) var(--sony-ease-default),
               color var(--sony-duration-base) var(--sony-ease-default);
 }
-.my_wrap .button-s { min-width: 0; min-height: 36px; padding: 0 16px; font-size: var(--sony-text-base); }
+.my_wrap .button-s { min-height: 28px; padding: 0 12px; font-size: var(--sony-text-xs); font-weight: 500; }
 .my_wrap .button_positive { background: var(--sony-color-gray-900); color: var(--sony-color-white); }
 .my_wrap .button_positive:hover { background: var(--sony-color-black); }
-.my_wrap .button_secondary { background: var(--sony-color-white); color: var(--sony-color-gray-900); border: 1px solid var(--sony-color-gray-900); }
-.my_wrap .button_secondary:hover { background: var(--sony-color-gray-900); color: var(--sony-color-white); }
+.my_wrap .button_secondary { background: var(--sony-color-white); color: var(--sony-color-gray-900); border: 1px solid var(--sony-color-gray-300); }
+.my_wrap .button_secondary:hover { border-color: var(--sony-color-gray-900); }
 
 /* ── 공통: 폭 ───────────────────────────────────────────────── */
-.my_wrap .cont_inner {
-  max-width: var(--sony-layout-width);
+.my_wrap .cont_inner,
+.my_head {
+  max-width: calc(var(--mp-width) + var(--sony-layout-padding-x) * 2);
   margin: 0 auto;
   padding: 0 var(--sony-layout-padding-x);
 }
 
-/* ── 머리 ──────────────────────────────────────────────────── */
-.my_head {
-  max-width: var(--sony-layout-width);
-  margin: 0 auto;
-  padding: 48px var(--sony-layout-padding-x) 0;
-}
+/* ── 머리: 가운데 제목 + 인사 + 회원정보 + 검정 바 ────────────── */
+.my_head { padding-top: 72px; }
 .my_head .title {
-  font-size: var(--sony-text-5xl);
-  line-height: 1;
+  text-align: center;
+  font-size: 36px;
+  line-height: 1.2;
   font-weight: 700;
   letter-spacing: var(--sony-tracking-title);
   color: var(--sony-color-gray-900);
 }
-.my_user {
+.my_user { display: flex; flex-direction: column; margin-top: 12px; }
+.my_user .user_profile { display: flex; flex-direction: column; gap: 22px; }
+.my_user .user_name { order: 0; text-align: center; font-size: var(--sony-text-sm); font-weight: 500; color: var(--sony-color-gray-900); }
+.my_user .user_name .name { font-weight: 700; }
+.my_user .user_modify_wrap {
+  order: 1;
   display: flex;
-  align-items: stretch;
-  margin-top: 40px;
-  background: var(--sony-surface-soft);
+  align-items: center;
+  gap: 8px;
+  font-size: var(--sony-text-md);
+  font-weight: 700;
+  color: var(--sony-color-gray-900);
 }
-.my_user .user_profile {
-  flex: 0 0 380px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 16px;
-  padding: 32px 40px;
-  border-right: 1px solid var(--sony-border-default);
+/* 사람 아이콘 — 헤더 svg(흰색) 를 반전 */
+.my_user .user_modify_wrap::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: url("/asset/sony/ic_mypage.svg") center / contain no-repeat;
+  filter: invert(1);
 }
-.my_user .user_name { font-size: var(--sony-text-xl); color: var(--sony-color-gray-900); }
-.my_user .user_name .name { font-size: var(--sony-text-2xl); font-weight: 700; margin-right: 2px; }
-.my_user .user_modify_wrap { display: flex; align-items: center; gap: 12px; font-size: var(--sony-text-base); color: var(--sony-color-gray-800); }
+.my_user .user_modify_wrap .button-s { min-height: 20px; padding: 0 7px; font-size: var(--sony-text-2xs); font-weight: 700; }
 
-.my_user .user_info { flex: 1 1 0; min-width: 0; background: var(--sony-color-white); }
-.my_user .user_info ul { display: grid; grid-template-columns: repeat(4, 1fr); height: 100%; }
-.my_user .user_item + .user_item { border-left: 1px solid var(--sony-border-default); }
+.my_user .user_info { margin-top: 12px; background: var(--sony-color-gray-900); color: var(--sony-color-white); }
+.my_user .user_info ul { display: grid; grid-template-columns: repeat(4, 1fr); }
+.my_user .user_item + .user_item { border-left: 1px solid var(--sony-color-neutral-70); }
 .my_user .user_tabs {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   gap: 10px;
-  height: 100%;
-  padding: 24px 28px;
+  padding: 18px 16px 20px;
   transition: background-color var(--sony-duration-fast) var(--sony-ease-default);
 }
-.my_user .user_tabs:hover { background: var(--sony-color-gray-25); }
-.my_user .ico_txt { font-size: var(--sony-text-base); color: var(--sony-color-gray-700); }
-/* 제목 뒤 작은 화살표 */
+.my_user .user_tabs:hover { background: var(--sony-color-black); }
+.my_user .ico_txt { font-size: var(--sony-text-2xs); color: var(--sony-color-gray-400); }
 .my_wrap .txt_arrow::after {
   content: "";
   display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin: 0 0 1px 6px;
+  width: 5px;
+  height: 5px;
+  margin: 0 0 1px 4px;
   border-top: 1px solid currentColor;
   border-right: 1px solid currentColor;
   transform: rotate(45deg);
   vertical-align: middle;
 }
-.my_user .val_txt { font-size: var(--sony-text-base); font-weight: 500; letter-spacing: 0; color: var(--sony-color-gray-900); }
-.my_user .val_txt .val { font-size: var(--sony-text-2xl); font-weight: 700; margin-right: 2px; }
-.my_user .val_txt .val.family { font-size: var(--sony-text-lg); letter-spacing: 0.04em; }
+.my_user .val_txt { display: flex; align-items: baseline; gap: 2px; font-size: var(--sony-text-base); font-weight: 500; letter-spacing: 0; color: var(--sony-color-white); }
+.my_user .val_txt .val { font-size: var(--sony-text-2xl); font-weight: 700; line-height: 1; }
+.my_user .val_txt .val.family { display: inline-flex; align-items: center; gap: 8px; font-size: var(--sony-text-xl); letter-spacing: 0.02em; }
+/* 등급 앞 M 배지 */
+.my_user .val_txt .val.family::before {
+  content: "M";
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  background: var(--sony-color-white);
+  color: var(--sony-color-gray-900);
+  font-size: 11px;
+  font-weight: 900;
+}
 
 /* ── 섹션 ──────────────────────────────────────────────────── */
 .my_wrap .b2b_banner:empty { display: none; }
-.my_wrap .cont { padding-top: 80px; scroll-margin-top: calc(var(--sony-header-height) + 24px); }
+.my_wrap .cont { padding-top: 64px; scroll-margin-top: calc(var(--sony-header-height) + 24px); }
 .my_wrap .cont_tit {
-  font-size: var(--sony-text-3xl);
-  line-height: 44px;
+  font-size: var(--sony-text-lg);
+  line-height: 28px;
   font-weight: 700;
-  letter-spacing: var(--sony-tracking-title);
-  color: var(--sony-color-black);
+  letter-spacing: var(--sony-tracking-tight);
+  color: var(--sony-color-gray-900);
 }
 .my_wrap .tit_head,
 .my_wrap .cont_head {
@@ -129,244 +145,216 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid var(--sony-color-gray-900);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sony-color-gray-900);
 }
-.my_wrap .cont > .cont_tit { padding-bottom: 20px; border-bottom: 2px solid var(--sony-color-gray-900); }
+.my_wrap .cont > .cont_tit { padding-bottom: 12px; border-bottom: 1px solid var(--sony-color-gray-900); }
 .my_wrap .btn_article,
-.my_wrap .like_select_btn { display: flex; gap: 8px; }
+.my_wrap .like_select_btn { display: flex; gap: 6px; }
 /* inline-flex 버튼 안에서는 span 뒤의 공백이 사라진다 */
-.my_wrap .like_select_btn .button span { margin-right: 4px; }
-.my_wrap .history_inner { padding-top: 24px; }
+.my_wrap .like_select_btn .button span { margin-right: 3px; }
+.my_wrap .history_inner { padding-top: 20px; }
 
-/* ── 진행 중인 주문 ────────────────────────────────────────── */
-.my_order .order_list {
-  display: flex;
-  background: var(--sony-color-gray-25);
-}
-.my_order .order_list li {
-  position: relative;
-  flex: 1 1 0;
-}
-.my_order .order_list li + li::before {
-  content: "";
-  position: absolute;
-  left: -4px;
-  top: 50%;
-  width: 8px;
-  height: 8px;
-  border-top: 1px solid var(--sony-color-gray-300);
-  border-right: 1px solid var(--sony-color-gray-300);
-  transform: translateY(-50%) rotate(45deg);
-}
+/* ── 진행 중인 주문 — 청회색 박스, 가운데 5단계 ───────────────── */
+.my_order { padding: 28px 24px; background: var(--mp-box); }
+.my_order .order_list { display: flex; justify-content: center; gap: 44px; }
 .my_order .ship_box {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 28px 0;
+  min-width: 64px;
 }
-.my_order .ship_box .ico_txt { font-size: var(--sony-text-base); color: var(--sony-color-gray-600); }
-.my_order .ship_box .val_txt { display: flex; align-items: baseline; gap: 2px; letter-spacing: 0; color: var(--sony-color-gray-400); }
-.my_order .ship_box .val_txt .val { font-size: var(--sony-text-3xl); font-weight: 300; line-height: 1; }
-.my_order .ship_box .val_txt span:last-child { font-size: var(--sony-text-base); }
-.my_order .order_list li.on .ico_txt { font-weight: 700; color: var(--sony-color-gray-900); }
+.my_order .ship_box .ico {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--sony-radius-full);
+  background: var(--sony-color-white);
+  color: var(--sony-color-primary);
+}
+.my_order .ship_box .ico svg { width: 26px; height: 26px; --ms-panel-bg: #fff; }
+.my_order .ship_box .ico_txt { font-size: var(--sony-text-xs); color: var(--sony-color-gray-700); }
+.my_order .ship_box .val_txt { display: flex; align-items: baseline; gap: 1px; letter-spacing: 0; font-size: var(--sony-text-sm); font-weight: 700; color: var(--sony-color-gray-900); }
+.my_order .order_list li.on .ico { background: var(--sony-color-primary); color: var(--sony-color-white); }
+.my_order .order_list li.on .ico svg { --ms-panel-bg: var(--sony-color-primary); }
 .my_order .order_list li.on .val_txt { color: var(--sony-color-primary); }
-.my_order .order_list li.on .val_txt .val { font-weight: 700; }
 
 /* ── 안내문 ────────────────────────────────────────────────── */
-.my_wrap .guide_list { margin-top: 24px; font-size: var(--sony-text-sm); color: var(--sony-color-gray-600); }
-.my_wrap .guide_list .tit { margin-bottom: 8px; font-weight: 700; color: var(--sony-color-gray-800); }
-.my_wrap .list_dot li { position: relative; padding-left: 10px; }
-.my_wrap .list_dot li + li { margin-top: 4px; }
-.my_wrap .list_dot li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 8px;
-  width: 3px;
-  height: 3px;
-  border-radius: var(--sony-radius-full);
-  background: currentColor;
-}
+.my_wrap .guide_list { margin-top: 20px; font-size: var(--sony-text-xs); line-height: 1.7; color: var(--sony-color-gray-600); }
+.my_wrap .guide_list .tit { margin-bottom: 4px; font-weight: 700; color: var(--sony-color-gray-800); }
+.my_wrap .list_dot li { position: relative; padding-left: 8px; }
+.my_wrap .list_dot li::before { content: "·"; position: absolute; left: 0; top: 0; }
 .my_wrap .guide_list strong { color: var(--sony-color-gray-800); }
 
 /* ── 마일리지 ──────────────────────────────────────────────── */
-.my_mileage {
-  padding: 24px 32px;
-  background: var(--sony-surface-soft);
+.my_mileage { padding: 18px; background: var(--mp-box); text-align: center; }
+.my_mileage .txt { display: inline-flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: 4px; font-size: var(--sony-text-xs); color: var(--sony-color-gray-800); }
+.my_mileage .mileage_val { font-size: var(--sony-text-xl); font-weight: 700; letter-spacing: 0; line-height: 1; color: var(--sony-color-primary); }
+/* 원본의 동그란 M 아이콘 */
+.my_mileage .mileage_val::after {
+  content: "M";
+  display: inline-grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+  margin-left: 3px;
+  border: 1px solid var(--sony-color-primary);
+  border-radius: 50%;
+  font-size: 8px;
+  font-weight: 900;
+  vertical-align: middle;
 }
-.my_mileage .txt { display: flex; align-items: baseline; gap: 8px; font-size: var(--sony-text-md); color: var(--sony-color-gray-900); }
-.my_mileage .mileage_val { font-size: var(--sony-text-3xl); font-weight: 700; letter-spacing: 0; line-height: 1; }
-.my_mileage .extinction { font-size: var(--sony-text-sm); color: var(--sony-color-gray-600); }
-.my_mileage .extinction .val_txt { color: var(--sony-color-sale); letter-spacing: 0; }
+.my_mileage .extinction { font-size: var(--sony-text-xs); color: var(--sony-color-gray-800); }
+.my_mileage .extinction .val_txt { color: var(--sony-color-gray-800); letter-spacing: 0; }
 
 .mileage_inquiry { margin-top: 24px; }
-.mileage_inquiry .date_box { display: flex; align-items: center; gap: 24px; padding-bottom: 24px; }
-.mileage_inquiry .date3_tab { display: flex; gap: 6px; flex-shrink: 0; }
-.mileage_inquiry .date3_btn {
-  display: inline-flex;
-  align-items: center;
-  height: 32px;
-  padding: 0 14px;
-  border: 1px solid var(--sony-border-default);
-  border-radius: var(--sony-radius-pill);
-  font-size: var(--sony-text-sm);
-  color: var(--sony-color-gray-700);
-  transition: all var(--sony-duration-fast) var(--sony-ease-default);
-}
-.mileage_inquiry .date3_btn:hover { border-color: var(--sony-color-gray-900); color: var(--sony-color-gray-900); }
-.mileage_inquiry .tabs.on .date3_btn { background: var(--sony-color-gray-900); border-color: var(--sony-color-gray-900); color: var(--sony-color-white); font-weight: 700; }
-.mileage_inquiry .date_rang { display: flex; align-items: center; gap: 8px; flex: 1 1 0; max-width: 560px; }
-.mileage_inquiry .date_picker_wrapper { flex: 1 1 0; min-width: 0; }
-.mileage_inquiry .date_tilde { line-height: 32px; color: var(--sony-color-gray-600); }
-/* 인풋은 밑줄형 — 가이드 규칙 */
-.mileage_inquiry .tui-datepicker-input { position: relative; height: 32px; }
+.mileage_inquiry .date_box { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 20px; }
+/* 기간 탭 — 글자 + 세로 구분선, 활성은 파랑 밑줄 */
+.mileage_inquiry .date3_tab { display: flex; align-items: center; flex-shrink: 0; }
+.mileage_inquiry .date3_tab .tabs + .tabs::before { content: ""; display: inline-block; width: 1px; height: 10px; margin: 0 14px; background: var(--sony-color-gray-300); vertical-align: middle; }
+.mileage_inquiry .date3_btn { font-size: var(--sony-text-xs); color: var(--sony-color-gray-700); }
+.mileage_inquiry .tabs.on .date3_btn { color: var(--sony-color-primary); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.mileage_inquiry .date_rang { display: flex; align-items: center; gap: 6px; }
+.mileage_inquiry .date_picker_wrapper { width: 150px; }
+.mileage_inquiry .date_tilde { line-height: 28px; font-size: var(--sony-text-xs); color: var(--sony-color-gray-600); }
+.mileage_inquiry .tui-datepicker-input { position: relative; height: 28px; }
 .mileage_inquiry .view_date_input {
   width: 100%;
   height: 100%;
-  padding: 0 24px 0 0;
-  border: 0;
-  border-bottom: 1px solid var(--sony-border-input);
-  background: transparent;
+  padding: 0 28px 0 10px;
+  border: 1px solid var(--sony-color-gray-300);
+  background: var(--sony-color-white);
   font: inherit;
-  font-size: var(--sony-text-base);
-  font-weight: 700;
+  font-size: var(--sony-text-xs);
   letter-spacing: 0;
   color: var(--sony-color-gray-900);
   outline: none;
 }
-.mileage_inquiry .view_date_input:focus { border-bottom: 2px solid var(--sony-color-primary); }
+.mileage_inquiry .view_date_input:focus { border-color: var(--sony-color-primary); }
 .mileage_inquiry .tui-ico-date {
   position: absolute;
-  right: 2px;
+  right: 8px;
   top: 50%;
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   transform: translateY(-50%);
-  border: 1px solid var(--sony-color-gray-600);
+  border: 1px solid var(--sony-color-gray-700);
   border-top-width: 3px;
   border-radius: 2px;
   pointer-events: none;
 }
-.mileage_inquiry .date_rang .button { flex-shrink: 0; min-height: 32px; }
+.mileage_inquiry .date_rang .button { min-height: 28px; padding: 0 12px; font-size: var(--sony-text-xs); }
 
-/* ── 빈 목록 ───────────────────────────────────────────────── */
+/* ── 빈 목록 — 선 없이 여백만 ─────────────────────────────── */
 .my_wrap .no_data { display: none; }
 .my_wrap .no_data.on {
   display: block;
-  padding: 56px 0;
-  border-top: 1px solid var(--sony-border-default);
-  border-bottom: 1px solid var(--sony-border-default);
+  padding: 88px 0;
   text-align: center;
-  font-size: var(--sony-text-base);
-  color: var(--sony-color-gray-600);
+  font-size: var(--sony-text-sm);
+  color: var(--sony-color-gray-700);
 }
 
 /* ── 쿠폰 ──────────────────────────────────────────────────── */
-/* 참고 시안: 흰 카드 + 오른쪽 소니 블루 스텁(세로 COUPON), 스텁 왼쪽에 톱니 절취선.
-   스텁이 곧 상세 펼침 버튼(.coupon_icon)이다 */
+/* 흰 카드(라운드 + 테두리) + 오른쪽 소니 블루 스텁(세로 COUPON, 톱니),
+   설명문은 카드 아래 항상 노출 */
 .coupon_inner { display: none; }
 .coupon_inner.on { display: block; }
-.coupon_list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; align-items: start; }
-.coupon_list li {
-  background: var(--sony-color-gray-25);
+.coupon_list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px 24px; align-items: start; }
+.coupon_item_wrap {
+  display: flex;
+  align-items: stretch;
+  min-height: 190px;
+  border: 1px solid var(--sony-color-gray-300);
+  border-radius: var(--sony-radius-md);
+  background: var(--sony-color-white);
   overflow: hidden;
-  transition: border-color var(--sony-duration-fast) var(--sony-ease-default);
 }
-.coupon_list li.on { outline: 2px solid var(--sony-color-primary); outline-offset: -2px; }
-.coupon_item_wrap { display: flex; align-items: stretch; min-height: 220px; }
-.coupon_item { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 32px 40px; }
-.my_wrap .coupon_price { font-size: var(--sony-text-2xl); font-weight: 700; letter-spacing: 0; color: var(--sony-color-primary); line-height: 1; }
-.coupon_price strong { font-size: 44px; color: var(--sony-color-primary); }
-.my_wrap .coupon_name { margin-top: 24px; font-size: var(--sony-text-lg); font-weight: 700; color: var(--sony-color-gray-900); }
-.my_wrap .coupon_date { margin-top: 24px; font-size: var(--sony-text-sm); color: var(--sony-color-gray-800); }
+.coupon_item { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 28px 32px; }
+.my_wrap .coupon_price { font-size: var(--sony-text-xl); font-weight: 700; letter-spacing: 0; color: var(--sony-color-primary); line-height: 1; }
+.my_wrap .coupon_price strong { font-size: 40px; color: var(--sony-color-primary); }
+.my_wrap .coupon_name { margin-top: 20px; font-size: var(--sony-text-md); font-weight: 700; color: var(--sony-color-gray-900); }
+.my_wrap .coupon_date { margin-top: 20px; font-size: var(--sony-text-xs); color: var(--sony-color-gray-800); }
 .my_wrap .coupon_icon {
   position: relative;
-  flex: 0 0 96px;
-  margin: 0;
+  flex: 0 0 72px;
+  border-radius: 0 var(--sony-radius-md) var(--sony-radius-md) 0;
   background: var(--sony-color-primary);
   color: var(--sony-color-white);
   /* 왼쪽 톱니 — 원을 세로로 반복해 파낸다 */
   -webkit-mask:
-    radial-gradient(circle at 0 50%, transparent 6px, #000 6.5px) 0 0 / 100% 20px repeat-y;
+    radial-gradient(circle at 0 50%, transparent 5px, #000 5.5px) 0 0 / 100% 16px repeat-y;
   mask:
-    radial-gradient(circle at 0 50%, transparent 6px, #000 6.5px) 0 0 / 100% 20px repeat-y;
-  transition: background-color var(--sony-duration-fast) var(--sony-ease-default);
+    radial-gradient(circle at 0 50%, transparent 5px, #000 5.5px) 0 0 / 100% 16px repeat-y;
 }
-.my_wrap .coupon_icon:hover { background: var(--sony-color-primary-dark); }
-.coupon_icon span {
+.my_wrap .coupon_icon span {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%) rotate(90deg);
-  font-size: var(--sony-text-md);
+  font-size: var(--sony-text-sm);
   font-weight: 700;
   letter-spacing: 0.08em;
   white-space: nowrap;
 }
-.coupon_icon::after { display: none; }
 .coupon_info {
-  padding: 16px 32px;
-  border-top: 1px dashed var(--sony-border-default);
-  background: var(--sony-color-gray-25);
-  font-size: var(--sony-text-sm);
-  line-height: 1.6;
+  margin-top: 16px;
+  padding: 0 2px;
+  font-size: var(--sony-text-xs);
+  line-height: 1.7;
   color: var(--sony-color-gray-700);
   white-space: pre-line;
 }
 
-/* ── 아이콘 링크 박스 ──────────────────────────────────────── */
-.ico_box_link { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 16px; }
-.ico_box_link_coupon { margin-top: 32px; }
+/* ── 아이콘 링크 박스 — 연회색 박스, 큰 선 아이콘, 오른쪽 화살표 ── */
+.ico_box_link { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+.ico_box_link_coupon { margin-top: 28px; }
 .box_link_inner {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 96px;
-  padding: 20px 48px 20px 92px;
-  background: var(--sony-color-gray-25);
+  min-height: 76px;
+  padding: 16px 44px 16px 92px;
+  background: var(--sony-color-gray-50);
   transition: background-color var(--sony-duration-fast) var(--sony-ease-default);
 }
-.box_link_inner:hover { background: var(--sony-color-gray-50); }
-/* 왼쪽 원형 아이콘 자리 · 오른쪽 화살표 */
+.box_link_inner:hover { background: var(--sony-color-gray-100); }
 .box_link_inner::before {
   content: "";
   position: absolute;
   left: 24px;
   top: 50%;
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   transform: translateY(-50%);
-  border-radius: var(--sony-radius-full);
-  background: var(--sony-color-white) center / 22px no-repeat;
+  background: center / contain no-repeat;
 }
 .box_link_inner::after {
   content: "";
   position: absolute;
-  right: 24px;
+  right: 20px;
   top: 50%;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-top: 1px solid var(--sony-color-gray-900);
   border-right: 1px solid var(--sony-color-gray-900);
   transform: translateY(-50%) rotate(45deg);
 }
-.box_link_inner .tit { font-size: var(--sony-text-md); font-weight: 700; color: var(--sony-color-gray-900); }
-.box_link_inner .txt { margin-top: 4px; font-size: var(--sony-text-sm); color: var(--sony-color-gray-600); }
-/* 아이콘 6종 — 자산이 없으므로 단색 SVG 를 인라인으로 */
-.box_link_inner.ico_type1::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23222' stroke-width='1.6'%3E%3Cpath d='M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4Z'/%3E%3Cpath d='M9 6v12' stroke-dasharray='2 2'/%3E%3C/svg%3E"); }
-.box_link_inner.ico_type2::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23222' stroke-width='1.6'%3E%3Cpath d='M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E"); }
-.box_link_inner.ico_type5::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23222' stroke-width='1.6'%3E%3Crect x='3' y='5' width='18' height='14' rx='1'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E"); }
-.box_link_inner.ico_type6::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23222' stroke-width='1.6'%3E%3Cpath d='M4 11h16v9H4zM2 8h20v3H2zM12 8v12M12 8c-3 0-4-1.5-4-3s3-2 4 3c1-5 4-4 4-3s-1 3-4 3'/%3E%3C/svg%3E"); }
+.box_link_inner .tit { font-size: var(--sony-text-sm); font-weight: 700; color: var(--sony-color-gray-900); }
+.box_link_inner .txt { margin-top: 3px; font-size: var(--sony-text-xs); color: var(--sony-color-gray-700); }
+/* 아이콘 4종 — 원본(종 · 케이크 · 손+쿠폰 · 인증서)을 단색 선으로 */
+.box_link_inner.ico_type5::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%23222' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M24 8a10 10 0 0 0-10 10v8l-4 6h28l-4-6v-8a10 10 0 0 0-10-10Z'/%3E%3Cpath d='M20 36a4 4 0 0 0 8 0M24 5v3'/%3E%3C/svg%3E"); }
+.box_link_inner.ico_type6::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%23222' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 26h32v14H8zM11 26v-6h26v6'/%3E%3Cpath d='M8 32c3 0 3 2 6 2s3-2 6-2 3 2 6 2 3-2 6-2 3 2 6 2M17 20v-5M24 20v-5M31 20v-5'/%3E%3Ccircle cx='17' cy='12' r='1.3'/%3E%3Ccircle cx='24' cy='12' r='1.3'/%3E%3Ccircle cx='31' cy='12' r='1.3'/%3E%3C/svg%3E"); }
+.box_link_inner.ico_type1::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%23222' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 36c5-2 8-2 12 0 4 2 8 2 14-1l10-5-3-3-9 3'/%3E%3Cpath d='M18 36c4-3 7-3 10-2'/%3E%3Crect x='16' y='8' width='22' height='14' rx='1'/%3E%3Cpath d='M16 15h22M27 8v14' stroke-dasharray='2 2'/%3E%3C/svg%3E"); }
+.box_link_inner.ico_type2::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%23222' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='8' y='8' width='32' height='30' rx='1'/%3E%3Cpath d='M14 16h20M14 22h12'/%3E%3Ccircle cx='31' cy='30' r='4'/%3E%3Cpath d='m28 33-2 8 5-3 5 3-2-8'/%3E%3C/svg%3E"); }
 
 /* ── 태블릿 이하 ───────────────────────────────────────────── */
 @media screen and (max-width: 1280px) {
-  .my_user { flex-direction: column; }
-  .my_user .user_profile { flex: none; border-right: 0; border-bottom: 1px solid var(--sony-border-default); padding: 24px 28px; }
-  .my_user .user_tabs { padding: 20px; }
-  .mileage_inquiry .date_box { flex-wrap: wrap; gap: 16px; }
-  .mileage_inquiry .date_rang { flex: 1 1 100%; max-width: none; }
+  .my_user .user_tabs { padding: 16px 12px; }
+  .my_order .order_list { gap: 24px; }
+  .mileage_inquiry .date_box { flex-wrap: wrap; gap: 12px; }
 }
 
 /* ── 모바일 ────────────────────────────────────────────────── */
@@ -374,54 +362,45 @@
   .my_wrap .pc_only { display: none; }
   .my_wrap .mo_only { display: inline-block; }
 
-  .my_head { padding-top: 24px; }
-  .my_user { margin-top: 24px; }
-  .my_user .user_profile { gap: 8px; padding: 20px; }
-  .my_user .user_name { font-size: var(--sony-text-md); }
-  .my_user .user_name .name { font-size: var(--sony-text-xl); }
-  .my_user .user_modify { font-size: var(--sony-text-sm); color: var(--sony-color-gray-800); }
+  .my_head { padding-top: 32px; }
+  .my_head .title { font-size: var(--sony-text-2xl); }
+  .my_user .user_profile { gap: 14px; }
+  .my_user .user_modify { align-self: flex-start; font-size: var(--sony-text-xs); color: var(--sony-color-gray-800); }
   .my_user .user_info ul { grid-template-columns: repeat(2, 1fr); }
   .my_user .user_item:nth-child(3) { border-left: 0; }
-  .my_user .user_item:nth-child(n + 3) { border-top: 1px solid var(--sony-border-default); }
-  .my_user .user_tabs { padding: 16px 20px; gap: 6px; }
+  .my_user .user_item:nth-child(n + 3) { border-top: 1px solid var(--sony-color-neutral-70); }
+  .my_user .user_tabs { padding: 14px 12px; gap: 6px; }
   .my_user .val_txt .val { font-size: var(--sony-text-xl); }
   .my_user .val_txt .val.family { font-size: var(--sony-text-md); }
 
-  .my_wrap .cont { padding-top: 56px; }
-  .my_wrap .cont_tit { line-height: 32px; }
-  .my_wrap .tit_head, .my_wrap .cont_head { flex-direction: column; align-items: stretch; gap: 12px; padding-bottom: 12px; }
-  .my_wrap .cont > .cont_tit { padding-bottom: 12px; }
+  .my_wrap .cont { padding-top: 48px; }
+  .my_wrap .tit_head, .my_wrap .cont_head { flex-direction: column; align-items: stretch; gap: 10px; }
   .my_wrap .btn_article, .my_wrap .like_select_btn { display: grid; grid-template-columns: 1fr 1fr; }
   .my_wrap .history_inner { padding-top: 16px; }
 
-  .my_order .order_list { flex-wrap: wrap; }
-  .my_order .order_list li { flex: 1 1 33.333%; }
-  .my_order .order_list li:nth-child(n + 4) { border-top: 1px solid var(--sony-border-default); }
-  .my_order .order_list li:nth-child(4)::before { display: none; }
-  .my_order .ship_box { padding: 16px 0; }
-  .my_order .ship_box .ico_txt { font-size: var(--sony-text-xs); }
-  .my_order .ship_box .val_txt .val { font-size: var(--sony-text-2xl); }
+  .my_order { padding: 20px 8px; }
+  .my_order .order_list { gap: 4px; }
+  .my_order .ship_box { min-width: 0; flex: 1 1 0; gap: 6px; }
+  .my_order .ship_box .ico { width: 36px; height: 36px; }
+  .my_order .ship_box .ico svg { width: 20px; height: 20px; }
+  .my_order .ship_box .ico_txt { font-size: var(--sony-text-2xs); }
 
-  .my_mileage { padding: 16px 20px; }
-  .my_mileage .txt { flex-wrap: wrap; gap: 4px 8px; font-size: var(--sony-text-base); }
-  .my_mileage .mileage_val { font-size: var(--sony-text-2xl); }
-  .mileage_inquiry .date3_tab { width: 100%; }
-  .mileage_inquiry .date3_tab .tabs { flex: 1 1 0; }
-  .mileage_inquiry .date3_btn { width: 100%; justify-content: center; }
-  .mileage_inquiry .date_rang { flex-wrap: wrap; }
+  .mileage_inquiry .date_box { justify-content: flex-start; }
+  .mileage_inquiry .date_rang { flex-wrap: wrap; width: 100%; }
+  .mileage_inquiry .date_picker_wrapper { flex: 1 1 0; width: auto; }
   .mileage_inquiry .date_rang .button { flex: 1 1 100%; }
 
-  .my_wrap .no_data.on { padding: 40px 0; }
-  .coupon_list { grid-template-columns: 1fr; gap: 12px; }
+  .my_wrap .no_data.on { padding: 56px 0; }
+  .coupon_list { grid-template-columns: 1fr; gap: 24px; }
   .coupon_item_wrap { min-height: 140px; }
   .coupon_item { padding: 20px; }
-  .coupon_price { font-size: var(--sony-text-lg); }
-  .coupon_price strong { font-size: var(--sony-text-3xl); }
-  .coupon_icon { flex-basis: 64px; }
-  .coupon_icon span { font-size: var(--sony-text-sm); }
-  .coupon_info { padding: 12px 20px; }
-  .ico_box_link { grid-template-columns: 1fr; gap: 12px; }
-  .box_link_inner { min-height: 80px; padding: 16px 40px 16px 76px; }
-  .box_link_inner::before { left: 16px; width: 44px; height: 44px; }
-  .box_link_inner::after { right: 16px; }
+  .my_wrap .coupon_price { font-size: var(--sony-text-lg); }
+  .my_wrap .coupon_price strong { font-size: var(--sony-text-3xl); }
+  .my_wrap .coupon_icon { flex-basis: 60px; }
+  .my_wrap .coupon_icon span { font-size: var(--sony-text-xs); }
+  .coupon_info { margin-top: 10px; }
+  .ico_box_link { grid-template-columns: 1fr; gap: 8px; }
+  .box_link_inner { min-height: 64px; padding: 12px 36px 12px 72px; }
+  .box_link_inner::before { left: 16px; width: 36px; height: 36px; }
+  .box_link_inner::after { right: 14px; }
 }

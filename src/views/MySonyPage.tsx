@@ -90,8 +90,14 @@ const MY_PRODUCTS = [
 
 // 나의 소니 아래 혜택 배너 자리에 쿠폰 카드를 놓는다 (참고 시안 디자인)
 const COUPONS = [
-  { price: "5,000", unit: "원", name: "마케팅 수신 동의 5,000원 할인", until: "2026-09-21 23:59:59" },
-  { price: "5", unit: "%", name: "회원가입 감사 5% 할인", until: "2026-09-28 23:59:59" },
+  {
+    price: "5,000", unit: "원", name: "마케팅 수신 동의 5,000원 할인", until: "2026-09-21 23:59:59",
+    info: "*발급대상 : 마케팅 수신 동의 고객\n*적용제품 : 3만원 이상의 소니스토어 전 제품 (단, My Sony Care 제외)\n*발급일로부터 7일간 자유롭게 사용 가능",
+  },
+  {
+    price: "5", unit: "%", name: "회원가입 감사 5% 할인", until: "2026-09-28 23:59:59",
+    info: "*발급대상 : 신규 회원 가입 고객\n*적용제품 : 3만원 이상의 소니스토어 전 제품 (단, My Sony Care 제외)\n*최대할인 : 100,000원\n*발급일로부터 14일간 자유롭게 사용 가능",
+  },
 ];
 
 const CARE = {
@@ -269,13 +275,16 @@ export default function MySonyPage() {
             </div>
             <ul className="ms-coupons__list">
               {COUPONS.map((c) => (
-                <li key={c.name} className="ms-coupon">
-                  <div className="ms-coupon__body">
-                    <p className="ms-coupon__price"><strong>{c.price}</strong>{c.unit}</p>
-                    <p className="ms-coupon__name">{c.name}</p>
-                    <p className="ms-coupon__date">유효기간 : {c.until} 까지</p>
+                <li key={c.name}>
+                  <div className="ms-coupon">
+                    <div className="ms-coupon__body">
+                      <p className="ms-coupon__price"><strong>{c.price}</strong>{c.unit}</p>
+                      <p className="ms-coupon__name">{c.name}</p>
+                      <p className="ms-coupon__date">유효기간 : {c.until} 까지</p>
+                    </div>
+                    <span className="ms-coupon__stub" aria-hidden="true"><span>COUPON</span></span>
                   </div>
-                  <span className="ms-coupon__stub" aria-hidden="true"><span>COUPON</span></span>
+                  <p className="ms-coupon__info">{c.info}</p>
                 </li>
               ))}
             </ul>
