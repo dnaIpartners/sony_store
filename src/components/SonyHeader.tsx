@@ -28,7 +28,7 @@ const ACTION_LINKS = [
   { key: "myPage", href: "/my-page", icon: "ic_mypage", label: "마이페이지" },
   {
     key: "myPage",
-    href: "/my-page",
+    href: "/my-sony",
     icon: "ic_mypage",
     label: "new 마이페이지",
   },

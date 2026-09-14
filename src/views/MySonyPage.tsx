@@ -1,0 +1,341 @@
+"use client";
+import { useRef, useState } from "react";
+import Link from "next/link";
+
+// My Sony — new 마이페이지.
+//
+// 와이어프레임(2026-09-14 스크린샷 3장)의 항목을 그대로 옮겼다:
+//   머리(할 수 있는 일 메뉴) → 회원 요약 패널 + 전용몰 카드 → 주문/배송 5칸
+//   → 나의 아카데미 → 나의 소니(정품등록 · 내 제품) → 혜택 배너 슬라이드
+//   → My Sony Care + 보증/AS 안내
+// 와이어프레임은 둥근 카드·알약 버튼을 쓴다. 가이드의 각진 규칙과 다르지만
+// 시안을 따른다. 스타일은 src/styles/my-sony.css.
+//
+// 데이터는 전부 이 파일 안의 더미다. 슬라이드는 Swiper 대신 scroll-snap.
+
+const QUICK_MENU = [
+  { href: "/my-page/order-list", label: "주문/배송 조회" },
+  { href: "/my-sony/products", label: "정품등록/관리" },
+  { href: "/my-sony/eps", label: "연장서비스 플랜 EPS" },
+  { href: "/my-sony/pickup", label: "픽업서비스 신청/내역" },
+  { href: "/my-sony/events", label: "이벤트관리" },
+  { href: "/my-page#wish-tit", label: "내가 찜한 소니" },
+];
+
+const USER = {
+  name: "가나다",
+  grade: "MEMBERSHIP",
+  mileage: 10_000,
+  coupons: 5,
+};
+
+const STATS = [
+  { key: "grade", value: USER.grade, unit: "", link: "등급&혜택 안내", href: "/membership/benefit" },
+  { key: "mileage", value: USER.mileage.toLocaleString("ko-KR"), unit: "M", link: "마일리지 안내", href: "/my-page#mileage-tit" },
+  { key: "coupon", value: String(USER.coupons), unit: "장", link: "쿠폰 안내", href: "/my-page#coupon-tit" },
+];
+
+const MALLS = [
+  { title: "소니스토어 학생 전용몰", desc: "학생을 위한 스페셜 할인 혜택!", href: "/event/student" },
+  { title: "크리에이터 전용몰", desc: "크리에이터 인증 시, 특별 할인가로 소니 제품을 만나 보실 수 있습니다.", href: "/event/creator" },
+  { title: "세상에서 가장 아름다운 날을 담다.", desc: "Wedding Seminar 특별 할인 혜택!", href: "/event/wedding" },
+  { title: "기업구매 전용몰", desc: "법인·단체 구매 시 별도 견적 상담을 받으세요.", href: "/agreement" },
+];
+
+// 입금대기 → 결제완료 → 배송준비 → 배송중 → 배송완료
+const ORDER_STEPS = [
+  { label: "입금대기", count: 1 },
+  { label: "결제완료", count: 0 },
+  { label: "배송준비", count: 0 },
+  { label: "배송중", count: 0 },
+  { label: "배송완료", count: 7 },
+];
+
+const ACADEMY = [
+  { title: "[제품 사용법] 알파 7R V - 1강", classDate: "2026.09.18", applyDate: "2026.09.11", status: "접수 후 결제완료" },
+];
+
+const MY_PRODUCTS = [{ model: "ILCE-7RM6", copy: "초고해상도의 독주" }];
+
+const BANNERS = [
+  { title: "마케팅 수신 동의하면\n5,000원 할인!", href: "/my-page/member" },
+  { title: "회원정보 수정하고\n내 생일에 쿠폰 받자!", href: "/my-page/member" },
+  { title: "정품등록하고\n10% 할인쿠폰 받자!", href: "/my-sony/products" },
+  { title: "My Sony Care 로\n무상수리 연장!", href: "/mysonycare" },
+  { title: "알파아카데미\n신규 강좌 오픈", href: "/academy" },
+  { title: "앱 설치하고\n첫 구매 쿠폰 받기", href: "/app" },
+];
+
+const CARE = {
+  expired: 2,
+};
+
+export default function MySonyPage() {
+  return (
+    <main className="ms">
+      <div className="ms-inner">
+        {/* ── 머리 ─────────────────────────────────────────── */}
+        <header className="ms-head">
+          <h1 className="ms-head__title">My Sony</h1>
+          <p className="ms-head__lead">My Sony에서 할 수 있는 일!</p>
+          <nav className="ms-quick" aria-label="My Sony 메뉴">
+            <ul>
+              {QUICK_MENU.map((m) => (
+                <li key={m.label}>
+                  <Link href={m.href}>{m.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </header>
+
+        {/* ── 회원 요약 패널 ────────────────────────────────── */}
+        <section className="ms-panel" aria-labelledby="ms-panel-title">
+          <div className="ms-panel__profile">
+            <span className="ms-panel__avatar" aria-hidden="true">
+              <img src="/asset/sony/ic_mypage.svg" alt="" />
+            </span>
+            <div>
+              <p className="ms-panel__hello" id="ms-panel-title">
+                <strong>{USER.name}님</strong> 환영합니다.
+                <Link href="/my-page/member" className="ms-btn ms-btn--dark ms-btn--xs">
+                  회원정보수정
+                </Link>
+              </p>
+              <Link href="/membership/convert" className="ms-link">
+                통합회원전환 안내
+              </Link>
+            </div>
+          </div>
+
+          <ul className="ms-stats">
+            {STATS.map((s) => (
+              <li key={s.key} className={`ms-stat ms-stat--${s.key}`}>
+                <span className="ms-stat__icon" aria-hidden="true">M</span>
+                <div>
+                  <p className="ms-stat__value">
+                    {s.value}
+                    {s.unit ? <em>{s.unit}</em> : null}
+                  </p>
+                  <Link href={s.href} className="ms-link">
+                    {s.link}
+                  </Link>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <MallSlider />
+        </section>
+
+        {/* ── 주문/배송 ────────────────────────────────────── */}
+        <section className="ms-sec" aria-labelledby="ms-order-title">
+          <div className="ms-sec__head">
+            <h2 className="ms-sec__title" id="ms-order-title">주문/배송</h2>
+            <Link href="/my-page/order-list" className="ms-link ms-sec__more">
+              구매 내역 조회
+            </Link>
+          </div>
+          <ol className="ms-steps">
+            {ORDER_STEPS.map((s) => (
+              <li key={s.label} className={`ms-step${s.count ? " on" : ""}`}>
+                <span className="ms-step__label">{s.label}</span>
+                {s.count ? (
+                  <Link href="/my-page/order-list" className="ms-step__count">
+                    {s.count}
+                  </Link>
+                ) : (
+                  <span className="ms-step__count">{s.count}</span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* ── 나의 아카데미 ─────────────────────────────────── */}
+        <section className="ms-sec" aria-labelledby="ms-academy-title">
+          <div className="ms-sec__head">
+            <h2 className="ms-sec__title" id="ms-academy-title">나의 아카데미</h2>
+            <a
+              href="https://www.sony.co.kr/alpha/handler/NAlphaAcademy-OfflineList"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ms-link ms-sec__more"
+            >
+              아카데미 바로가기
+            </a>
+          </div>
+          <ul className="ms-cards ms-cards--academy">
+            {ACADEMY.map((a) => (
+              <li key={a.title} className="ms-card ms-card--wide">
+                <div className="ms-card__thumb">
+                  <p className="ms-card__thumb-title">{a.title}</p>
+                </div>
+                <dl className="ms-academy__meta">
+                  <div>
+                    <dt>강좌일</dt>
+                    <dd>{a.classDate}</dd>
+                  </div>
+                  <div>
+                    <dt>신청일</dt>
+                    <dd>{a.applyDate}</dd>
+                    <span className="ms-academy__status">{a.status}</span>
+                  </div>
+                </dl>
+              </li>
+            ))}
+            <li className="ms-card ms-card--empty" aria-hidden="true"><div className="ms-card__thumb" /></li>
+            <li className="ms-card ms-card--empty" aria-hidden="true"><div className="ms-card__thumb" /></li>
+          </ul>
+        </section>
+
+        {/* ── 나의 소니 ────────────────────────────────────── */}
+        <section className="ms-sec" aria-labelledby="ms-mine-title">
+          <div className="ms-sec__head">
+            <h2 className="ms-sec__title" id="ms-mine-title">나의 소니</h2>
+            <Link href="/my-sony/products" className="ms-link ms-sec__more">
+              제품 정보/관리
+            </Link>
+          </div>
+          <ul className="ms-cards ms-cards--mine">
+            <li className="ms-card ms-card--cta">
+              <p className="ms-card__cta-copy">
+                소니 정품등록하고
+                <br />
+                10% 할인쿠폰 받으세요.
+              </p>
+              <a
+                href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ms-btn ms-btn--dark ms-btn--pill"
+              >
+                정품등록하기
+              </a>
+            </li>
+            {MY_PRODUCTS.map((p) => (
+              <li key={p.model} className="ms-card ms-card--product">
+                <Link href="/my-sony/products">
+                  <div className="ms-product__img" aria-hidden="true">
+                    <span>{p.model}</span>
+                  </div>
+                  <p className="ms-product__model">{p.model}</p>
+                  <p className="ms-product__copy">{p.copy}</p>
+                </Link>
+              </li>
+            ))}
+            <li className="ms-card ms-card--empty" aria-hidden="true" />
+          </ul>
+
+          <BannerSlider />
+
+          <div className="ms-care">
+            <div className="ms-card ms-card--cta">
+              <p className="ms-card__cta-copy">
+                소니의 공식
+                <br />
+                무상수리 연장 서비스
+              </p>
+              <Link href="/mysonycare" className="ms-btn ms-btn--dark ms-btn--pill">
+                My Sony Care
+              </Link>
+            </div>
+            <ul className="ms-care__list">
+              <li>
+                <p>보증기간이 만료된 제품이 {CARE.expired}건 있습니다.</p>
+                <div className="ms-care__actions">
+                  <Link href="/my-sony/products" className="ms-btn ms-btn--slate">
+                    보증기간 수정요청
+                  </Link>
+                </div>
+              </li>
+              <li>
+                <p>A/S가 필요하신가요?</p>
+                <div className="ms-care__actions">
+                  <Link href="/my-sony/pickup" className="ms-btn ms-btn--slate">
+                    픽업 서비스 신청
+                  </Link>
+                  <a
+                    href="https://www.sony.co.kr/scs/handler/SCSReservation-Start"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ms-btn ms-btn--slate"
+                  >
+                    A/S센터 방문 예약신청
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+/** 전용몰 카드 슬라이더. 화살표를 누르면 카드 한 장 폭만큼 민다 */
+function MallSlider() {
+  const ref = useRef<HTMLUListElement>(null);
+  function slide(dir: 1 | -1) {
+    const el = ref.current;
+    if (!el) return;
+    const card = el.firstElementChild as HTMLElement | null;
+    const step = card ? card.offsetWidth + 24 : el.clientWidth;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  }
+  return (
+    <div className="ms-malls">
+      <ul className="ms-malls__track" ref={ref}>
+        {MALLS.map((m) => (
+          <li key={m.title} className="ms-card ms-card--mall">
+            <Link href={m.href}>
+              <p className="ms-mall__title">{m.title}</p>
+              <p className="ms-mall__desc">{m.desc}</p>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <button type="button" className="ms-malls__nav ms-malls__nav--prev" aria-label="이전" onClick={() => slide(-1)} />
+      <button type="button" className="ms-malls__nav ms-malls__nav--next" aria-label="다음" onClick={() => slide(1)} />
+    </div>
+  );
+}
+
+/** 혜택 배너. 한 화면에 두 장, 점 세 개 */
+const PER_PAGE = 2;
+function BannerSlider() {
+  const [page, setPage] = useState(0);
+  const pages = Math.ceil(BANNERS.length / PER_PAGE);
+  return (
+    <div className="ms-banner">
+      <div className="ms-banner__bar" aria-hidden="true">
+        <span style={{ width: `${((page + 1) / pages) * 100}%` }} />
+      </div>
+      <div className="ms-banner__viewport">
+        <ul className="ms-banner__track" style={{ transform: `translateX(-${page * 100}%)` }}>
+          {BANNERS.map((b) => (
+            <li key={b.title} className="ms-banner__item">
+              <Link href={b.href}>
+                <span className="ms-banner__img" aria-hidden="true" />
+                <span className="ms-banner__title">{b.title}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="ms-banner__dots" role="tablist" aria-label="배너 페이지">
+        {Array.from({ length: pages }, (_, i) => (
+          <button
+            key={i}
+            type="button"
+            role="tab"
+            aria-selected={i === page}
+            aria-label={`${i + 1}페이지`}
+            className={i === page ? "on" : undefined}
+            onClick={() => setPage(i)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
