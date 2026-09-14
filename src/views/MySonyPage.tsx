@@ -58,8 +58,29 @@ const ORDER_STEPS = [
   { label: "배송완료", count: 7, Icon: IconDelivered },
 ];
 
+// 썸네일 파일명이 한글이라 URL 로는 인코딩해 쓴다
 const ACADEMY = [
-  { title: "[제품 사용법] 알파 7R V - 1강", classDate: "2026.09.18", applyDate: "2026.09.11", status: "접수 후 결제완료" },
+  {
+    title: "[건축 사진] 도시의 선과 면을 담다 - 1강",
+    img: encodeURI("/asset/sony/건물.png"),
+    classDate: "2026.09.18",
+    applyDate: "2026.09.11",
+    status: "접수 후 결제완료",
+  },
+  {
+    title: "[인물 사진] 자연광 포트레이트 - 2강",
+    img: encodeURI("/asset/sony/인물.png"),
+    classDate: "2026.09.25",
+    applyDate: "2026.09.12",
+    status: "접수 후 결제완료",
+  },
+  {
+    title: "[풍경 사진] 골든아워 장노출 - 1강",
+    img: encodeURI("/asset/sony/풍경.png"),
+    classDate: "2026.10.02",
+    applyDate: "2026.09.14",
+    status: "접수 대기",
+  },
 ];
 
 const MY_PRODUCTS = [
@@ -180,8 +201,9 @@ export default function MySonyPage() {
           </div>
           <ul className="ms-cards ms-cards--academy">
             {ACADEMY.map((a) => (
-              <li key={a.title} className="ms-card ms-card--wide">
-                <div className="ms-card__thumb">
+              <li key={a.title} className="ms-card ms-card--academy">
+                <div className="ms-card__thumb ms-card__thumb--img">
+                  <img src={a.img} alt="" />
                   <p className="ms-card__thumb-title">{a.title}</p>
                 </div>
                 <dl className="ms-academy__meta">
@@ -192,13 +214,16 @@ export default function MySonyPage() {
                   <div>
                     <dt>신청일</dt>
                     <dd>{a.applyDate}</dd>
-                    <span className="ms-academy__status">{a.status}</span>
+                    <span className={`ms-academy__status${a.status.includes("대기") ? " wait" : ""}`}>
+                      {a.status}
+                    </span>
                   </div>
                 </dl>
               </li>
             ))}
-            <li className="ms-card ms-card--empty" aria-hidden="true"><div className="ms-card__thumb" /></li>
-            <li className="ms-card ms-card--empty" aria-hidden="true"><div className="ms-card__thumb" /></li>
+            {Array.from({ length: Math.max(0, 3 - ACADEMY.length) }, (_, i) => (
+              <li key={i} className="ms-card ms-card--empty" aria-hidden="true"><div className="ms-card__thumb" /></li>
+            ))}
           </ul>
         </section>
 

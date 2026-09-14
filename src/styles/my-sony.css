@@ -223,7 +223,18 @@
 
 /* ── 카드 그리드 (아카데미 · 나의 소니) ─────────────────────── */
 .ms-cards { display: grid; gap: 32px; }
-.ms-cards--academy { grid-template-columns: 3fr 1fr 1fr; }
+.ms-cards--academy { grid-template-columns: repeat(3, 1fr); }
+/* 강좌 썸네일 — 사진 위에 제목을 얹는다 */
+.ms-card__thumb--img { position: relative; padding: 0; overflow: hidden; }
+.ms-card__thumb--img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ms-card__thumb--img .ms-card__thumb-title {
+  position: relative;
+  width: 100%;
+  padding: 48px 24px 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent);
+  color: var(--sony-color-white);
+}
+.ms-academy__status.wait { color: var(--sony-color-gray-600); }
 .ms-cards--mine { grid-template-columns: repeat(3, 1fr); }
 .ms-cards .ms-card { min-height: 380px; display: flex; flex-direction: column; }
 .ms-card__thumb {
@@ -318,8 +329,8 @@
   .ms-card--mall { flex-basis: calc((100% - 24px) / 2); }
   .ms-steps { gap: 16px; }
   .ms-step__label { min-height: 160px; }
-  .ms-cards--academy { grid-template-columns: 2fr 1fr; }
-  .ms-cards--academy .ms-card--empty:last-child { display: none; }
+  .ms-cards--academy { grid-template-columns: repeat(2, 1fr); }
+  .ms-cards--academy .ms-card--empty { display: none; }
   .ms-cards--mine { grid-template-columns: repeat(2, 1fr); }
   .ms-cards--mine .ms-card--empty { display: none; }
   .ms-care { grid-template-columns: 1fr; }
@@ -358,7 +369,8 @@
   .ms-cards--academy, .ms-cards--mine { grid-template-columns: 1fr; }
   .ms-cards--academy .ms-card--empty { display: none; }
   .ms-cards .ms-card { min-height: 0; }
-  .ms-card__thumb { min-height: 140px; padding: 16px; }
+  .ms-card__thumb { min-height: 180px; padding: 16px; }
+  .ms-card__thumb--img .ms-card__thumb-title { padding: 40px 16px 14px; }
   .ms-card__thumb-title { font-size: var(--sony-text-md); }
   .ms-academy__meta { padding: 16px; }
   .ms-academy__meta > div { flex-wrap: wrap; }
