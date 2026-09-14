@@ -1,0 +1,668 @@
+@import "@fontsource-variable/archivo";
+@import "@fontsource-variable/playfair-display";
+@import "@fontsource/dm-mono";
+@import "pretendard/dist/web/static/pretendard.css";
+@import "@fontsource/noto-sans-kr/400.css";
+@import "@fontsource/noto-sans-kr/500.css";
+@import "@fontsource/noto-sans-kr/700.css";
+@import "tailwindcss";
+@import "../src/styles/tokens.css";
+@import "../src/styles/sony-layout.css";
+@import "../src/styles/design-guide.css";
+@import "../src/styles/my-page.css";
+
+/* 카드를 겹쳐 쌓아도 되는 화면.
+   sticky 로 상단에 붙는 카드가 화면보다 높으면 아래가 잘린 채 고정되고,
+   다음 카드가 그 위를 덮어 버려서 잘린 부분을 영영 볼 수 없다. 그래서 폭만
+   보지 않고 높이도 함께 본다 — 카드(604px)에 붙는 자리(60px)를 더한 664px
+   에 여유를 얹은 값이다. 못 미치는 화면에서는 그냥 흐르게 두는 편이 낫다. */
+@custom-variant stack (@media (min-width: 1024px) and (min-height: 700px));
+/* 붙들어 두는 구획에 쓴다. 무대가 화면보다 크면 sticky 로 붙는 순간 아래가
+   잘리므로, 세로로도 여유가 있을 때만 건다. Line-up 의 무대가 약 815px 라
+   860px 를 기준으로 잡았다. */
+@custom-variant pin (@media (min-width: 1024px) and (min-height: 860px));
+
+/* 유리를 걷어 내라는 요청.
+
+   두 요청을 한 이름으로 받는다. 투명을 줄이라는 쪽(prefers-reduced-
+   transparency)과 대비를 높이라는 쪽(prefers-contrast)은 서로 다른 요청
+   이지만, 반투명 판 하나에 대해서는 답이 같다 — 불투명하게 만들고 흐림을
+   끄고 테두리를 세운다. 둘을 갈라 두면 같은 값을 두 곳에 적게 되고, 그러면
+   한쪽만 고쳐지는 날이 온다.
+
+   쓰는 꼴은 solid:bg-white 처럼 판마다 '이 판의 불투명한 색' 을 적는 것이다.
+   색은 판이 안다 — 어두운 판을 흰색으로 덮을 수는 없으므로 여기서 한 값을
+   정해 줄 수 없다. */
+@custom-variant solid {
+  @media (prefers-reduced-transparency: reduce) { @slot }
+  @media (prefers-contrast: more) { @slot }
+}
+
+@theme {
+  --font-sans: "Noto Sans KR", "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  /* 제목 글꼴. 모회사 사이트(ipartners.co.kr)가 라틴 제목에 Archivo 를 쓴다
+     — 같은 집안으로 맞춘다. 전에는 Satoshi 를 fontshare CDN 에서 받아 썼는데,
+     Archivo 는 이미 @fontsource 로 실려 있어 바깥 요청 하나가 사라진다.
+     유틸 이름은 font-display 다. 글꼴 이름을 유틸에 박으면 글꼴을 바꾸는 날
+     이름이 거짓이 된다 — 오늘이 그 날이었다. */
+  --font-display: "Archivo Variable", "Archivo", "Pretendard", ui-sans-serif, system-ui, sans-serif;
+  --font-playfair: "Playfair Display Variable", "Playfair Display", Georgia, serif;
+  --font-mono: "DM Mono", ui-monospace, monospace;
+
+  /* 회색 — 모회사 사이트(ipartners.co.kr)의 램프를 그대로 쓴다.
+
+     여덟 칸이고 200 · 800 이 없다. 우리 회색은 #0B0B0B 에 투명도를 준
+     것이었는데, #FCFCFC 위에서 실제로 그려지던 값을 재니 이 램프와 거의
+     같았다 — /60 은 #6b6b6b 로 gray-600(#6a6a6a)과 2 차이, /12 는
+     #dfdfdf 로 gray-100(#e0e0e0)과 1 차이. 눈으로는 같은 색이다.
+
+     그래도 고정값으로 두는 까닭은 재기 위해서다. 감사(scripts/audit.mjs)는
+     투명도 회색을 바탕 위에 얹어 계산해야 하는데 그 바탕을 늘 맞히지는
+     못했다. hex 면 그 계산이 없다. 감사도 이 변수를 읽는다 — 값을 두 곳에
+     적지 않는다.
+
+     Tailwind 기본 회색(파르스름한 gray)은 지운다. 두 램프가 섞여 있으면 같은
+     'gray-500' 이 어느 쪽인지 파일마다 다르다. */
+  --color-gray-*: initial;
+  --color-gray-50: #efefef;
+  --color-gray-100: #e0e0e0;
+  --color-gray-300: #cccccc;
+  --color-gray-400: #acacac;
+  --color-gray-500: #959595;
+  --color-gray-600: #6a6a6a;
+  --color-gray-700: #525252;
+  --color-gray-900: #252525;
+
+  /* 강조 — 모회사 사이트의 파랑(#3a6dfd)에서 왔다.
+
+     원색은 글자에 못 쓴다. #FCFCFC 위 4.28:1 · #0B0B0B 위 4.49:1 로 기준
+     아래다. 저쪽은 파랑을 흐린 빛(blur 300px · 50%)과 선 그림에만 쓰고 글자는
+     흑백뿐이다. 우리는 라벨 대부분이 10~12px 라 판마다 값을 따로 둔다 —
+     앰버 때도 #8C5F0E / #5C3D07 / #F0C36B 셋이었다. 자리는 그대로고 색만
+     바뀐다.
+
+       accent       밝은 판 글자·선·채움   흰판 5.58 · 제 6% 판 5.13
+       accent-deep  밝은 판 더 진한 강조    9.84
+       accent-lit   어두운 판               #0B0B0B 9.16 · 네이비 8.20
+       accent-raw   원색. 글자 금지. 빛과 선 그림용 — 아직 쓰는 곳 없음 */
+  --color-accent: #315dd7;
+  --color-accent-deep: #203c8b;
+  --color-accent-lit: #93affe;
+  --color-accent-raw: #3a6dfd;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 40s linear infinite;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333333%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-33.333333%); }
+  100% { transform: translateX(0); }
+}
+
+/* ── Hero 진입 애니메이션 ──────────────────────────
+   기본 상태를 '보임'으로 두고 애니메이션으로 페이드인한다.
+   JS를 실행하지 않는 크롤러·SNS 스크래퍼에게 제목이 숨겨지지 않도록
+   motion 라이브러리의 initial opacity:0 대신 CSS로 처리. */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-fade {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@utility animate-hero-rise {
+  animation: hero-rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@utility animate-hero-fade {
+  animation: hero-fade 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+/* 흐린 상태에서 선명해지며 들어온다. Knowledge 와 Contact 의 제목이 스크롤에
+   맞춰 쓰는 번짐 반전과 같은 결인데, 첫 화면의 제목은 스크롤을 기다릴 수 없어
+   불러오는 즉시 한 번 지나간다.
+
+   filter 는 합성 대상이라 애니메이션 중 글자가 래스터를 다시 뜬다. 끝나면
+   filter:none 으로 떨어뜨려(both + to 에서 none) 정지 상태에서는 비용이 남지
+   않게 한다. */
+@keyframes sharpen-in {
+  from { opacity: 0; filter: blur(var(--sharpen-blur, 18px)); transform: scale(1.012); }
+  to   { opacity: 1; filter: blur(0);    transform: none; }
+}
+@utility animate-sharpen-in {
+  /* both 가 아니라 backwards 다. both 는 끝난 뒤의 모습까지 애니메이션이
+     붙들고 있어서, 어떤 이유로든 진행이 멈추면 제목이 opacity 0 인 채로
+     남는다. backwards 는 시작 전(지연 구간)만 붙들고 끝나면 요소 본래의
+     모습으로 놓아 준다 — 페이지의 h1 이 애니메이션에 매달리지 않는다. */
+  /* 2.2s 에 완만한 곡선이다. 사이트의 다른 등장에 쓰는 (0.16,1,0.3,1) 은
+     끝값으로 먼저 달려가는 곡선이라 — 3할 지점에서 이미 8할 5푼이 진행된다 —
+     같은 길이를 줘도 번짐이 순식간에 걷히고 나머지 시간은 멈춘 듯 보인다.
+     번짐이 걷히는 것 자체가 이 효과라 진행을 고르게 편다. */
+  animation: sharpen-in 2.2s cubic-bezier(0.4, 0.08, 0.25, 1) backwards;
+}
+
+/* 흩어진 썸네일이 제자리에서 천천히 헤엄친다. 위아래로만 움직이면 열 장이
+   같은 축으로 오르내려 규칙이 드러나므로 가로로도 조금씩 흔든다. 주기와
+   지연도 서로 어긋나게 줘야 한 무리로 함께 움직이지 않는다. */
+@keyframes thumb-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25%      { transform: translate3d(7px, -20px, 0); }
+  50%      { transform: translate3d(-5px, -34px, 0); }
+  75%      { transform: translate3d(-9px, -14px, 0); }
+}
+@utility animate-thumb-drift {
+  animation: thumb-drift 10s ease-in-out infinite;
+}
+
+/* 엇갈린 블로그 목록. 항목마다 가로 위치와 폭을 달리 줘서 계단처럼 내려간다.
+   좁은 화면에서는 접는다 — 폭이 없으면 계단이 아니라 들쭉날쭉으로 보인다. */
+@media (max-width: 767px) {
+  .blog-stagger { margin-left: 0 !important; width: 100% !important; }
+}
+
+/* 실이 닿기 전의 카드는 흐리게 잠들어 있다. 실이 도착해 data-linked 가 붙으면
+   깨어난다 — 도착과 등장이 한 동작이 된다.
+
+   흐린 상태는 data-armed 가 붙었을 때만 건다. 스크립트가 돌지 않는 환경에서
+   내용이 흐린 채로 남으면 안 되므로, 실을 그리는 쪽이 실제로 살아 있음을
+   확인한 뒤에 붙인다.
+
+   투명도만 건드린다. 이동은 못 쓴다 — 같은 요소에 스크롤 시차(transform)가
+   인라인으로 걸려 있어서 CSS 의 transform 은 덮이지 않는다. */
+[data-armed] [data-card] {
+  transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-armed] [data-card]:not([data-linked]) { opacity: 0.2; }
+
+/* 실이 카드에 닿는 순간의 불꽃.
+   스크롤에 물린 값이 아니라 한 번 도는 애니메이션이다 — 진행률에 물리면
+   실이 닿은 자리에 불꽃이 멈춰 서 있고, 스크롤을 되감으면 거꾸로 재생된다.
+   data-linked 가 붙는 그 프레임에 시작해 한 번만 돈다.
+
+   기본은 보이지 않는다. 켜지지 않은 카드에도 점이 찍혀 있으면 실이 아직
+   닿지 않았는데 닿은 것처럼 보인다. */
+.spark-ring,
+.spark-core {
+  opacity: 0;
+  /* 가운데 맞춤은 기본 상태에도 둔다. 키프레임 안에만 두면 멈춰 있는 동안
+     요소가 자기 크기의 절반만큼 어긋난 자리에 놓인다 — 56px 짜리 고리는
+     접점에서 28px 밀려 있다. 보이지 않을 뿐 자리는 틀린 상태다. */
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spark-ring {
+  from { opacity: 0.85; transform: translate(-50%, -50%) scale(0.14); }
+  to   { opacity: 0;    transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes spark-core {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+  18%  { opacity: 1; transform: translate(-50%, -50%) scale(1.4); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+}
+[data-linked] .spark-ring { animation: spark-ring 640ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+[data-linked] .spark-core { animation: spark-core 540ms ease-out both; }
+
+@keyframes caret-blink {
+  0%, 45%   { opacity: 1; }
+  55%, 100% { opacity: 0; }
+}
+@utility animate-caret {
+  animation: caret-blink 1.05s steps(1, end) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-rise, .animate-hero-fade, .animate-sharpen-in,
+  .animate-thumb-drift { animation: none; }
+  /* 불꽃도 끈다. 다만 카드가 켜지는 것 자체는 남는다 */
+  [data-linked] .spark-ring, [data-linked] .spark-core { animation: none; }
+  /* 타이핑이 멈추면 캐럿도 깜빡일 이유가 없다 */
+  .animate-caret { animation: none; opacity: 0; }
+}
+
+/* ── Font family utilities ─────────────────────────── */
+@utility font-playfair   { font-family: var(--font-playfair); }
+@utility font-pretendard { font-family: var(--font-sans); }
+@utility font-dm-mono    { font-family: var(--font-mono); }
+
+/* ── Heading scale (Archivo) ───────────────────────── */
+@utility text-heading-1 {
+  font-size: 5rem; line-height: 5.25rem; letter-spacing: 0em;
+  @media (max-width: 767px) { font-size: 2rem; line-height: 1.2; }
+}
+@utility text-heading-2 {
+  font-size: 4rem; line-height: 5.375rem; letter-spacing: -0.01em;
+  @media (max-width: 767px) { font-size: 1.75rem; line-height: 1.2; }
+}
+@utility text-heading-3 {
+  font-size: 3.125rem; line-height: 3.875rem; letter-spacing: 0em;
+  @media (max-width: 767px) { font-size: 1.5rem; line-height: 1.25; }
+}
+@utility text-heading-4 {
+  font-size: 1.375rem; line-height: 2.25rem; letter-spacing: 0em;
+  @media (max-width: 767px) { font-size: 1.125rem; line-height: 1.5; }
+}
+
+/* ── Accent scale (Playfair) ───────────────────────── */
+@utility text-accent-1 {
+  font-size: 6.25rem; line-height: normal; letter-spacing: 0.02em;
+  @media (max-width: 767px) { font-size: 2.125rem; line-height: 1.15; }
+}
+@utility text-accent-2 {
+  font-size: 5.5rem; line-height: 90%; letter-spacing: 0.02em;
+  @media (max-width: 767px) { font-size: 2.125rem; line-height: 1.15; }
+}
+@utility text-accent-3 {
+  font-size: 4.25rem; line-height: 4.75rem; letter-spacing: 0em;
+  @media (max-width: 767px) { font-size: 1.75rem; line-height: 1.2; }
+}
+
+/* ── Body scale (Pretendard) ───────────────────────── */
+@utility text-body-1 {
+  font-size: 1.375rem; line-height: 2.375rem; letter-spacing: -0.02em;
+  @media (max-width: 767px) { font-size: 1rem; line-height: 1.65; }
+}
+@utility text-body-2    { font-size: 1.125rem;  line-height: 1.875rem;     letter-spacing: -0.02em; }
+@utility text-body-3    { font-size: 1rem;  line-height: 1.625rem;     letter-spacing: -0.02em; }
+@utility text-body-4    { font-size: 0.875rem;  line-height: 1.5rem;     letter-spacing: 0em;     }
+
+/* ── Label scale (DM Mono) ─────────────────────────── */
+@utility text-label-1   { font-size: 0.75rem;  line-height: normal;   letter-spacing: 0em;     }
+
+/* ── 가로 캐러셀 ───────────────────────────────────── */
+/* 스크롤바만 감춘다. overflow-x 는 그대로 둬서 키보드 포커스 이동과
+   트랙패드 가로 스크롤은 계속 동작한다. */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ── 텍스트 버튼 ───────────────────────────────────── */
+/* 레퍼런스에서 옮긴 짜임. 세 가지가 동시에 움직인다.
+     1) 밑줄이 오른쪽으로 걷히고, 곧이어 왼쪽에서 다시 그어진다
+     2) 글자가 한 자씩 위로 빠지고 아래에서 같은 글자가 올라온다
+     3) 화살표가 오른쪽으로 빠지고 왼쪽에서 새 화살표가 들어온다
+   나갈 때와 들어올 때의 지연이 서로 달라야 자연스러운데, Tailwind 로는
+   같은 delay 가 양방향에 걸려 표현할 수 없다. 그래서 여기서 직접 쓴다. */
+.tbtn { line-height: 1.35; }
+
+.tbtn .tbtn-ul-out,
+.tbtn .tbtn-ul-in {
+  position: absolute; inset-inline: 0; bottom: 0; height: 1px;
+  background-color: currentColor;
+  transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tbtn .tbtn-ul-out { transform-origin: right center; transform: scaleX(1); transition-delay: 280ms; }
+.tbtn .tbtn-ul-in  { transform-origin: left center;  transform: scaleX(0); transition-delay: 0ms; }
+.tbtn:hover .tbtn-ul-out, .tbtn:focus-visible .tbtn-ul-out { transform: scaleX(0); transition-delay: 0ms; }
+.tbtn:hover .tbtn-ul-in,  .tbtn:focus-visible .tbtn-ul-in  { transform: scaleX(1); transition-delay: 280ms; }
+
+.tbtn .tbtn-ch { position: relative; display: inline-block; overflow: hidden; vertical-align: bottom; }
+.tbtn .tbtn-ch > span {
+  display: block;
+  transition: transform 380ms cubic-bezier(0.33, 1, 0.68, 1);
+  transition-delay: var(--d, 0ms);
+}
+.tbtn .tbtn-ch > span + span { position: absolute; inset: 0; transform: translateY(105%); }
+.tbtn:hover .tbtn-ch > span, .tbtn:focus-visible .tbtn-ch > span { transform: translateY(-105%); }
+.tbtn:hover .tbtn-ch > span + span, .tbtn:focus-visible .tbtn-ch > span + span { transform: translateY(0); }
+
+.tbtn .tbtn-arw { transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms; }
+.tbtn .tbtn-arw-out { transform: translateX(0); opacity: 1; }
+.tbtn .tbtn-arw-in  { position: absolute; inset: 0; transform: translateX(-150%); opacity: 0; transition-delay: 140ms; }
+.tbtn:hover .tbtn-arw-out, .tbtn:focus-visible .tbtn-arw-out { transform: translateX(150%); opacity: 0; }
+.tbtn:hover .tbtn-arw-in,  .tbtn:focus-visible .tbtn-arw-in  { transform: translateX(0); opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tbtn .tbtn-ul-out, .tbtn .tbtn-ul-in,
+  .tbtn .tbtn-ch > span, .tbtn .tbtn-arw { transition: none; }
+  /* 움직임을 끄면 밑줄은 처음부터 그어진 채로 둔다 */
+  .tbtn .tbtn-ul-in { transform: scaleX(1); }
+  .tbtn .tbtn-ch > span + span, .tbtn .tbtn-arw-in { display: none; }
+}
+
+/* 화면에 들어올 때 한 번 올라온다 — how-it-works 상세의 목록·블록이 쓴다.
+   스크롤에 계속 물리지 않고 IntersectionObserver 가 is-in 을 한 번 붙인다.
+   지연은 인라인 transition-delay 로 항목마다 다르게 준다. */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 620ms cubic-bezier(0.33, 1, 0.68, 1),
+              transform 620ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* 구획을 나누는 선이 왼쪽에서 오른쪽으로 그어진다.
+   이 페이지의 유일한 구분 장치가 그 선이라, 구조 자체가 전환이 된다.
+   .reveal 과 달리 opacity 를 건드리지 않는다 — 선은 처음부터 있고
+   길이만 자란다. */
+.reveal-line {
+  transform: scaleX(0);
+  transform-origin: 0% 50%;
+  transition: transform 700ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+.reveal-line.is-in { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* 움직임을 끄면 처음부터 자리에 있다. JS 가 죽어도 내용이 보여야 한다 */
+  .reveal { opacity: 1; transform: none; transition: none; transition-delay: 0ms !important; }
+  .reveal-line { transform: none; transition: none; transition-delay: 0ms !important; }
+}
+
+/* 메인 랜딩 오른쪽 스크롤 신호의 마디.
+   선(64px) 안에서 마디(20px)가 위에서 아래로 내려갔다가 사라진다. 되돌아
+   올라오지 않는다 — 올라오는 순간 "위로도 갈 수 있다"는 다른 말이 된다. */
+@keyframes scroll-tick {
+  0%        { transform: translateY(-100%); opacity: 0; }
+  20%, 60%  { opacity: 1; }
+  100%      { transform: translateY(320%); opacity: 0; }
+}
+.scroll-tick { animation: scroll-tick 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+
+/* 낱자를 훑고 지나가는 빛.
+   낱자마다 늦게 출발하는 시간만 다르고 길이는 모두 같으므로, 밝은 자리가
+   위에서 아래로 흐른다. 밝기만 오간다 — 자리를 움직이면 글줄이 흔들린다. */
+/* 흐린 상태가 0.45 였는데, 밝은 판에서 #0B0B0B/45 가 흰 바탕에 3.15:1 로
+   떨어졌다. 0.6 이면 밝은 판 5.17:1 · 어두운 판 7.2:1 로 둘 다 넘고,
+   1.0 과의 차이도 여전히 눈에 보인다. */
+@keyframes scroll-wave {
+  0%, 26%, 100% { opacity: 0.6; }
+  8%            { opacity: 1; }
+}
+.scroll-wave { opacity: 0.6; animation: scroll-wave 2.4s ease-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* 움직임을 끄면 마디를 선 가운데 세우고 글자는 읽히는 밝기로 둔다.
+     감추지 않는다 — 신호가 사라지면 아래에 더 있다는 것도 사라진다 */
+  .scroll-tick { animation: none; transform: translateY(120%); }
+  .scroll-wave { animation: none; opacity: 0.75; }
+}
+
+/* 갈래 도식(how-it-works 원칙)의 선.
+   .reveal-line 이 가로 한 방향만 그리는 데 비해 여기서는 세로로 내려오고,
+   가로로는 가운데에서 양쪽으로 벌어졌다가 다시 모여야 한다. 그래서 방향별로
+   기점을 따로 둔다.
+
+   opacity 를 건드리지 않는다 — 선은 자라는 것이지 나타나는 것이 아니다.
+   길이 0 에서 시작하므로 애초에 보이지 않는다. */
+.draw-y  { transform: scaleY(0); transform-origin: 50% 0%; }
+.draw-x  { transform: scaleX(0); transform-origin: 50% 50%; }   /* 가운데→양쪽, 갈라짐 */
+.draw-xl { transform: scaleX(0); transform-origin: 0% 50%; }
+.draw-xr { transform: scaleX(0); transform-origin: 100% 50%; }  /* 양끝→가운데, 모임 */
+.draw-y, .draw-x, .draw-xl, .draw-xr {
+  /* 260ms 다. 조각이 여덟이라 하나가 길면 전체가 늘어진다 — 460ms 로
+     이어 붙였더니 끝나는 데 3.4 초가 걸려, 다 보기 전에 스크롤이 지나갔다. */
+  transition: transform 260ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+.draw-y.is-in, .draw-x.is-in, .draw-xl.is-in, .draw-xr.is-in { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* 선은 처음부터 그어져 있다. 감추지 않는다 */
+  .draw-y, .draw-x, .draw-xl, .draw-xr {
+    transform: none; transition: none; transition-delay: 0ms !important;
+  }
+}
+
+/* NX SENTINEL 의 도식 둘 — 주기 눈금과 회차 고리. */
+
+/* 점검 주기 칸의 점 하나가 제 박자로 뛴다.
+   박자는 실제 주기가 아니라 열하나의 비다 — lib/sentinel-data 의 beat.
+   부풀었다 꺼지는 것이 아니라 한 번 밝아졌다 가라앉는다. 크기를 흔들면
+   열하나가 저마다 다른 크기로 보여 '자주 도는가' 가 아니라 '큰가' 로
+   읽힌다. */
+@keyframes tick-beat {
+  0%, 100% { opacity: 0.35; }
+  8%       { opacity: 1; }
+  40%      { opacity: 0.35; }
+}
+.tick-beat { animation: tick-beat var(--beat, 3.6s) ease-out infinite; }
+
+/* 감시 → 판정 → 알림 → 기록 이 한 고리로 이어진다. 신호 하나가 그 길을
+   계속 돈다 — 한 바퀴가 한 회차다.
+
+   고리는 SVG 가 아니라 판 크기에 맞춰 늘어나는 상자(border)라, 신호도
+   선의 파선(dashoffset)이 아니라 상자 테두리를 따라가는 알약이다 —
+   offset-path: inset(0) 은 담는 상자의 테두리 그 자체다. 앞서 SVG 를
+   preserveAspectRatio: none 으로 늘리고 non-scaling-stroke 를 걸었더니
+   크롬이 파선을 화면 px 로 재어 한 바퀴에 열 개가 섰다.
+
+   좁은 판은 세로 한 줄이다. 되돌아 올라오는 길이 없으니 위에서 아래로
+   흐른 뒤 사라지고 다시 위에서 난다. */
+@keyframes loop-run { to { offset-distance: 100%; } }
+.loop-run {
+  offset-path: inset(0);
+  offset-rotate: auto;
+  animation: loop-run 9s linear infinite;
+}
+@keyframes loop-run-down {
+  0%       { top: 0;                 opacity: 1; }
+  86%      {                         opacity: 1; }
+  100%     { top: calc(100% - 1rem); opacity: 0; }
+}
+.loop-run-down { animation: loop-run-down 4s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* 접근성을 파는 페이지다. 움직임을 끄라고 했으면 끈다.
+     감추지는 않는다 — 점은 밝은 채로 서고, 신호는 출발점에 머문다 */
+  .tick-beat  { animation: none; opacity: 1; }
+  .loop-run, .loop-run-down { animation: none; }
+}
+
+/* 글줄 안에 앉은 알약이 천천히 떠다닌다.
+   
+   레퍼런스가 이 자리에 will-change: transform 을 걸어 두고 몇 픽셀씩
+   어긋난 값을 들고 있었다 — 멈춰 있는 그림이 아니라 떠 있는 그림이다.
+   
+   진폭을 작게 잡는다(4~6px). 글줄 안의 것이라 크게 움직이면 읽는 줄이
+   흔들리는 것처럼 보인다. 자리만 살짝 떠 있으면 된다.
+   
+   주기는 9초부터다. 애플의 접근성 지침이 5초 안팎(0.2Hz)의 느린 진동을
+   피하라고 하는데, 그 대역이 눈에 가장 거슬린다. 그보다 느리게 두고
+   알약마다 주기와 방향을 어긋나게 해서 둘이 한 몸으로 흔들리지 않게 한다.
+   
+   transform 만 움직인다. 레이아웃을 건드리지 않으므로 글줄이 다시 흐르지
+   않는다 — 글자 사이에 낀 것이 글줄을 밀면 그건 움직임이 아니라 사고다. */
+@keyframes pill-drift {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(var(--dx, 4px), var(--dy, -5px)); }
+}
+.pill-drift {
+  animation: pill-drift var(--dur, 11s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 멈춘다. 감추지는 않는다 — 알약은 글줄의 한 자리라 사라지면 문장이
+     달라진다 */
+  .pill-drift { animation: none; will-change: auto; }
+}
+
+/* NX ASKGRAPH 의 궤도. 엔진 다섯이 돌고, 회차마다 다섯이 함께 맥박 친다.
+
+   박자가 둘이고 뜻도 둘이다.
+
+   도는 것(--ag-dur)은 엔진이다. 다섯이 늘 거기서 돌아가고 있다는 말이지
+   차례를 뜻하지 않는다. SENTINEL 도 한때 궤도였는데 저쪽은 반지름이
+   점검 주기였다 — 지금은 눈금(SentinelCadence)이 그 말을 한다. 이쪽이
+   도는 것은 시간이 아니라 판이다.
+
+   맥박(--ag-beat)이 회차다. 다섯이 같은 순간에 함께 부푼다. 처음에는 맨
+   위에 눈금을 세워 두고 표식이 지날 때마다 하나씩 터뜨렸는데, 그러면
+   돌아가며 던지는 것으로 읽힌다 — 기획서가 못 박은 것은 '같은 질문을 같은
+   회차로' 다. 같은 순간이어야 같은 회차다. 눈금도 함께 걷었다. 설명 없이
+   원을 가로지르는 선은 표시가 아니라 흠집으로 읽힌다.
+
+   한 바퀴 18초(0.056Hz), 맥박 9초(0.11Hz)다. 애플의 접근성 지침이 5초
+   안팎(0.2Hz)의 느린 진동을 피하라고 하는데 둘 다 그 대역 밖이고, 서로
+   나누어떨어지지 않게 두어 둘이 한 박자로 겹쳐 보이지 않는다.
+
+   두 겹인 까닭은 표식을 세워 두기 위해서다. 바깥 겹이 돌면 안에 실린
+   것도 함께 기울어 로고가 거꾸로 선다. 안쪽 겹을 같은 주기로 거꾸로
+   돌리면(reverse) 두 회전이 상쇄되어 자리는 돌고 모양은 서 있는다.
+
+   자리는 rotate · scale 속성으로 준다. transform 이 아닌 것은 이 그림의
+   요소들이 .reveal(transform) 과 자리잡기(translate)를 이미 쓰고 있어서다 —
+   셋을 한 속성에 얹으면 서로를 덮어쓴다. */
+@keyframes ag-orbit { to { rotate: 360deg; } }
+.ag-orbit     { animation: ag-orbit var(--ag-dur, 18s) linear infinite; }
+.ag-orbit-fix { animation: ag-orbit var(--ag-dur, 18s) linear infinite reverse; }
+
+/* 질문이 닿는 순간의 파문. 사라진 뒤에 원점으로 돌아가므로 되감기가 보이지
+   않는다 — opacity 가 이미 0 인 자리에서 크기만 되돌린다 */
+@keyframes ag-ping {
+  0%    { opacity: 0.75; scale: 0.55; }
+  15%   { opacity: 0;    scale: 1.5; }
+  100%  { opacity: 0;    scale: 1.5; }
+}
+.ag-ping { animation: ag-ping var(--ag-beat, 9s) cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+
+/* 표식이 한 번 부푼다. 94% 에서 미리 차오르므로 한 박자가 끝나는 자리에서
+   튀지 않는다 */
+@keyframes ag-lit {
+  0%        { scale: 1.16; }
+  18%, 94%  { scale: 1; }
+  100%      { scale: 1.16; }
+}
+.ag-lit { animation: ag-lit var(--ag-beat, 9s) cubic-bezier(0.33, 1, 0.68, 1) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* 멈춰도 잃는 것이 없다. 표식 다섯은 처음 앉은 자리에 서고 파문만 지운다.
+     이름은 도식 밖 범례가 지고 있어 멈춰도 읽힌다 */
+  .ag-orbit, .ag-orbit-fix, .ag-lit { animation: none; }
+  .ag-ping { animation: none; opacity: 0; }
+}
+
+
+/* 유리를 걷는다 — 빠뜨린 자리를 위한 그물.
+
+   판마다 solid:bg-… 로 불투명한 색을 적어 두었지만, 새 판을 만들면서 그것을
+   잊으면 흐림만 남는다. 흐림은 뒤를 평균 낼 뿐 가리지 못하므로, 반투명한
+   채로 흐림만 걸린 판은 투명을 줄여 달라는 요청에 아무 답도 하지 않은
+   것이나 같다.
+
+   여기서 흐림을 일괄로 끈다. 색까지 여기서 정할 수는 없지만, 적어도
+   "흐릿하게 비치는 판" 이 남지는 않는다 — 빠뜨린 자리는 또렷하게 비치는
+   판이 되어 눈에 띈다. 조용히 어기는 것보다 낫다. */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* 글이 써지는 것처럼 드러난다.
+
+   낱자를 자바스크립트로 하나씩 넣지 않는다. 그러면 원문이 DOM 에 없는
+   순간이 생겨 읽기 도구와 검색엔진이 반쪽짜리 글을 본다. 글은 처음부터 다
+   있고 clip-path 로 오른쪽을 가렸다가 걷는다 — 보이는 것만 달라진다.
+
+   steps() 로 끊는 까닭은 매끄럽게 밀면 '글이 써진다' 가 아니라 '글이
+   미끄러져 들어온다' 로 보여서다. 한 칸이 한 글자다.
+
+   .reveal 과 같은 장치(lib/reveal)를 탄다. 관찰자가 응답하지 않으면 1.2초
+   뒤 is-in 이 붙어 전부 드러나므로, 글이 영영 가려질 일이 없다. */
+@keyframes type-wipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+.type-wipe { clip-path: inset(0 100% 0 0); }
+
+/* 신호는 덩이 하나(.type-run)가 받는다.
+   줄마다 따로 관찰하면 줄이 화면에 들어오는 때가 제각각이라, 각자 제
+   지연을 자기가 들어온 순간부터 센다 — 천천히 내리면 앞줄이 다 써진 뒤에도
+   뒷줄은 아직 관찰되지 않아 멈춰 있고, 빠르게 지나가면 넷이 동시에 켜져
+   제대로 이어진다. 스크롤 속도가 연출을 바꾸는 셈이라 한 곳에서 받는다. */
+.type-run.is-in .type-wipe,
+.type-wipe.is-in {
+  animation: type-wipe var(--type-dur, 1s) steps(var(--type-steps, 24), end) forwards;
+  animation-delay: var(--type-at, 0ms);
+}
+
+/* 짚는 낱말 밑에 선이 그어진다.
+
+   text-decoration 은 길이를 애니메이션할 수 없다. 배경 그림 하나를 밑줄
+   삼아 가로 크기만 키운다 — 글자 위에 얹히지 않으므로 대비도 그대로다. */
+.mark-draw {
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-repeat: no-repeat;
+  background-position: 0 calc(100% - 0.06em);
+  background-size: 0 2px;
+  transition: background-size 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--mark-at, 0ms);
+}
+/* 켜는 신호는 덩이(.type-run)가 받는다. 밑줄은 그 안에 있어 스스로
+   관찰되지 않으므로, 덩이가 켜질 때 제 지연을 세어 그어진다 */
+.type-run.is-in .mark-draw,
+.type-wipe.is-in .mark-draw,
+.mark-draw.is-in { background-size: 100% 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* 둘 다 끝난 모습으로 선다. 글은 다 보이고 밑줄은 그어져 있다 —
+     움직임만 없다 */
+  .type-wipe, .type-run.is-in .type-wipe { clip-path: none; animation: none; }
+  .mark-draw { background-size: 100% 2px; transition: none; }
+}
+
+/* 선이 제 길을 따라 그려진다.
+
+   pathLength 를 100 으로 정규화해 두면 길이가 얼마든 같은 값으로 다룰 수
+   있다 — 호의 실제 길이는 화면 폭을 따라 바뀐다.
+
+   NX ASKGRAPH 의 5→2 되돌아가는 호가 쓴다. 다섯 칸이 다 선 뒤에 호가
+   그려져야 '한 번 재고 끝이 아니라 되돌아간다' 가 순서대로 읽힌다. */
+.draw-line {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 900ms cubic-bezier(0.33, 1, 0.68, 1);
+  transition-delay: var(--draw-at, 0ms);
+}
+.draw-line.is-in { stroke-dashoffset: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .draw-line { stroke-dashoffset: 0; transition: none; }
+}
+
+/* 막대가 바닥에서 자란다.
+
+   높이를 애니메이션하지 않는다. 높이는 레이아웃을 다시 잡게 해서 여덟 개가
+   자라는 동안 옆 글까지 매 프레임 밀린다. scaleY 는 합성 단계에서만 도므로
+   무엇도 다시 잡히지 않는다 — 기준점만 바닥으로 옮겨 준다. */
+.bar-grow {
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--bar-at, 0ms);
+}
+.bar-grow.is-in { transform: none; }
+
+/* 띠가 왼쪽에서 자란다. 같은 이유로 width 가 아니라 scaleX 다 */
+.bar-wide {
+  transform: scaleX(0);
+  transform-origin: 0% 50%;
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--bar-at, 0ms);
+}
+.bar-wide.is-in { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bar-grow, .bar-wide { transform: none; transition: none; }
+}
+
+/* 표본 옆에 붙는 축 이름. 제 줄이 다 써진 뒤에 온다.
+   덩이(.type-run)가 신호를 받고, 이름은 제 줄과 같은 지연을 물려받는다 —
+   아직 오지 않은 글 옆에 이름이 먼저 서 있으면 무엇을 가리키는지 알 수 없다. */
+.axis-in { opacity: 0; transition: opacity 380ms ease; transition-delay: var(--mark-at, 0ms); }
+.type-run.is-in .axis-in { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .axis-in { opacity: 1; transition: none; }
+}

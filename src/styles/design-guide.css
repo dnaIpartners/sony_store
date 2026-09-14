@@ -1,0 +1,355 @@
+/* ─────────────────────────────────────────────────────────────
+   디자인 가이드 페이지 (src/views/DesignGuidePage.tsx)
+   가이드가 말하는 규칙을 그대로 쓴다 — tokens.css 의 --sony-* 만 참조한다.
+   ───────────────────────────────────────────────────────────── */
+
+.dg {
+  background: var(--sony-surface-page);
+  color: var(--sony-color-gray-700);
+  font-size: var(--sony-text-base);
+  line-height: var(--sony-leading-normal);
+  letter-spacing: var(--sony-tracking-tight);
+  word-break: keep-all;
+}
+.dg code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: 0;
+  color: var(--sony-color-gray-900);
+  background: var(--sony-color-gray-100);
+  padding: 2px 5px;
+}
+.dg table { border-collapse: collapse; }
+.dg p { margin: 0; }
+.dg ul, .dg ol { margin: 0; padding: 0; list-style: none; }
+
+.dg-inner {
+  max-width: var(--sony-layout-width);
+  margin: 0 auto;
+  padding: 0 var(--sony-layout-padding-x);
+}
+
+/* ── 공통 글자 ──────────────────────────────────────────────── */
+.dg-eyebrow {
+  font-size: var(--sony-text-xs);
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0;
+  color: var(--sony-color-primary);
+  text-transform: uppercase;
+}
+.dg-title {
+  margin: 16px 0 0;
+  font-size: var(--sony-text-5xl);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: var(--sony-tracking-title);
+  color: var(--sony-color-gray-900);
+}
+.dg-lead {
+  margin-top: 40px !important;
+  max-width: 52em;
+  font-size: var(--sony-text-xl);
+  line-height: 1.5;
+  color: var(--sony-color-gray-700);
+}
+.dg-lead em { font-style: normal; font-weight: 700; color: var(--sony-color-gray-900); }
+.dg-h2 {
+  margin: 8px 0 0;
+  font-size: var(--sony-text-3xl);
+  line-height: 44px;
+  font-weight: 700;
+  letter-spacing: var(--sony-tracking-title);
+  color: var(--sony-color-black);
+}
+.dg-desc { margin-top: 12px !important; font-size: var(--sony-text-md); color: var(--sony-color-gray-700); }
+.dg-h3 {
+  margin: 48px 0 16px;
+  font-size: var(--sony-text-lg);
+  line-height: 25px;
+  font-weight: 700;
+  color: var(--sony-color-gray-900);
+}
+.dg-h3:first-of-type { margin-top: 0; }
+.dg-h3 .dg-muted { font-weight: 500; font-size: var(--sony-text-base); }
+.dg-muted { color: var(--sony-color-gray-600); font-weight: 400; }
+.dg-count {
+  display: inline-block;
+  font-size: var(--sony-text-2xs);
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0;
+  color: var(--sony-color-neutral-90);
+  background: var(--sony-color-neutral-10);
+  padding: 1px 6px;
+  vertical-align: middle;
+}
+.dg-note { margin-top: 16px !important; max-width: 52em; }
+
+/* ── 머리 ─────────────────────────────────────────────────── */
+.dg-hero { padding: 80px 0 64px; border-bottom: 1px solid var(--sony-border-default); }
+.dg-meta {
+  margin: 40px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 40px;
+}
+.dg-meta div { display: flex; gap: 10px; align-items: baseline; }
+.dg-meta dt { font-size: var(--sony-text-xs); font-weight: 700; color: var(--sony-color-gray-600); }
+.dg-meta dd { margin: 0; font-size: var(--sony-text-base); font-weight: 500; color: var(--sony-color-gray-900); }
+.dg-nav { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 0 24px; border-top: 1px solid var(--sony-border-default); }
+.dg-nav a {
+  position: relative;
+  padding: 14px 0;
+  font-size: var(--sony-text-md);
+  font-weight: 700;
+  color: var(--sony-color-neutral-50);
+  transition: color var(--sony-duration-base);
+}
+.dg-nav a:hover { color: var(--sony-color-gray-900); }
+
+/* ── 구획 ─────────────────────────────────────────────────── */
+.dg-section { padding-top: var(--sony-layout-cmpnt-gap); }
+.dg-section:last-of-type { padding-bottom: var(--sony-layout-cmpnt-gap); }
+.dg-section__head { margin-bottom: 40px; }
+
+/* ── 원칙 ─────────────────────────────────────────────────── */
+.dg-principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  border-top: 1px solid var(--sony-border-strong);
+}
+.dg-principles li {
+  padding: 24px 24px 28px 0;
+  border-bottom: 1px solid var(--sony-border-default);
+}
+.dg-principles__no { display: block; font-size: var(--sony-text-xs); font-weight: 700; color: var(--sony-color-primary); }
+.dg-principles strong {
+  display: block;
+  margin-top: 12px;
+  font-size: var(--sony-text-lg);
+  line-height: 1.35;
+  color: var(--sony-color-gray-900);
+}
+.dg-principles p { margin-top: 8px; color: var(--sony-color-gray-700); }
+
+/* ── 표 ───────────────────────────────────────────────────── */
+.dg-table { width: 100%; }
+.dg-table th {
+  text-align: left;
+  padding: 10px 12px 10px 0;
+  font-size: var(--sony-text-xs);
+  font-weight: 700;
+  color: var(--sony-color-gray-600);
+  border-bottom: 1px solid var(--sony-border-strong);
+}
+.dg-table td {
+  padding: 12px 12px 12px 0;
+  border-bottom: 1px solid var(--sony-border-default);
+  vertical-align: top;
+  color: var(--sony-color-gray-800);
+}
+.dg-table strong { color: var(--sony-color-gray-900); }
+.dg-table--tight td { padding: 8px 12px 8px 0; }
+
+.dg-split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.dg-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: start; }
+.dg-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 16px; }
+
+.dg-code {
+  margin: 0;
+  padding: 20px 24px;
+  background: var(--sony-color-gray-900);
+  color: #fff;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  letter-spacing: 0;
+  overflow-x: auto;
+}
+.dg-sample-body { padding: 20px 24px; border: 1px solid var(--sony-border-default); background: var(--sony-surface-section); }
+
+/* ── 타입 스케일 ──────────────────────────────────────────── */
+.dg-scale { border-top: 1px solid var(--sony-border-strong); }
+.dg-scale li {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 24px;
+  align-items: baseline;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--sony-border-default);
+}
+.dg-scale__meta { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; font-size: var(--sony-text-xs); color: var(--sony-color-gray-600); }
+.dg-scale__sample { font-weight: 700; color: var(--sony-color-gray-900); letter-spacing: -0.025em; overflow-wrap: anywhere; }
+.dg-scale__sample[style*="font-size: 3"], .dg-scale__sample[style*="font-size: 4"] { letter-spacing: -1px; }
+.dg-scale__use { grid-column: 2; margin-top: -8px; font-size: var(--sony-text-xs); color: var(--sony-color-gray-600); }
+
+.dg-weights li { display: flex; gap: 12px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--sony-border-default); }
+.dg-weights li > span:first-child { font-size: var(--sony-text-lg); color: var(--sony-color-gray-900); min-width: 9em; }
+
+/* ── 스와치 ───────────────────────────────────────────────── */
+.dg-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 24px 16px;
+}
+.dg-swatches--large { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.dg-swatches--ramp { gap: 24px 0; }
+.dg-swatches--ramp .dg-swatch { border: 0; }
+.dg-swatch {
+  height: 72px;
+  border: 1px solid var(--sony-border-default);
+  display: flex;
+  align-items: flex-end;
+  padding: 8px 10px;
+  font-size: var(--sony-text-xs);
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--sony-color-gray-900);
+}
+.dg-swatches--large .dg-swatch { height: 120px; }
+.dg-swatch--dark { color: #fff; }
+.dg-swatches code { display: inline-block; margin-top: 10px; }
+.dg-swatches p { margin-top: 6px; font-size: var(--sony-text-xs); color: var(--sony-color-gray-700); }
+.dg-swatches .dg-count { margin-top: 6px; }
+
+.dg-badges { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+.dg-badge { font-size: var(--sony-text-xs); font-weight: 700; letter-spacing: 0; }
+.dg-badge--fill { color: #fff; padding: 2px 6px; }
+
+.dg-layers { margin-top: 20px; }
+.dg-layers__page, .dg-layers__section, .dg-layers__card {
+  padding: 20px;
+  font-size: var(--sony-text-xs);
+  font-weight: 700;
+  color: var(--sony-color-gray-600);
+}
+.dg-layers__page { background: #fff; border: 1px solid var(--sony-border-default); }
+.dg-layers__section { margin-top: 12px; background: var(--sony-surface-section); }
+.dg-layers__card { margin-top: 12px; background: var(--sony-surface-soft); border: 1px solid var(--sony-border-default); }
+
+/* ── 스타일 규칙 ──────────────────────────────────────────── */
+.dg-border-samples > div { padding: 16px; margin-bottom: 12px; color: var(--sony-color-gray-800); }
+.dg-radii li, .dg-shadows li, .dg-motion li { display: flex; align-items: center; gap: 12px; padding: 8px 0; }
+.dg-radii__box { width: 40px; height: 40px; flex-shrink: 0; border: 1px solid var(--sony-border-strong); background: #fff; }
+.dg-shadows__box { width: 40px; height: 40px; flex-shrink: 0; background: #fff; }
+.dg-motion__box {
+  width: 40px; height: 40px; flex-shrink: 0;
+  border: 0; padding: 0; cursor: pointer;
+  background: var(--sony-color-gray-400);
+  transition-property: background-color, transform;
+  transition-timing-function: var(--sony-ease-default);
+}
+.dg-motion__box:hover { background: var(--sony-color-primary); transform: translateX(12px); }
+
+/* ── 레이아웃 ─────────────────────────────────────────────── */
+.dg-bp { margin-top: 40px; }
+.dg-bp__bar { display: flex; height: 40px; border: 1px solid var(--sony-border-strong); }
+.dg-bp__bar span {
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--sony-text-xs); font-weight: 700; color: var(--sony-color-gray-900);
+  border-right: 1px solid var(--sony-border-strong);
+}
+.dg-bp__bar span:nth-child(1) { background: var(--sony-surface-soft); }
+.dg-bp__bar span:nth-child(2) { background: var(--sony-surface-section); }
+.dg-bp__bar span:last-child { border-right: 0; background: #fff; }
+
+/* ── 컴포넌트: 버튼 ───────────────────────────────────────── */
+.sbtn {
+  min-width: var(--sony-btn-min-width);
+  min-height: var(--sony-btn-height-xl);
+  padding: 15px var(--sony-btn-padding-x);
+  font-size: var(--sony-text-md);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+  border: 0;
+  border-radius: var(--sony-radius-none);
+  cursor: pointer;
+  transition: background-color var(--sony-duration-base), color var(--sony-duration-base), border-color var(--sony-duration-base);
+}
+.sbtn--dark { background: var(--sony-color-gray-900); color: #fff; }
+.sbtn--dark:hover { background: var(--sony-color-black); }
+.sbtn--primary { background: var(--sony-color-primary); color: #fff; }
+.sbtn--primary:hover { background: var(--sony-color-primary-dark); }
+.sbtn--outline { background: #fff; color: var(--sony-color-gray-900); border: 1px solid var(--sony-border-strong); }
+.sbtn--outline:hover { background: var(--sony-color-gray-50); }
+.sbtn--disabled { background: var(--sony-color-gray-400); color: #fff; cursor: default; }
+.sbtn--sm { min-width: 98px; min-height: var(--sony-btn-height-md); padding: 12px; font-size: var(--sony-text-base); }
+.sbtn--cta { min-height: var(--sony-btn-height-cta); flex: 1 1 100%; font-size: var(--sony-text-lg); }
+
+/* ── 컴포넌트: 인풋 ───────────────────────────────────────── */
+.sinp { position: relative; display: block; }
+.sinp__field {
+  appearance: none;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--sony-border-input);
+  padding: 28px 0 20px;
+  font-size: var(--sony-text-lg);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--sony-color-gray-900);
+  background: transparent;
+  outline: 0;
+  transition: all var(--sony-duration-fast) var(--sony-ease-default);
+}
+.sinp__field::placeholder { color: var(--sony-color-gray-400); font-weight: 500; }
+.sinp__focus::before, .sinp__focus::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--sony-color-primary);
+  transition: all var(--sony-duration-slow) var(--sony-ease-default);
+}
+.sinp__field:focus ~ .sinp__focus::before { left: 0; width: 50%; }
+.sinp__field:focus ~ .sinp__focus::after { width: 50%; }
+.sinp--error .sinp__field { border-bottom-color: var(--sony-color-error); }
+.sinp__error { display: block; margin-top: 5px; font-size: var(--sony-text-xs); line-height: 18px; color: var(--sony-color-error); }
+
+/* ── 컴포넌트: 제목 · 가격 ────────────────────────────────── */
+.dg-headings { border-top: 1px solid var(--sony-border-strong); padding-top: 24px; }
+.s-page-title { font-size: var(--sony-text-5xl); line-height: 48px; font-weight: 700; letter-spacing: -1px; color: var(--sony-color-gray-900); }
+.s-page-desc { margin-top: 40px !important; font-size: var(--sony-text-xl); color: var(--sony-color-gray-700); }
+.s-cmpnt-title { margin-top: 48px !important; font-size: var(--sony-text-3xl); line-height: 44px; font-weight: 700; color: var(--sony-color-black); }
+
+.dg-price-card {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  align-items: center;
+  max-width: 560px;
+  padding: 24px;
+  border: 1px solid var(--sony-border-default);
+  background: var(--sony-surface-soft);
+}
+.dg-price-card__pic { aspect-ratio: 1; background: #fff; border: 1px solid var(--sony-border-default); }
+.dg-price-card__badges { display: flex; gap: 8px; font-size: var(--sony-text-xs); font-weight: 700; letter-spacing: 0; }
+.dg-price-card__name { margin-top: 8px !important; font-size: var(--sony-text-md); font-weight: 700; color: var(--sony-color-gray-900); }
+.s-price { margin-top: 12px !important; font-weight: 700; letter-spacing: 0; line-height: 1.5; color: var(--sony-color-gray-900); }
+.s-price__original { display: block; font-size: var(--sony-text-base); font-weight: 500; color: var(--sony-color-gray-400); text-decoration: line-through; text-decoration-thickness: 1px; }
+.s-price__discount { margin-right: 8px; font-size: var(--sony-text-2xl); color: var(--sony-color-sale); }
+.s-price__num { font-size: var(--sony-text-2xl); }
+.s-price__unit { font-size: var(--sony-text-md); }
+
+/* ── 반응형 ───────────────────────────────────────────────── */
+@media screen and (max-width: 1280px) {
+  .dg-grid-3 { grid-template-columns: 1fr 1fr; }
+}
+@media screen and (max-width: 640px) {
+  .dg-hero { padding: 48px 0 40px; }
+  .dg-title { font-size: 24px; }
+  .dg-lead { font-size: var(--sony-text-base); margin-top: 15px !important; }
+  .dg-h2 { font-size: 20px; line-height: 26px; }
+  .dg-split, .dg-grid-3 { grid-template-columns: 1fr; gap: 32px; }
+  .dg-scale li { grid-template-columns: 1fr; gap: 8px; }
+  .dg-scale__use { grid-column: 1; margin-top: 0; }
+  .dg-table { display: block; overflow-x: auto; }
+  .dg-price-card { grid-template-columns: 1fr; }
+  .s-page-title { font-size: 24px; line-height: 32px; }
+  .s-page-desc { margin-top: 15px !important; font-size: var(--sony-text-base); }
+  .s-cmpnt-title { font-size: 20px; line-height: 26px; }
+}
