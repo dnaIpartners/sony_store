@@ -68,7 +68,6 @@
   display: flex;
   align-items: stretch;
   margin-top: 40px;
-  border: 1px solid var(--sony-border-default);
   background: var(--sony-surface-soft);
 }
 .my_user .user_profile {
@@ -143,7 +142,7 @@
 /* ── 진행 중인 주문 ────────────────────────────────────────── */
 .my_order .order_list {
   display: flex;
-  border: 1px solid var(--sony-border-default);
+  background: var(--sony-color-gray-25);
 }
 .my_order .order_list li {
   position: relative;
@@ -195,7 +194,6 @@
 /* ── 마일리지 ──────────────────────────────────────────────── */
 .my_mileage {
   padding: 24px 32px;
-  border: 1px solid var(--sony-border-default);
   background: var(--sony-surface-soft);
 }
 .my_mileage .txt { display: flex; align-items: baseline; gap: 8px; font-size: var(--sony-text-md); color: var(--sony-color-gray-900); }
@@ -272,12 +270,11 @@
 .coupon_inner.on { display: block; }
 .coupon_list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; align-items: start; }
 .coupon_list li {
-  border: 1px solid var(--sony-border-default);
-  background: var(--sony-color-white);
+  background: var(--sony-color-gray-25);
   overflow: hidden;
   transition: border-color var(--sony-duration-fast) var(--sony-ease-default);
 }
-.coupon_list li.on { border-color: var(--sony-color-primary); }
+.coupon_list li.on { outline: 2px solid var(--sony-color-primary); outline-offset: -2px; }
 .coupon_item_wrap { display: flex; align-items: stretch; min-height: 220px; }
 .coupon_item { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 32px 40px; }
 .my_wrap .coupon_price { font-size: var(--sony-text-2xl); font-weight: 700; letter-spacing: 0; color: var(--sony-color-primary); line-height: 1; }
@@ -328,10 +325,10 @@
   align-items: center;
   min-height: 96px;
   padding: 20px 48px 20px 92px;
-  border: 1px solid var(--sony-border-default);
-  transition: border-color var(--sony-duration-fast) var(--sony-ease-default);
+  background: var(--sony-color-gray-25);
+  transition: background-color var(--sony-duration-fast) var(--sony-ease-default);
 }
-.box_link_inner:hover { border-color: var(--sony-color-gray-900); }
+.box_link_inner:hover { background: var(--sony-color-gray-50); }
 /* 왼쪽 원형 아이콘 자리 · 오른쪽 화살표 */
 .box_link_inner::before {
   content: "";
@@ -342,7 +339,7 @@
   height: 48px;
   transform: translateY(-50%);
   border-radius: var(--sony-radius-full);
-  background: var(--sony-surface-soft) center / 22px no-repeat;
+  background: var(--sony-color-white) center / 22px no-repeat;
 }
 .box_link_inner::after {
   content: "";
