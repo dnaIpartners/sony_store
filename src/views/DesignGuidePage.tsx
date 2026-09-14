@@ -4,6 +4,7 @@ import {
   RADII, SHADOWS, MOTION, LAYOUT, BREAKPOINTS, PRINCIPLES,
   type Swatch,
 } from '@/src/lib/sony-guide-data';
+import MyPageProposals from '@/src/components/MyPageProposals';
 
 // Sony Store KR 디자인 가이드 — 메인 랜딩.
 //
@@ -23,6 +24,9 @@ const NAV = [
 export default function DesignGuidePage() {
   return (
     <main className="dg">
+      {/* ── 마이페이지 4안 제안 요약 ───────────────────────── */}
+      <MyPageProposals />
+
       {/* ── 머리 ─────────────────────────────────────────────── */}
       <section className="dg-hero">
         <div className="dg-inner">
