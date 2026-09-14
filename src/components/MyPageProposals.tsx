@@ -14,7 +14,7 @@ const SESSION = {
   processing: "약 1시간 50분",
   elapsed: "3시간 15분",
   requests: 55,
-  commits: 31,
+  commits: 42,
   inputShare: 15, // 입력 : 처리 ≈ 15 : 85
 };
 
