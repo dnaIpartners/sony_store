@@ -278,7 +278,7 @@
   .ma-steps li + li { border-left: 0; }
   .ma-steps__icon { width: 24px; height: 24px; }
   .ma-steps__text { align-items: center; gap: 2px; }
-  .ma-steps__label { font-size: var(--sony-text-2xs); }
+  .ma-steps__label { font-size: 11px; }
   .ma-steps__count { font-size: var(--sony-text-md); }
   .ma-table th, .ma-table td { padding: 10px 8px; font-size: var(--sony-text-xs); }
   .ma-table th:nth-child(5), .ma-table td:nth-child(5) { display: none; }
@@ -296,7 +296,7 @@
   .ma-product__actions .ma-btn { width: 100%; }
   .ma-service { padding: 16px; }
   .ma-service__head { flex-direction: column; }
-  .ma-progress li { font-size: 10px; }
+  .ma-progress li { font-size: 11px; }
   .ma-academy { grid-template-columns: 1fr; gap: 12px; }
   .ma-list li { flex-wrap: wrap; gap: 6px 10px; }
   .ma-list__title { flex-basis: 100%; white-space: normal; }

@@ -384,7 +384,7 @@
   .my_order .ship_box { min-width: 0; flex: 1 1 0; gap: 6px; }
   .my_order .ship_box .ico { width: 44px; height: 44px; }
   .my_order .ship_box .ico svg { width: 26px; height: 26px; }
-  .my_order .ship_box .ico_txt { font-size: var(--sony-text-2xs); }
+  .my_order .ship_box .ico_txt { font-size: 11px; }
 
   .mileage_inquiry .date_box { justify-content: flex-start; }
   .mileage_inquiry .date_rang { flex-wrap: wrap; width: 100%; }
