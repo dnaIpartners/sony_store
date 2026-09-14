@@ -195,8 +195,10 @@
 .ms-step { display: flex; flex-direction: column; border: var(--ms-card-border); border-radius: var(--ms-card-radius); overflow: hidden; }
 .ms-step__label {
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 28px;
   min-height: 250px;
   padding-bottom: 28px;
   background: var(--ms-panel-bg);
@@ -204,6 +206,8 @@
   font-weight: 700;
   color: var(--sony-color-gray-900);
 }
+.ms-step__icon { width: 72px; height: 72px; color: var(--sony-color-gray-900); }
+.ms-step.on .ms-step__icon { color: var(--sony-color-primary); }
 .ms-step__count {
   display: block;
   padding: 36px 0;
@@ -250,12 +254,13 @@
 
 .ms-card--product a { display: flex; flex-direction: column; justify-content: center; height: 100%; padding: 40px; }
 .ms-product__img {
-  display: grid;
-  place-items: center;
-  height: 220px;
-  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 260px;
+  margin-bottom: 40px;
 }
-.ms-product__img img { max-height: 100%; width: auto; object-fit: contain; }
+.ms-product__img img { height: 100%; width: auto; max-width: 100%; object-fit: contain; }
 .ms-product__model { font-size: var(--sony-text-xl); font-weight: 700; letter-spacing: 0; color: var(--sony-color-gray-900); }
 .ms-product__copy { margin-top: 8px; font-size: var(--sony-text-lg); color: var(--sony-color-gray-600); }
 
@@ -345,7 +350,8 @@
   .ms-sec__head { padding-bottom: 16px; }
   .ms-sec__more { position: static; display: inline-flex; margin-top: 8px; }
   .ms-steps { grid-template-columns: repeat(5, 1fr); gap: 6px; }
-  .ms-step__label { min-height: 72px; padding-bottom: 10px; font-size: var(--sony-text-xs); }
+  .ms-step__label { min-height: 72px; gap: 6px; padding-bottom: 10px; font-size: var(--sony-text-xs); }
+  .ms-step__icon { width: 28px; height: 28px; }
   .ms-step__count { padding: 14px 0; font-size: var(--sony-text-2xl); }
 
   .ms-cards { gap: 16px; }
@@ -361,7 +367,7 @@
   .ms-card__cta-copy { font-size: var(--sony-text-md); }
   .ms-btn--pill { min-width: 0; width: 100%; }
   .ms-card--product a { padding: 20px; }
-  .ms-product__img { height: 160px; margin-bottom: 16px; }
+  .ms-product__img { height: 200px; margin-bottom: 20px; }
 
   .ms-banner { margin-top: 32px; }
   .ms-banner__viewport { margin-top: 24px; }

@@ -405,7 +405,9 @@ function CouponList() {
                   aria-expanded={isOpen}
                   aria-label={isOpen ? "쿠폰 상세 접기" : "쿠폰 상세 보기"}
                   onClick={() => setOpen(isOpen ? null : i)}
-                />
+                >
+                  <span aria-hidden="true">COUPON</span>
+                </button>
               </div>
               <div className="coupon_info" hidden={!isOpen}>
                 {c.info}

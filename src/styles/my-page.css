@@ -266,42 +266,54 @@
 }
 
 /* ── 쿠폰 ──────────────────────────────────────────────────── */
+/* 참고 시안: 흰 카드 + 오른쪽 소니 블루 스텁(세로 COUPON), 스텁 왼쪽에 톱니 절취선.
+   스텁이 곧 상세 펼침 버튼(.coupon_icon)이다 */
 .coupon_inner { display: none; }
 .coupon_inner.on { display: block; }
-.coupon_list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.coupon_list li { border: 1px solid var(--sony-border-default); }
-.coupon_list li.on { border-color: var(--sony-color-gray-900); }
-.coupon_item_wrap { display: flex; align-items: stretch; }
-.coupon_item { flex: 1 1 0; min-width: 0; padding: 24px; }
-.coupon_price { font-size: var(--sony-text-md); font-weight: 700; letter-spacing: 0; color: var(--sony-color-gray-900); line-height: 1; }
-.coupon_price strong { font-size: var(--sony-text-3xl); color: var(--sony-color-primary); }
-.coupon_name { margin-top: 12px; font-size: var(--sony-text-md); font-weight: 700; color: var(--sony-color-gray-900); }
-.coupon_date { margin-top: 6px; font-size: var(--sony-text-xs); color: var(--sony-color-gray-600); }
-/* 원본의 btn_coupon.jpg 대신 쉐브론 */
-.coupon_icon {
+.coupon_list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; align-items: start; }
+.coupon_list li {
+  border: 1px solid var(--sony-border-default);
+  border-radius: var(--sony-radius-md);
+  background: var(--sony-color-white);
+  overflow: hidden;
+  transition: border-color var(--sony-duration-fast) var(--sony-ease-default);
+}
+.coupon_list li.on { border-color: var(--sony-color-primary); }
+.coupon_item_wrap { display: flex; align-items: stretch; min-height: 176px; }
+.coupon_item { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 28px 32px; }
+.coupon_price { font-size: var(--sony-text-2xl); font-weight: 700; letter-spacing: 0; color: var(--sony-color-primary); line-height: 1; }
+.coupon_price strong { font-size: 40px; color: var(--sony-color-primary); }
+.coupon_name { margin-top: 14px; font-size: var(--sony-text-md); font-weight: 700; color: var(--sony-color-gray-900); }
+.coupon_date { margin-top: 12px; font-size: var(--sony-text-xs); color: var(--sony-color-gray-800); }
+.my_wrap .coupon_icon {
   position: relative;
-  flex: 0 0 56px;
-  border-left: 1px dashed var(--sony-border-default);
-  background: var(--sony-color-primary-tint);
+  flex: 0 0 92px;
+  margin: 8px 8px 8px 0;
+  border-radius: 0 var(--sony-radius-md) var(--sony-radius-md) 0;
+  background: var(--sony-color-primary);
+  color: var(--sony-color-white);
+  /* 왼쪽 톱니 — 원을 세로로 반복해 파낸다 */
+  -webkit-mask:
+    radial-gradient(circle at 0 50%, transparent 5px, #000 5.5px) 0 0 / 100% 16px repeat-y;
+  mask:
+    radial-gradient(circle at 0 50%, transparent 5px, #000 5.5px) 0 0 / 100% 16px repeat-y;
   transition: background-color var(--sony-duration-fast) var(--sony-ease-default);
 }
-.coupon_icon:hover { background: var(--sony-color-gray-100); }
-.coupon_icon::after {
-  content: "";
+.my_wrap .coupon_icon:hover { background: var(--sony-color-primary-dark); }
+.coupon_icon span {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 9px;
-  height: 9px;
-  border-right: 2px solid var(--sony-color-gray-900);
-  border-bottom: 2px solid var(--sony-color-gray-900);
-  transform: translate(-50%, -70%) rotate(45deg);
-  transition: transform var(--sony-duration-base) var(--sony-ease-default);
+  transform: translate(-50%, -50%) rotate(90deg);
+  font-size: var(--sony-text-md);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
 }
-.coupon_icon.icon_up::after { transform: translate(-50%, -30%) rotate(-135deg); }
+.coupon_icon::after { display: none; }
 .coupon_info {
-  padding: 16px 24px;
-  border-top: 1px solid var(--sony-border-default);
+  padding: 16px 32px;
+  border-top: 1px dashed var(--sony-border-default);
   background: var(--sony-color-gray-25);
   font-size: var(--sony-text-sm);
   line-height: 1.6;
@@ -406,9 +418,13 @@
 
   .my_wrap .no_data.on { padding: 40px 0; }
   .coupon_list { grid-template-columns: 1fr; gap: 12px; }
-  .coupon_item { padding: 16px; }
-  .coupon_price strong { font-size: var(--sony-text-2xl); }
-  .coupon_info { padding: 12px 16px; }
+  .coupon_item_wrap { min-height: 140px; }
+  .coupon_item { padding: 20px; }
+  .coupon_price { font-size: var(--sony-text-lg); }
+  .coupon_price strong { font-size: var(--sony-text-3xl); }
+  .coupon_icon { flex-basis: 64px; margin: 6px 6px 6px 0; }
+  .coupon_icon span { font-size: var(--sony-text-sm); }
+  .coupon_info { padding: 12px 20px; }
   .ico_box_link { grid-template-columns: 1fr; gap: 12px; }
   .box_link_inner { min-height: 80px; padding: 16px 40px 16px 76px; }
   .box_link_inner::before { left: 16px; width: 44px; height: 44px; }

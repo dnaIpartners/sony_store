@@ -1,6 +1,13 @@
 "use client";
 import { useRef, useState } from "react";
 import Link from "next/link";
+import {
+  IconDeposit,
+  IconPaid,
+  IconPacking,
+  IconShipping,
+  IconDelivered,
+} from "@/src/components/OrderStepIcons";
 
 // My Sony — new 마이페이지.
 //
@@ -44,11 +51,11 @@ const MALLS = [
 
 // 입금대기 → 결제완료 → 배송준비 → 배송중 → 배송완료
 const ORDER_STEPS = [
-  { label: "입금대기", count: 1 },
-  { label: "결제완료", count: 0 },
-  { label: "배송준비", count: 0 },
-  { label: "배송중", count: 0 },
-  { label: "배송완료", count: 7 },
+  { label: "입금대기", count: 1, Icon: IconDeposit },
+  { label: "결제완료", count: 0, Icon: IconPaid },
+  { label: "배송준비", count: 0, Icon: IconPacking },
+  { label: "배송중", count: 0, Icon: IconShipping },
+  { label: "배송완료", count: 7, Icon: IconDelivered },
 ];
 
 const ACADEMY = [
@@ -57,6 +64,7 @@ const ACADEMY = [
 
 const MY_PRODUCTS = [
   { model: "ILCE-7RM6", copy: "초고해상도의 독주", img: "/asset/sony/ILCE-7RM6.png" },
+  { model: "ILCE-7CM2L", copy: "작고 가벼운 풀프레임, 렌즈 키트", img: "/asset/sony/ILCE-7CM2L.png" },
 ];
 
 const BANNERS = [
@@ -141,7 +149,10 @@ export default function MySonyPage() {
           <ol className="ms-steps">
             {ORDER_STEPS.map((s) => (
               <li key={s.label} className={`ms-step${s.count ? " on" : ""}`}>
-                <span className="ms-step__label">{s.label}</span>
+                <span className="ms-step__label">
+                  <s.Icon className="ms-step__icon" />
+                  {s.label}
+                </span>
                 {s.count ? (
                   <Link href="/my-page/order-list" className="ms-step__count">
                     {s.count}
@@ -226,7 +237,7 @@ export default function MySonyPage() {
                 </Link>
               </li>
             ))}
-            <li className="ms-card ms-card--empty" aria-hidden="true" />
+            {MY_PRODUCTS.length < 2 ? <li className="ms-card ms-card--empty" aria-hidden="true" /> : null}
           </ul>
 
           <BannerSlider />
