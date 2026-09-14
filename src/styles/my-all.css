@@ -47,34 +47,7 @@
 
 /* ── 머리 ──────────────────────────────────────────────────── */
 .ma-head { padding: 48px 0 40px; }
-.ma-eyebrow { font-size: var(--sony-text-xs); font-weight: 700; letter-spacing: 0; color: var(--sony-color-primary); text-transform: uppercase; }
-.ma-title { margin-top: 12px; font-size: var(--sony-text-5xl); line-height: 1; font-weight: 700; letter-spacing: var(--sony-tracking-title); color: var(--sony-color-gray-900); }
-.ma-lead { margin-top: 24px; max-width: 46em; font-size: var(--sony-text-lg); line-height: 1.5; color: var(--sony-color-gray-700); }
-.ma-lead em { font-weight: 700; color: var(--sony-color-gray-900); }
-.ma-sources { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-.ma-sources li {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 28px;
-  padding: 0 12px 0 0;
-  border: 1px solid var(--sony-border-default);
-  font-family: ui-monospace, "SF Mono", Menlo, monospace;
-  font-size: 11px;
-  letter-spacing: 0;
-  color: var(--sony-color-gray-600);
-}
-.ma-sources li span {
-  display: inline-flex;
-  align-items: center;
-  height: 100%;
-  padding: 0 10px;
-  background: var(--sony-color-gray-900);
-  color: var(--sony-color-white);
-  font-family: var(--sony-font-sans-kr);
-  font-size: var(--sony-text-2xs);
-  font-weight: 700;
-}
+.ma-title { font-size: var(--sony-text-5xl); line-height: 1; font-weight: 700; letter-spacing: var(--sony-tracking-title); color: var(--sony-color-gray-900); }
 
 /* ── 요약 띠 ───────────────────────────────────────────────── */
 .ma-summary { background: var(--sony-surface-soft); border-top: 1px solid var(--sony-border-default); border-bottom: 1px solid var(--sony-border-default); }
@@ -275,8 +248,6 @@
 /* ── 모바일 ────────────────────────────────────────────────── */
 @media screen and (max-width: 640px) {
   .ma-head { padding: 24px 0; }
-  .ma-lead { margin-top: 16px; font-size: var(--sony-text-base); }
-  .ma-sources li { font-size: 10px; }
   .ma-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ma-stats li:nth-child(odd) { border-left: 0; }
   .ma-stats li:nth-child(n + 3) { border-top: 1px solid var(--sony-border-default); }

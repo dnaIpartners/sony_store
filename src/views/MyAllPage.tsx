@@ -119,17 +119,7 @@ export default function MyAllPage() {
       {/* ── 머리 ─────────────────────────────────────────────── */}
       <header className="ma-head">
         <div className="ma-inner">
-          <p className="ma-eyebrow">제안 · 통합안</p>
           <h1 className="ma-title">통합 마이페이지</h1>
-          <p className="ma-lead">
-            스토어 마이페이지 · My Sony 서비스 · 정품등록, 세 곳에 흩어진 나의 것을 한 화면에.
-            어느 사이트의 메뉴였는지가 아니라 <em>내가 하려는 일</em>로 묶었습니다.
-          </p>
-          <ul className="ma-sources" aria-label="합쳐진 페이지">
-            <li><span>스토어</span>store.sony.co.kr/my-page</li>
-            <li><span>My Sony</span>sony.co.kr/scs/…/Mypage-Go</li>
-            <li><span>정품등록</span>sony.co.kr/scs/…/SCSWarranty-Start</li>
-          </ul>
         </div>
       </header>
 
