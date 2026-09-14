@@ -47,10 +47,10 @@
   color: var(--sony-color-gray-900);
 }
 .dg-lead {
-  margin-top: 40px !important;
-  max-width: 52em;
-  font-size: var(--sony-text-xl);
-  line-height: 1.5;
+  margin-top: 24px !important;
+  max-width: 60em;
+  font-size: var(--sony-text-md);
+  line-height: 1.6;
   color: var(--sony-color-gray-700);
 }
 .dg-lead em { font-style: normal; font-weight: 700; color: var(--sony-color-gray-900); }
