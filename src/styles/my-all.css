@@ -98,7 +98,17 @@
 .ma-stats li.alert .ma-stat__value { color: var(--sony-color-sale); }
 
 /* ── 고정 탭 ───────────────────────────────────────────────── */
-.ma-tabs { position: sticky; top: var(--sony-header-height); z-index: 10; background: var(--sony-color-white); border-bottom: 1px solid var(--sony-border-subtle); }
+.ma-tabs {
+  position: sticky;
+  top: var(--sony-header-height);
+  z-index: 10;
+  background: var(--sony-color-white);
+  border-bottom: 1px solid var(--sony-border-subtle);
+  /* 헤더(.header)와 같은 타이밍으로 움직인다 */
+  transition: top var(--sony-duration-base) var(--sony-ease-in-out) 0.1s;
+}
+/* 헤더가 스크롤 다운으로 숨으면(.header--invisible) 탭이 맨 위로 따라간다 */
+.header--invisible + div .ma-tabs { top: 0; }
 .ma-tabs ul { display: flex; gap: 40px; overflow-x: auto; scrollbar-width: none; }
 .ma-tabs ul::-webkit-scrollbar { display: none; }
 .ma-tabs a { display: flex; flex-direction: column; gap: 2px; padding: 14px 0 12px; border-bottom: 2px solid transparent; font-size: var(--sony-text-md); font-weight: 700; color: var(--sony-color-neutral-50); white-space: nowrap; transition: color var(--sony-duration-fast) var(--sony-ease-default); }
