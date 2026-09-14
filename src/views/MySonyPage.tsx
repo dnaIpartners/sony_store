@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import MallSlider from "@/src/components/MallSlider";
+import { SONY_EVENTS } from "@/src/lib/sony-events";
 import {
   IconDeposit,
   IconPaid,
@@ -42,12 +43,6 @@ const STATS = [
   { key: "coupon", value: String(USER.coupons), unit: "장", link: "쿠폰 안내", href: "/my-page#coupon-tit" },
 ];
 
-const MALLS = [
-  { title: "소니스토어 학생 전용몰", desc: "학생을 위한 스페셜 할인 혜택!", href: "/event/student" },
-  { title: "크리에이터 전용몰", desc: "크리에이터 인증 시, 특별 할인가로 소니 제품을 만나 보실 수 있습니다.", href: "/event/creator" },
-  { title: "세상에서 가장 아름다운 날을 담다.", desc: "Wedding Seminar 특별 할인 혜택!", href: "/event/wedding" },
-  { title: "기업구매 전용몰", desc: "법인·단체 구매 시 별도 견적 상담을 받으세요.", href: "/agreement" },
-];
 
 // 입금대기 → 결제완료 → 배송준비 → 배송중 → 배송완료
 const ORDER_STEPS = [
@@ -160,7 +155,7 @@ export default function MySonyPage() {
           </ul>
 
           <div className="ms-malls">
-            <MallSlider items={MALLS} tone="panel" />
+            <MallSlider items={SONY_EVENTS} tone="panel" />
           </div>
         </section>
 

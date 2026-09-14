@@ -95,7 +95,7 @@
 /* ── 회원 요약 패널 ────────────────────────────────────────── */
 .ms-panel {
   display: grid;
-  grid-template-columns: 1fr 1.6fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
   grid-template-areas:
     "profile stats"
     "profile malls";
@@ -116,8 +116,8 @@
 .ms-panel__hello strong { font-size: var(--sony-text-2xl); }
 .ms-panel__profile .ms-link { margin-top: 16px; }
 
-.ms-stats { grid-area: stats; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.ms-stat { display: flex; align-items: flex-start; gap: 20px; }
+.ms-stats { grid-area: stats; min-width: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.ms-stat { display: flex; align-items: flex-start; gap: 14px; min-width: 0; }
 .ms-stat__icon {
   flex-shrink: 0;
   width: 60px;
@@ -133,11 +133,11 @@
 }
 .ms-stat__value { font-size: var(--sony-text-2xl); font-weight: 700; letter-spacing: 0; line-height: 1.2; color: var(--sony-color-gray-900); }
 .ms-stat__value em { margin-left: 4px; font-size: var(--sony-text-lg); font-weight: 500; }
-.ms-stat--grade .ms-stat__value { letter-spacing: 0.02em; }
+.ms-stat--grade .ms-stat__value { font-size: var(--sony-text-xl); letter-spacing: 0.02em; }
 .ms-stat .ms-link { margin-top: 14px; }
 
 /* 전용몰 슬라이더 → src/styles/mall-slider.css (.msl) */
-.ms-malls { grid-area: malls; }
+.ms-malls { grid-area: malls; min-width: 0; }
 
 /* ── 섹션 ──────────────────────────────────────────────────── */
 .ms-sec { padding-top: 96px; }
@@ -200,9 +200,11 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-/* 작은 카드는 메타를 세로로 */
-.ms-cards--academy .ms-academy__meta > div { flex-wrap: wrap; }
-.ms-cards--academy .ms-academy__status { white-space: nowrap; }
+/* 메타 영역은 카드 폭이 변해도 높이가 고정 — 줄바꿈 금지, 넘치면 말줄임 */
+.ms-cards--academy .ms-academy__meta { height: 96px; overflow: hidden; }
+.ms-cards--academy .ms-academy__meta > div { flex-wrap: nowrap; white-space: nowrap; }
+.ms-cards--academy .ms-academy__meta dd { overflow: hidden; text-overflow: ellipsis; }
+.ms-cards--academy .ms-academy__status { flex-shrink: 0; white-space: nowrap; }
 /* 강좌 썸네일 — 사진 위에 제목을 얹는다 */
 .ms-card__thumb--img { position: relative; padding: 0; overflow: hidden; }
 .ms-card__thumb--img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }

@@ -3,7 +3,7 @@
    tone=panel : 회색 패널 안에 놓일 때(/my-sony) — 바탕 없음
    tone=band  : 흰 바탕 위에 놓일 때(/my)     — 회색 띠를 깔고 그 안에 카드
    ───────────────────────────────────────────────────────────── */
-.msl { position: relative; }
+.msl { position: relative; min-width: 0; }
 .msl--band { padding: 24px 72px; background: var(--sony-color-gray-100); }
 .msl ul { margin: 0; padding: 0; list-style: none; }
 .msl p { margin: 0; }
@@ -19,13 +19,24 @@
 .msl__track::-webkit-scrollbar { display: none; }
 .msl__card {
   flex: 0 0 calc((100% - 48px) / 3);
+  min-width: 0;
   min-height: 270px;
   scroll-snap-align: start;
   background: var(--sony-color-gray-25);
 }
 .msl__card a { display: flex; flex-direction: column; justify-content: center; gap: 24px; height: 100%; padding: 32px; }
-.msl__title { font-size: var(--sony-text-lg); font-weight: 700; color: var(--sony-color-gray-900); }
-.msl__desc { font-size: var(--sony-text-md); line-height: 1.5; color: var(--sony-color-gray-800); }
+.msl__body { display: flex; flex-direction: column; gap: 12px; }
+.msl__title { font-size: var(--sony-text-lg); font-weight: 700; line-height: 1.35; color: var(--sony-color-gray-900); }
+.msl__desc { font-size: var(--sony-text-sm); line-height: 1.5; color: var(--sony-color-gray-800); }
+.msl__date { font-size: var(--sony-text-xs); letter-spacing: 0; color: var(--sony-color-gray-600); }
+/* 배너가 있는 카드: 위 배너(오른쪽 기준 크롭) + 아래 글 */
+.msl__card--img { min-height: 0; background: var(--sony-color-white); }
+.msl__card--img a { justify-content: flex-start; gap: 0; padding: 0; }
+.msl__img { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--sony-color-gray-100); }
+.msl__img img { width: 100%; height: 100%; object-fit: cover; object-position: right center; }
+.msl__card--img .msl__body { flex: 1 1 auto; padding: 20px 24px 24px; }
+.msl__card--img .msl__title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.msl__card--img .msl__desc { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .msl__nav { position: absolute; top: 50%; width: 40px; height: 60px; transform: translateY(-50%); background: none; border: 0; padding: 0; cursor: pointer; }
 .msl__nav::before {
   content: "";
@@ -54,4 +65,6 @@
   .msl--band { padding: 16px; }
   .msl__card { flex-basis: 80%; min-height: 0; }
   .msl__card a { padding: 24px; gap: 12px; }
+  .msl__card--img a { padding: 0; }
+  .msl__card--img .msl__body { padding: 16px; }
 }

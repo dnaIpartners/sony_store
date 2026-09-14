@@ -210,7 +210,7 @@
 .ma-service__title strong { margin-right: 6px; }
 .ma-service__state { flex-shrink: 0; height: 28px; padding: 0 12px; line-height: 28px; background: var(--sony-color-primary); color: var(--sony-color-white); font-size: var(--sony-text-xs); font-weight: 700; }
 .ma-service__state.done { background: var(--sony-color-gray-900); }
-.ma-progress { display: flex; margin-top: 20px; counter-reset: step; }
+.ma .ma-progress { display: flex; margin-top: 36px; padding-top: 24px; border-top: 1px dashed var(--sony-border-default); counter-reset: step; }
 .ma-progress li { position: relative; flex: 1 1 0; padding-top: 18px; text-align: center; font-size: var(--sony-text-xs); color: var(--sony-color-gray-400); }
 .ma-progress li::before { content: ""; position: absolute; left: 0; right: 0; top: 5px; height: 2px; background: var(--sony-color-gray-200); }
 .ma-progress li::after { content: ""; position: absolute; left: 50%; top: 0; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--sony-color-white); border: 2px solid var(--sony-color-gray-300); box-sizing: border-box; }
