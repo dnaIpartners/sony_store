@@ -119,7 +119,7 @@ export default function MyAllPage() {
       {/* ── 머리 ─────────────────────────────────────────────── */}
       <header className="ma-head">
         <div className="ma-inner">
-          <h1 className="ma-title">통합 마이페이지</h1>
+          <h1 className="ma-title">My Sony</h1>
         </div>
       </header>
 
