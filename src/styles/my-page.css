@@ -273,7 +273,6 @@
 .coupon_list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; align-items: start; }
 .coupon_list li {
   border: 1px solid var(--sony-border-default);
-  border-radius: var(--sony-radius-md);
   background: var(--sony-color-white);
   overflow: hidden;
   transition: border-color var(--sony-duration-fast) var(--sony-ease-default);
@@ -289,7 +288,6 @@
   position: relative;
   flex: 0 0 96px;
   margin: 0;
-  border-radius: 0 var(--sony-radius-md) var(--sony-radius-md) 0;
   background: var(--sony-color-primary);
   color: var(--sony-color-white);
   /* 왼쪽 톱니 — 원을 세로로 반복해 파낸다 */

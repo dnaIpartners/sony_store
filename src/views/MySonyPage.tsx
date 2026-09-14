@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import {
   IconDeposit,
@@ -13,7 +13,7 @@ import {
 //
 // 와이어프레임(2026-09-14 스크린샷 3장)의 항목을 그대로 옮겼다:
 //   머리(할 수 있는 일 메뉴) → 회원 요약 패널 + 전용몰 카드 → 주문/배송 5칸
-//   → 나의 아카데미 → 나의 소니(정품등록 · 내 제품) → 혜택 배너 슬라이드
+//   → 나의 아카데미 → 나의 소니(정품등록 · 내 제품) → 쿠폰
 //   → My Sony Care + 보증/AS 안내
 // 와이어프레임은 둥근 카드·알약 버튼을 쓴다. 가이드의 각진 규칙과 다르지만
 // 시안을 따른다. 스타일은 src/styles/my-sony.css.
@@ -33,7 +33,7 @@ const USER = {
   name: "가나다",
   grade: "MEMBERSHIP",
   mileage: 10_000,
-  coupons: 5,
+  coupons: 2,
 };
 
 const STATS = [
@@ -88,13 +88,10 @@ const MY_PRODUCTS = [
   { model: "ILCE-7CM2L", copy: "작고 가벼운 풀프레임, 렌즈 키트", img: "/asset/sony/ILCE-7CM2L.png" },
 ];
 
-const BANNERS = [
-  { title: "마케팅 수신 동의하면\n5,000원 할인!", href: "/my-page/member" },
-  { title: "회원정보 수정하고\n내 생일에 쿠폰 받자!", href: "/my-page/member" },
-  { title: "정품등록하고\n10% 할인쿠폰 받자!", href: "/my-sony/products" },
-  { title: "My Sony Care 로\n무상수리 연장!", href: "/mysonycare" },
-  { title: "알파아카데미\n신규 강좌 오픈", href: "/academy" },
-  { title: "앱 설치하고\n첫 구매 쿠폰 받기", href: "/app" },
+// 나의 소니 아래 혜택 배너 자리에 쿠폰 카드를 놓는다 (참고 시안 디자인)
+const COUPONS = [
+  { price: "5,000", unit: "원", name: "마케팅 수신 동의 5,000원 할인", until: "2026-09-21 23:59:59" },
+  { price: "5", unit: "%", name: "회원가입 감사 5% 할인", until: "2026-09-28 23:59:59" },
 ];
 
 const CARE = {
@@ -265,7 +262,24 @@ export default function MySonyPage() {
             {MY_PRODUCTS.length < 2 ? <li className="ms-card ms-card--empty" aria-hidden="true" /> : null}
           </ul>
 
-          <BannerSlider />
+          <div className="ms-coupons">
+            <div className="ms-coupons__head">
+              <h3>쿠폰 <span className="ms-coupons__count">{COUPONS.length}</span></h3>
+              <Link href="/my-page#coupon-tit" className="ms-link">쿠폰 전체보기</Link>
+            </div>
+            <ul className="ms-coupons__list">
+              {COUPONS.map((c) => (
+                <li key={c.name} className="ms-coupon">
+                  <div className="ms-coupon__body">
+                    <p className="ms-coupon__price"><strong>{c.price}</strong>{c.unit}</p>
+                    <p className="ms-coupon__name">{c.name}</p>
+                    <p className="ms-coupon__date">유효기간 : {c.until} 까지</p>
+                  </div>
+                  <span className="ms-coupon__stub" aria-hidden="true"><span>COUPON</span></span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <div className="ms-care">
             <div className="ms-card ms-card--cta">
@@ -335,45 +349,6 @@ function MallSlider() {
       </ul>
       <button type="button" className="ms-malls__nav ms-malls__nav--prev" aria-label="이전" onClick={() => slide(-1)} />
       <button type="button" className="ms-malls__nav ms-malls__nav--next" aria-label="다음" onClick={() => slide(1)} />
-    </div>
-  );
-}
-
-/** 혜택 배너. 한 화면에 두 장, 점 세 개 */
-const PER_PAGE = 2;
-function BannerSlider() {
-  const [page, setPage] = useState(0);
-  const pages = Math.ceil(BANNERS.length / PER_PAGE);
-  return (
-    <div className="ms-banner">
-      <div className="ms-banner__bar" aria-hidden="true">
-        <span style={{ width: `${((page + 1) / pages) * 100}%` }} />
-      </div>
-      <div className="ms-banner__viewport">
-        <ul className="ms-banner__track" style={{ transform: `translateX(-${page * 100}%)` }}>
-          {BANNERS.map((b) => (
-            <li key={b.title} className="ms-banner__item">
-              <Link href={b.href}>
-                <span className="ms-banner__img" aria-hidden="true" />
-                <span className="ms-banner__title">{b.title}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="ms-banner__dots" role="tablist" aria-label="배너 페이지">
-        {Array.from({ length: pages }, (_, i) => (
-          <button
-            key={i}
-            type="button"
-            role="tab"
-            aria-selected={i === page}
-            aria-label={`${i + 1}페이지`}
-            className={i === page ? "on" : undefined}
-            onClick={() => setPage(i)}
-          />
-        ))}
-      </div>
     </div>
   );
 }

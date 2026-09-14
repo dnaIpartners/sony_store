@@ -1,11 +1,11 @@
 /* ─────────────────────────────────────────────────────────────
    My Sony — new 마이페이지 (src/views/MySonyPage.tsx)
-   와이어프레임을 따른다: 둥근 카드(16px), 알약 버튼, 회색 판(#f4f4f4).
+   와이어프레임을 따르되 카드·박스는 각지게(라운드 0). 알약 버튼, 회색 판(#f4f4f4).
    값은 tokens.css 의 --sony-* 만 참조한다. 브레이크포인트 1280 / 640.
    ───────────────────────────────────────────────────────────── */
 
 .ms {
-  --ms-card-radius: var(--sony-radius-lg);
+  --ms-card-radius: 0; /* 카드·박스는 각지게 */
   --ms-card-border: 1px solid var(--sony-color-gray-300);
   --ms-panel-bg: var(--sony-color-gray-100);
   background: var(--sony-surface-page);
@@ -192,7 +192,7 @@
 
 /* ── 주문/배송 5칸 ─────────────────────────────────────────── */
 .ms-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px; }
-.ms-step { display: flex; flex-direction: column; border: var(--ms-card-border); border-radius: var(--ms-card-radius); overflow: hidden; }
+.ms-step { display: flex; flex-direction: column; border: var(--ms-card-border); overflow: hidden; }
 .ms-step__label {
   display: flex;
   flex-direction: column;
@@ -275,29 +275,27 @@
 .ms-product__model { font-size: var(--sony-text-xl); font-weight: 700; letter-spacing: 0; color: var(--sony-color-gray-900); }
 .ms-product__copy { margin-top: 8px; font-size: var(--sony-text-lg); color: var(--sony-color-gray-600); }
 
-/* ── 혜택 배너 슬라이드 ────────────────────────────────────── */
-.ms-banner { margin-top: 48px; }
-.ms-banner__bar { height: 6px; background: var(--sony-color-gray-100); }
-.ms-banner__bar span { display: block; height: 100%; background: var(--sony-color-black); transition: width var(--sony-duration-slow) var(--sony-ease-out-expo); }
-.ms-banner__viewport { overflow: hidden; margin-top: 48px; }
-.ms-banner__track { display: flex; transition: transform var(--sony-duration-slow) var(--sony-ease-in-out-quart); }
-.ms-banner__item { flex: 0 0 50%; padding: 0 32px; }
-.ms-banner__item a { display: flex; align-items: center; gap: 32px; }
-.ms-banner__img { flex-shrink: 0; width: 100px; height: 100px; background: var(--sony-color-gray-600); border: 1px solid var(--sony-color-gray-700); }
-.ms-banner__title { flex: 1 1 0; font-size: var(--sony-text-xl); font-weight: 700; line-height: 1.6; white-space: pre-line; color: var(--sony-color-gray-900); }
-.ms-banner__item a::after {
-  content: "";
-  flex-shrink: 0;
-  width: 14px;
-  height: 14px;
-  margin-right: 12px;
-  border-top: 2px solid var(--sony-color-gray-900);
-  border-right: 2px solid var(--sony-color-gray-900);
-  transform: rotate(45deg);
+/* ── 쿠폰 (참고 시안: 흰 카드 + 블루 스텁) ────────────────────── */
+.ms-coupons { margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--sony-border-default); }
+.ms-coupons__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.ms-coupons__head h3 { margin: 0; font-size: var(--sony-text-xl); font-weight: 700; color: var(--sony-color-gray-900); }
+.ms-coupons__count { margin-left: 4px; color: var(--sony-color-primary); }
+.ms-coupons__list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.ms-coupon { display: flex; min-height: 176px; border: 1px solid var(--sony-color-gray-300); background: var(--sony-color-white); overflow: hidden; }
+.ms-coupon__body { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 28px 36px; }
+.ms .ms-coupon__price { font-size: var(--sony-text-xl); font-weight: 700; letter-spacing: 0; line-height: 1; color: var(--sony-color-primary); }
+.ms .ms-coupon__price strong { font-size: 44px; color: var(--sony-color-primary); }
+.ms .ms-coupon__name { margin-top: 22px; font-size: var(--sony-text-lg); font-weight: 700; color: var(--sony-color-gray-900); }
+.ms .ms-coupon__date { margin-top: 18px; font-size: var(--sony-text-sm); color: var(--sony-color-gray-800); }
+.ms-coupon__stub {
+  position: relative;
+  flex: 0 0 96px;
+  background: var(--sony-color-primary);
+  color: var(--sony-color-white);
+  -webkit-mask: radial-gradient(circle at 0 50%, transparent 6px, #000 6.5px) 0 0 / 100% 20px repeat-y;
+  mask: radial-gradient(circle at 0 50%, transparent 6px, #000 6.5px) 0 0 / 100% 20px repeat-y;
 }
-.ms-banner__dots { display: flex; justify-content: center; gap: 10px; margin-top: 40px; }
-.ms-banner__dots button { width: 14px; height: 14px; border: 2px solid var(--sony-color-gray-900); border-radius: var(--sony-radius-full); }
-.ms-banner__dots button.on { background: var(--sony-color-gray-900); }
+.ms-coupon__stub span { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(90deg); font-size: var(--sony-text-md); font-weight: 700; letter-spacing: 0.08em; white-space: nowrap; }
 
 /* ── My Sony Care ──────────────────────────────────────────── */
 .ms-care { display: grid; grid-template-columns: 1fr 2fr; gap: 32px 60px; margin-top: 64px; }
@@ -381,15 +379,13 @@
   .ms-card--product a { padding: 20px; }
   .ms-product__img { height: 200px; margin-bottom: 20px; }
 
-  .ms-banner { margin-top: 32px; }
-  .ms-banner__viewport { margin-top: 24px; }
-  /* 페이지당 2장은 그대로 — 세로로 쌓는다 */
-  .ms-banner__item { padding: 0 8px; }
-  .ms-banner__item a { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .ms-banner__item a::after { display: none; }
-  .ms-banner__img { width: 64px; height: 64px; }
-  .ms-banner__title { font-size: var(--sony-text-md); }
-  .ms-banner__dots { margin-top: 24px; }
+  .ms-coupons { margin-top: 32px; padding-top: 24px; }
+  .ms-coupons__list { grid-template-columns: 1fr; gap: 12px; }
+  .ms-coupon { min-height: 130px; }
+  .ms-coupon__body { padding: 20px; }
+  .ms .ms-coupon__price strong { font-size: var(--sony-text-3xl); }
+  .ms-coupon__stub { flex-basis: 64px; }
+  .ms-coupon__stub span { font-size: var(--sony-text-sm); }
 
   .ms-care { margin-top: 40px; gap: 24px; }
   .ms-care__list { gap: 24px; padding: 0; }
