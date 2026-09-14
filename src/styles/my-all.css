@@ -289,11 +289,17 @@
   .ma-coupon__stub { flex-basis: 60px; }
   .ma-coupon__price strong { font-size: var(--sony-text-3xl); }
   .ma-wish { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .ma-product { grid-template-columns: 1fr; gap: 16px; padding: 16px; }
-  .ma-product__img { height: 100px; }
-  .ma-product__meta { grid-template-columns: repeat(2, 1fr); gap: 8px 12px; }
-  .ma-product__actions { flex-direction: column; }
-  .ma-product__actions .ma-btn { width: 100%; }
+  /* 모바일: 사진 왼쪽(크게) + 본문 오른쪽, 버튼은 아래 전체폭 */
+  .ma-product { grid-template-columns: 112px minmax(0, 1fr); gap: 12px 14px; align-items: start; padding: 16px; }
+  .ma-product__img { position: relative; width: 112px; height: 112px; overflow: hidden; background: var(--sony-color-white); }
+  .ma-product__img img { position: absolute; inset: -12%; width: 124%; height: 124%; object-fit: contain; }
+  .ma-product__model { font-size: var(--sony-text-lg); }
+  .ma-product__name { font-size: var(--sony-text-sm); }
+  .ma-product__meta { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 10px; margin-top: 10px; }
+  .ma-product__meta dt { font-size: 11px; }
+  .ma-product__meta dd { font-size: var(--sony-text-xs); }
+  .ma-product__actions { grid-column: 1 / -1; flex-direction: row; }
+  .ma-product__actions .ma-btn { flex: 1 1 0; width: auto; }
   .ma-service { padding: 16px; }
   .ma-service__head { flex-direction: column; }
   .ma-progress li { font-size: 11px; }
