@@ -5,14 +5,13 @@ import Link from "next/link";
 // 시간 산정 (2026-09-14 세션, 커밋 시각과 대화 기록 기준 — 대략값)
 //   입력 시간  사용자가 요청을 적은 시간. 요청 약 55건 × 평균 20초 ≈ 20분
 //   처리 시간  Claude 가 읽고·만들고·확인하고·커밋한 시간. 실작업 2시간 10분 − 입력
-//   자리 비움  17:41→18:51 의 70분. 요청도 커밋도 없음 — 다른 업무를 본 시간
+//   (17:41→18:51 의 70분은 요청도 커밋도 없어 처리 시간에서 뺐다)
 //   경과       첫 작업(약 16:40, 추정)부터 마지막 커밋 19:55 까지
 // 카드의 소요는 안별 처리 시간. 공통 작업(푸시·모바일 보정)은 합계에만.
 const SESSION = {
   date: "2026-09-14",
   input: "약 20분",
   processing: "약 1시간 50분",
-  away: "70분",
   elapsed: "3시간 15분",
   requests: 55,
   commits: 31,
@@ -71,6 +70,7 @@ export default function MyPageProposals() {
           <h2 className="pp-title" id="pp-title">마이페이지 4안</h2>
           <p className="pp-lead">
             현행 재현에서 출발해, 시안 구현 → 세 페이지 통합 → 개인화까지 단계적으로 확장한 제안입니다.
+            <br />
             요청은 한 줄씩 적고, 만드는 동안은 다른 업무를 봤습니다. 헤더의 마이페이지 아이콘 4개가 각 안으로 연결됩니다.
           </p>
           <dl className="pp-meta">
@@ -84,7 +84,6 @@ export default function MyPageProposals() {
             </div>
             <div><dt>요청</dt><dd>{SESSION.requests}건</dd></div>
             <div><dt>커밋</dt><dd>{SESSION.commits}개</dd></div>
-            <div><dt>자리 비움</dt><dd>{SESSION.away}</dd></div>
             <div><dt>경과</dt><dd>{SESSION.elapsed}</dd></div>
           </dl>
           <div className="pp-ratio" role="img" aria-label={`입력 ${SESSION.inputShare}%, 처리 ${100 - SESSION.inputShare}%`}>
