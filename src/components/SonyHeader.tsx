@@ -39,10 +39,10 @@ const ACTION_LINKS = [
     label: "통합 마이페이지",
   },
   {
-    key: "myDash",
-    href: "/my-dash",
-    icon: "ic_mydash",
-    label: "대시보드",
+    key: "myPersonal",
+    href: "/my-personal",
+    icon: "ic_mypersonal",
+    label: "개인화 마이페이지",
   },
   {
     key: "order",

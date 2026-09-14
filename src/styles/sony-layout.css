@@ -225,7 +225,7 @@
   .header .header__action .action__links .logout,
   .header .header__action .action__links .myPage,
   .header .header__action .action__links .myAll,
-  .header .header__action .action__links .myDash,
+  .header .header__action .action__links .myPersonal,
   .header .header__action .action__links .order { display: none; }
 
   .header__tab { margin-top: 13px; }

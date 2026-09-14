@@ -16,15 +16,15 @@ import {
   won,
 } from "@/src/lib/my-data";
 
-// My Sony 대시보드 — 두 번째 제안.
+// 개인화 마이페이지 — 두 번째 제안.
 //
 // /my(통합 마이페이지)와 내용은 같다. 다른 것은 구조다:
 //   /my      긴 한 장. 요약 띠 → 고정 탭 → 섹션을 아래로 읽어 내려간다
-//   /my-dash 한 화면. 왼쪽 메뉴 + 오른쪽 위젯 격자. 각 위젯은 요약만 보여 주고
+//   /my-personal 한 화면. 왼쪽 메뉴 + 오른쪽 위젯 격자. 각 위젯은 요약만 보여 주고
 //            "더보기"로 /my 의 해당 섹션으로 보낸다
 // 차별점은 "해야 할 일" 위젯 — 보증 만료·쿠폰 만료·강좌 D-day·A/S 진행처럼
 // 지금 손댈 일을 한곳에 모은다. 데이터는 src/lib/my-data.ts 의 더미.
-// 스타일은 src/styles/my-dash.css.
+// 스타일은 src/styles/my-personal.css.
 
 const MENU = [
   { href: "#w-order", label: "주문/배송", count: 2 },
@@ -46,7 +46,7 @@ const TODOS = [
   { kind: "info", text: "WH-1000XM5 A/S 점검·수리 중", action: "진행 보기", href: "#w-service" },
 ];
 
-export default function MyDashPage() {
+export default function MyPersonalPage() {
   const orderTotal = ORDER_STEPS.reduce((n, s) => n + s.count, 0);
   const nextClass = ACADEMY[0];
   const active = SERVICES.find((s) => s.step < SERVICE_STEPS.length - 1) ?? SERVICES[0];

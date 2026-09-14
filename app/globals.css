@@ -13,7 +13,7 @@
 @import "../src/styles/my-sony.css";
 @import "../src/styles/my-all.css";
 @import "../src/styles/mall-slider.css";
-@import "../src/styles/my-dash.css";
+@import "../src/styles/my-personal.css";
 
 /* 카드를 겹쳐 쌓아도 되는 화면.
    sticky 로 상단에 붙는 카드가 화면보다 높으면 아래가 잘린 채 고정되고,
