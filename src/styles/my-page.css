@@ -189,7 +189,7 @@
 .my_wrap .guide_list strong { color: var(--sony-color-gray-800); }
 
 /* ── 마일리지 ──────────────────────────────────────────────── */
-.my_mileage { padding: 18px; background: var(--mp-box); text-align: center; }
+.my_mileage { padding: 36px 18px; background: var(--mp-box); text-align: center; }
 .my_mileage .txt { display: inline-flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: 4px; font-size: var(--sony-text-sm); color: var(--sony-color-gray-800); }
 .my_mileage .mileage_val { font-size: var(--sony-text-2xl); font-weight: 700; letter-spacing: 0; line-height: 1; color: var(--sony-color-primary); }
 /* 원본의 동그란 M 아이콘 */
