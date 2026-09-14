@@ -128,23 +128,26 @@
 .ma-steps li.on .ma-steps__label { font-weight: 700; }
 .ma-steps li.on .ma-steps__count { font-weight: 700; color: var(--sony-color-primary); }
 
-/* ── 쿠폰 (참고 시안) ───────────────────────────────────────── */
-.ma-coupons { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-.ma-coupon { display: flex; border: 1px solid var(--sony-border-default); border-radius: var(--sony-radius-md); overflow: hidden; min-height: 140px; }
-.ma-coupon__body { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 20px 28px; }
-.ma-coupon__price { font-size: var(--sony-text-lg); font-weight: 700; letter-spacing: 0; line-height: 1; color: var(--sony-color-primary); }
-.ma-coupon__price strong { font-size: var(--sony-text-3xl); }
-.ma-coupon__name { margin-top: 14px; font-size: var(--sony-text-md); font-weight: 700; color: var(--sony-color-gray-900); }
-.ma-coupon__date { margin-top: 12px; font-size: var(--sony-text-xs); color: var(--sony-color-gray-800); }
+/* ── 쿠폰 (참고 시안) — 요약 띠 아래 가로 2장 ─────────────────── */
+.ma-coupon-strip { padding: 32px 0 24px; }
+.ma-coupon-strip__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.ma-coupon-strip__head h2 { font-size: var(--sony-text-xl); font-weight: 700; color: var(--sony-color-gray-900); }
+.ma-coupons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.ma-coupon { display: flex; border: 1px solid var(--sony-border-default); border-radius: var(--sony-radius-md); overflow: hidden; min-height: 160px; }
+.ma-coupon__body { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 24px 32px; }
+.ma .ma-coupon__price { font-size: var(--sony-text-lg); font-weight: 700; letter-spacing: 0; line-height: 1; color: var(--sony-color-primary); }
+.ma-coupon__price strong { font-size: 40px; }
+.ma .ma-coupon__name { margin-top: 20px; font-size: var(--sony-text-lg); font-weight: 700; color: var(--sony-color-gray-900); }
+.ma .ma-coupon__date { margin-top: 16px; font-size: var(--sony-text-sm); color: var(--sony-color-gray-800); }
 .ma-coupon__stub {
   position: relative;
-  flex: 0 0 72px;
+  flex: 0 0 88px;
   background: var(--sony-color-primary);
   color: var(--sony-color-white);
-  -webkit-mask: radial-gradient(circle at 0 50%, transparent 5px, #000 5.5px) 0 0 / 100% 16px repeat-y;
-  mask: radial-gradient(circle at 0 50%, transparent 5px, #000 5.5px) 0 0 / 100% 16px repeat-y;
+  -webkit-mask: radial-gradient(circle at 0 50%, transparent 6px, #000 6.5px) 0 0 / 100% 20px repeat-y;
+  mask: radial-gradient(circle at 0 50%, transparent 6px, #000 6.5px) 0 0 / 100% 20px repeat-y;
 }
-.ma-coupon__stub span { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(90deg); font-size: var(--sony-text-sm); font-weight: 700; letter-spacing: 0.08em; white-space: nowrap; }
+.ma-coupon__stub span { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(90deg); font-size: var(--sony-text-md); font-weight: 700; letter-spacing: 0.08em; white-space: nowrap; }
 
 /* ── 마일리지 ──────────────────────────────────────────────── */
 .ma-mileage { margin-top: 20px; padding: 24px 28px; border: 1px solid var(--sony-border-default); background: var(--sony-surface-soft); }
@@ -274,9 +277,12 @@
   .ma-steps__count { font-size: var(--sony-text-md); }
   .ma-table th, .ma-table td { padding: 10px 8px; font-size: var(--sony-text-xs); }
   .ma-table th:nth-child(5), .ma-table td:nth-child(5) { display: none; }
+  .ma-coupons { grid-template-columns: 1fr; gap: 12px; }
+  .ma-coupon-strip { padding: 20px 0 0; }
   .ma-coupon { min-height: 120px; }
   .ma-coupon__body { padding: 16px; }
-  .ma-coupon__stub { flex-basis: 56px; }
+  .ma-coupon__stub { flex-basis: 60px; }
+  .ma-coupon__price strong { font-size: var(--sony-text-3xl); }
   .ma-wish { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .ma-product { grid-template-columns: 1fr; gap: 16px; padding: 16px; }
   .ma-product__img { height: 100px; }

@@ -68,6 +68,11 @@ const ORDERS = [
 
 
 // 사진이 있는 제품만 img 를 채운다. 없으면 모델명을 적은 회색 판
+const COUPONS = [
+  { price: "5,000", unit: "원", name: "마케팅 수신 동의 5,000원 할인", until: "2026-09-21 23:59:59" },
+  { price: "5", unit: "%", name: "회원가입 감사 5% 할인", until: "2026-09-28 23:59:59" },
+];
+
 const WISH = [
   { model: "ILCE-7RM6", name: "α7R VI 풀프레임 미러리스", price: 4_990_000, img: "/asset/sony/ILCE-7RM6.png" },
   { model: "ILCE-7CM2L", name: "α7C II 렌즈 키트", price: 2_990_000, img: "/asset/sony/ILCE-7CM2L.png" },
@@ -150,6 +155,28 @@ export default function MyAllPage() {
           <Link href="/my-page/member" className="ma-btn ma-btn--line ma-btn--sm ma-me__edit">
             회원정보 수정
           </Link>
+        </div>
+      </section>
+
+      {/* ── 쿠폰 — 요약 띠 바로 아래, 탭 위 ───────────────────── */}
+      <section className="ma-coupon-strip" aria-labelledby="ma-coupon-title">
+        <div className="ma-inner">
+          <div className="ma-coupon-strip__head">
+            <h2 id="ma-coupon-title">쿠폰 <span className="ma-count">{COUPONS.length}</span></h2>
+            <Link href="/my-page#coupon-tit" className="ma-more">쿠폰 등록 · 전체보기</Link>
+          </div>
+          <ul className="ma-coupons">
+            {COUPONS.map((c) => (
+              <li key={c.name} className="ma-coupon">
+                <div className="ma-coupon__body">
+                  <p className="ma-coupon__price"><strong>{c.price}</strong>{c.unit}</p>
+                  <p className="ma-coupon__name">{c.name}</p>
+                  <p className="ma-coupon__date">유효기간 : {c.until} 까지</p>
+                </div>
+                <span className="ma-coupon__stub" aria-hidden="true"><span>COUPON</span></span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
