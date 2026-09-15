@@ -56,6 +56,10 @@
 .my_wrap--b .my_user .user_profile { flex-direction: row; align-items: center; justify-content: space-between; gap: 24px; padding-top: 16px; padding-bottom: 32px; }
 .my_wrap--b .my_user .user_name { order: 0; text-align: left; font-size: var(--sony-text-lg); font-weight: 400; color: var(--sony-color-gray-300); }
 .my_wrap--b .my_user .user_name .name { color: var(--sony-color-white); }
+/* 인사 옆 통합회원전환 안내 › */
+.my_wrap--b .my_user .user_convert { display: inline-flex; align-items: center; gap: 4px; margin-left: 16px; font-size: var(--sony-text-sm); font-weight: 700; color: var(--sony-color-white); text-decoration: underline; text-underline-offset: 3px; }
+.my_wrap--b .my_user .user_convert::after { content: ""; width: 6px; height: 6px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); margin-left: 2px; }
+.my_wrap--b .my_user .user_convert:hover { color: var(--sony-color-accent-lit, #93affe); }
 .my_wrap--b .my_user .user_modify_wrap { order: 1; font-size: var(--sony-text-base); color: var(--sony-color-white); }
 .my_wrap--b .my_user .user_modify_wrap::before { filter: none; }
 .my_wrap--b .my_user .user_modify_wrap .button-s { min-height: 30px; padding: 0 14px; background: var(--sony-color-white); color: var(--sony-color-gray-900); font-size: var(--sony-text-xs); }
@@ -185,6 +189,7 @@
   .my_wrap--b .my_head .title { padding-top: 32px; font-size: var(--sony-text-3xl); }
   .my_wrap--b .my_user .user_profile { flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 10px; padding-bottom: 20px; }
   .my_wrap--b .my_user .user_name { font-size: var(--sony-text-base); }
+  .my_wrap--b .my_user .user_convert { display: flex; margin: 6px 0 0; font-size: var(--sony-text-xs); }
   .my_wrap--b .my_user .user_modify { color: var(--sony-color-gray-300); }
   .my_wrap--b .my_user .user_info ul { gap: 10px; }
   .my_wrap--b .my_user .user_item:nth-child(n + 3) { border-top: 0; }

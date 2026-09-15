@@ -102,6 +102,11 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
           <div className="user_profile">
             <p className="user_name">
               <span className="name">{USER.name}</span>님 안녕하세요 :)
+              {variant === "b" ? (
+                <Link href="/membership/convert" className="user_convert">
+                  통합회원전환 안내
+                </Link>
+              ) : null}
             </p>
             <p className="user_modify_wrap pc_only">
               회원정보
