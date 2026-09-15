@@ -29,6 +29,7 @@ const SEARCH_KEYWORDS = [
 
 const ACTION_LINKS = [
   { key: "myPage", href: "/my-page", icon: "ic_mypage", label: "마이페이지" },
+  { key: "myPageB", href: "/my-page-b", icon: "ic_mypage", label: "마이페이지 B" },
   {
     key: "myPage",
     href: "/my-sony",

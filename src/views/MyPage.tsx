@@ -77,9 +77,10 @@ function monthsAgo(months: number) {
   return d;
 }
 
-export default function MyPage() {
+// variant="b" 는 마크업은 그대로 두고 src/styles/my-page-b.css 로 스타일만 바꾼다
+export default function MyPage({ variant }: { variant?: "b" } = {}) {
   return (
-    <div className="my_wrap">
+    <div className={`my_wrap${variant ? ` my_wrap--${variant}` : ""}`}>
       {/* ── 머리: 제목 + 회원 요약 ─────────────────────────── */}
       <div className="my_head">
         <h2 className="title">마이페이지</h2>
