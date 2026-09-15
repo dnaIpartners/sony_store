@@ -8,7 +8,6 @@ import {
   IconShipping,
   IconDelivered,
 } from "@/src/components/OrderStepIcons";
-import MallSlider from "@/src/components/MallSlider";
 import { SONY_EVENTS } from "@/src/lib/sony-events";
 import { ACADEMY, EVENTS, WISH, PRODUCTS, won } from "@/src/lib/my-data";
 
@@ -200,7 +199,30 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
               </div>
             </div>
             <div className="history_inner">
-              <MallSlider items={SONY_EVENTS} tone="band" />
+              {/* 대표 배너 1장 + 나머지 썸네일 띠 */}
+              <a className="event_hero" href={SONY_EVENTS[0].href} target="_blank" rel="noopener noreferrer">
+                <img src={SONY_EVENTS[0].img} alt="" />
+                <span className="event_hero__body">
+                  <span className="event_hero__badge">NOW</span>
+                  <strong className="event_hero__title">{SONY_EVENTS[0].title}</strong>
+                  <span className="event_hero__desc">{SONY_EVENTS[0].desc}</span>
+                  {SONY_EVENTS[0].date ? <span className="event_hero__date">{SONY_EVENTS[0].date}</span> : null}
+                  <span className="event_hero__go">자세히 보기</span>
+                </span>
+              </a>
+              <ul className="event_strip">
+                {SONY_EVENTS.slice(1).map((e) => (
+                  <li key={e.href}>
+                    <a href={e.href} target="_blank" rel="noopener noreferrer">
+                      <span className="event_strip__thumb" aria-hidden="true">
+                        <img src={e.img} alt="" />
+                      </span>
+                      <span className="event_strip__title">{e.title}</span>
+                      {e.date ? <span className="event_strip__date">{e.date}</span> : null}
+                    </a>
+                  </li>
+                ))}
+              </ul>
               <p className="event_sub">응모 내역</p>
               <ul className="event_list">
                 {EVENTS.map((e) => (

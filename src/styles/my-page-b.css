@@ -345,3 +345,53 @@
   .my_wrap--b .care_tile__value { flex: 1 1 auto; }
   .my_wrap--b .care_tile__action { margin-top: 0; padding-top: 0; }
 }
+
+/* ── B 전용: 이벤트 — 대표 배너 + 썸네일 띠 ──────────────────── */
+.my_wrap--b .event_hero { position: relative; display: block; aspect-ratio: 16 / 5; overflow: hidden; background: var(--sony-color-gray-900); }
+.my_wrap--b .event_hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: right center; transition: transform var(--sony-duration-slow) var(--sony-ease-out-expo); }
+.my_wrap--b .event_hero:hover img { transform: scale(1.03); }
+.my_wrap--b .event_hero__body {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  width: 46%;
+  padding: 40px 48px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.45) 70%, transparent);
+  color: var(--sony-color-white);
+}
+.my_wrap--b .event_hero__badge { height: 22px; padding: 0 8px; line-height: 22px; background: var(--sony-color-primary); font-size: var(--sony-text-2xs); font-weight: 700; letter-spacing: 0.08em; }
+.my_wrap--b .event_hero__title { font-size: var(--sony-text-3xl); line-height: 1.25; letter-spacing: var(--sony-tracking-title); color: var(--sony-color-white); }
+.my_wrap--b .event_hero__desc { font-size: var(--sony-text-sm); line-height: 1.5; color: var(--sony-color-gray-300); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.my_wrap--b .event_hero__date { font-size: var(--sony-text-xs); letter-spacing: 0; color: var(--sony-color-gray-400); }
+.my_wrap--b .event_hero__go { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 0 16px; height: 36px; border-radius: var(--sony-radius-pill); background: var(--sony-color-white); color: var(--sony-color-gray-900); font-size: var(--sony-text-sm); font-weight: 700; }
+.my_wrap--b .event_hero__go::after { content: ""; width: 6px; height: 6px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); }
+
+.my_wrap--b .event_strip { display: flex; gap: 16px; margin-top: 16px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory; }
+.my_wrap--b .event_strip::-webkit-scrollbar { display: none; }
+.my_wrap--b .event_strip li { flex: 0 0 calc((100% - 64px) / 5); min-width: 0; scroll-snap-align: start; }
+.my_wrap--b .event_strip a { display: flex; flex-direction: column; gap: 6px; }
+.my_wrap--b .event_strip__thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--sony-color-gray-100); }
+.my_wrap--b .event_strip__thumb img { width: 100%; height: 100%; object-fit: cover; object-position: right center; transition: transform var(--sony-duration-slow) var(--sony-ease-out-expo); }
+.my_wrap--b .event_strip a:hover .event_strip__thumb img { transform: scale(1.05); }
+.my_wrap--b .event_strip__title { font-size: var(--sony-text-sm); font-weight: 700; color: var(--sony-color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.my_wrap--b .event_strip__date { font-size: 11px; letter-spacing: 0; color: var(--sony-color-gray-600); }
+
+@media screen and (max-width: 1280px) {
+  .my_wrap--b .event_hero { aspect-ratio: 16 / 7; }
+  .my_wrap--b .event_hero__body { width: 60%; padding: 28px 32px; }
+  .my_wrap--b .event_hero__title { font-size: var(--sony-text-2xl); }
+  .my_wrap--b .event_strip li { flex-basis: calc((100% - 32px) / 3); }
+}
+@media screen and (max-width: 640px) {
+  .my_wrap--b .event_hero { aspect-ratio: auto; }
+  .my_wrap--b .event_hero img { position: static; aspect-ratio: 16 / 9; }
+  .my_wrap--b .event_hero__body { position: static; width: 100%; padding: 16px; background: var(--sony-color-gray-900); gap: 6px; }
+  .my_wrap--b .event_hero__title { font-size: var(--sony-text-lg); }
+  .my_wrap--b .event_hero__go { margin-top: 6px; height: 32px; }
+  .my_wrap--b .event_strip { gap: 10px; margin-top: 12px; }
+  .my_wrap--b .event_strip li { flex-basis: 60%; }
+}
