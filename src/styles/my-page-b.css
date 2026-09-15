@@ -14,6 +14,9 @@
   background: var(--sony-color-gray-100);
   font-size: var(--sony-text-base);
   color: var(--sony-color-gray-700);
+  /* 푸터(#f1f5f9)와 바탕(#f4f4f4)이 거의 같은 회색이라 경계선을 둔다 */
+  padding-bottom: 64px;
+  border-bottom: 1px solid var(--sony-border-default);
 }
 
 /* ── 버튼: 알약 ────────────────────────────────────────────── */
