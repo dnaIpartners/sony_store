@@ -28,14 +28,24 @@ const SEARCH_KEYWORDS = [
 ];
 
 const ACTION_LINKS = [
-  { key: "myPage", href: "/my-page", icon: "ic_mypage", label: "마이페이지" },
+  {
+    key: "myPage",
+    href: "/my-page",
+    icon: "ic_mypage",
+    label: " 기존 마이페이지",
+  },
   {
     key: "myPage",
     href: "/my-sony",
     icon: "ic_mypage",
     label: "기획안",
   },
-  { key: "myPageB", href: "/my-page-b", icon: "ic_mypage", label: "마이페이지 B" },
+  {
+    key: "myPageB",
+    href: "/my-page-b",
+    icon: "ic_mypage",
+    label: "마이페이지 A",
+  },
   {
     key: "myAll",
     href: "/my",
@@ -116,7 +126,10 @@ export default function SonyHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const lastY = useRef(0);
   const pathname = usePathname();
-  const pinned = pathname === "/my" || pathname.startsWith("/my-") || pathname.startsWith("/my/");
+  const pinned =
+    pathname === "/my" ||
+    pathname.startsWith("/my-") ||
+    pathname.startsWith("/my/");
 
   // 내리면 숨기고 올리면 보인다. 맨 위 근처에서는 늘 보인다. 마이페이지는 고정
   useEffect(() => {

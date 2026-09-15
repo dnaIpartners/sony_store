@@ -324,53 +324,68 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
 
         {variant === "b" ? (
           <div className="cont history_care" id="care-tit">
-            <div className="tit_head">
-              <h3 className="cont_tit">My Sony Care</h3>
-            </div>
-            <div className="history_inner">
-              <div className="care_wrap">
-                <div className="care_cta">
-                  <p className="care_cta__copy">
-                    소니의 공식
-                    <br />
-                    무상수리 연장 서비스
-                  </p>
-                  <Link className="button button_positive" href="/mysonycare">
-                    My Sony Care
-                  </Link>
-                </div>
-                <ul className="care_list">
-                  <li>
-                    <p>보증기간이 만료된 제품이 2건 있습니다.</p>
-                    <div className="care_actions">
-                      <a
-                        className="button button_slate"
-                        href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start?asa=Sa"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        보증기간 수정요청
-                      </a>
-                    </div>
-                  </li>
-                  <li>
-                    <p>A/S가 필요하신가요?</p>
-                    <div className="care_actions">
-                      <Link className="button button_slate" href="/my-sony/pickup">
-                        픽업 서비스 신청
-                      </Link>
-                      <a
-                        className="button button_slate"
-                        href="https://www.sony.co.kr/scs/handler/SCSReservation-Start"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        A/S센터 방문 예약신청
-                      </a>
-                    </div>
-                  </li>
-                </ul>
+            <div className="care_band">
+              <div className="care_intro">
+                <p className="care_intro__eyebrow">My Sony Care</p>
+                <p className="care_intro__copy">
+                  소니의 공식
+                  <br />
+                  무상수리 연장 서비스
+                </p>
+                <p className="care_intro__desc">
+                  제조사 보증이 끝나도 최대 3년, 정품등록 제품이면 바로 가입할 수 있습니다.
+                </p>
+                <Link className="button button_white" href="/mysonycare">
+                  My Sony Care 알아보기
+                </Link>
               </div>
+              <ul className="care_tiles">
+                <li className="care_tile care_tile--alert">
+                  <a
+                    href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start?asa=Sa"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="care_tile__ico" aria-hidden="true">
+                      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M24 6 8 12v12c0 9 7 16 16 20 9-4 16-11 16-20V12L24 6Z" />
+                        <path d="M24 17v9M24 31v.5" />
+                      </svg>
+                    </i>
+                    <span className="care_tile__label">보증기간 만료</span>
+                    <b className="care_tile__value">2<em>건</em></b>
+                    <span className="care_tile__action">보증기간 수정요청</span>
+                  </a>
+                </li>
+                <li className="care_tile">
+                  <Link href="/my-sony/pickup">
+                    <i className="care_tile__ico" aria-hidden="true">
+                      <IconShipping />
+                    </i>
+                    <span className="care_tile__label">집에서 보내기</span>
+                    <b className="care_tile__value">픽업 서비스</b>
+                    <span className="care_tile__action">신청하기</span>
+                  </Link>
+                </li>
+                <li className="care_tile">
+                  <a
+                    href="https://www.sony.co.kr/scs/handler/SCSReservation-Start"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="care_tile__ico" aria-hidden="true">
+                      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="7" y="10" width="34" height="30" rx="1" />
+                        <path d="M7 19h34M16 6v8M32 6v8" />
+                        <path d="m18 30 4 4 8-8" />
+                      </svg>
+                    </i>
+                    <span className="care_tile__label">센터에서 받기</span>
+                    <b className="care_tile__value">방문 예약</b>
+                    <span className="care_tile__action">A/S센터 예약신청</span>
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         ) : null}

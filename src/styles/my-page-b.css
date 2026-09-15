@@ -298,31 +298,50 @@
   .my_wrap--b .mysony_thumb { height: 180px; margin-bottom: 12px; }
 }
 
-/* ── B 전용: My Sony Care (CTA + 보증/AS 안내) ───────────────── */
-.my_wrap--b .care_wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 20px 40px; }
-.my_wrap--b .care_cta { display: flex; flex-direction: column; justify-content: center; gap: 36px; min-height: 320px; padding: 40px 32px; background: var(--sony-color-gray-100); }
-.my_wrap--b .care_cta__copy { margin: 0; font-size: var(--sony-text-xl); font-weight: 700; line-height: 1.5; color: var(--sony-color-gray-900); }
-.my_wrap--b .care_cta .button { min-height: var(--sony-btn-height-lg); }
-.my_wrap--b .care_list { display: flex; flex-direction: column; justify-content: center; gap: 40px; }
-.my_wrap--b .care_list li { position: relative; padding-left: 28px; }
-.my_wrap--b .care_list li::before { content: ""; position: absolute; left: 6px; top: 11px; width: 5px; height: 5px; border-radius: 50%; background: var(--sony-color-gray-900); }
-.my_wrap--b .care_list p { margin: 0; font-size: var(--sony-text-lg); font-weight: 700; color: var(--sony-color-gray-900); }
-.my_wrap--b .care_actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
-/* 슬레이트 버튼 — 와이어프레임의 회청색, 각지게 */
-.my_wrap--b .button_slate { min-height: 44px; padding: 0 22px; border-radius: 0; background: var(--sony-color-neutral-60); color: var(--sony-color-white); font-size: var(--sony-text-base); font-weight: 500; }
-.my_wrap--b .button_slate:hover { background: var(--sony-color-neutral-80); }
+/* ── B 전용: My Sony Care — 검정 밴드 + 실행 타일 3장 ────────── */
+.my_wrap--b .history_care { padding: 0; background: var(--sony-color-gray-900); color: var(--sony-color-white); }
+.my_wrap--b .care_band { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px 48px; padding: 44px 40px; }
+.my_wrap--b .care_intro { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 14px; }
+.my_wrap--b .care_intro__eyebrow { margin: 0; font-size: var(--sony-text-xs); font-weight: 700; letter-spacing: 0.08em; color: var(--sony-color-gray-400); text-transform: uppercase; }
+.my_wrap--b .care_intro__copy { margin: 0; font-size: var(--sony-text-3xl); font-weight: 700; line-height: 1.25; letter-spacing: var(--sony-tracking-title); color: var(--sony-color-white); }
+.my_wrap--b .care_intro__desc { margin: 0 0 8px; max-width: 26em; font-size: var(--sony-text-sm); line-height: 1.6; color: var(--sony-color-gray-300); }
+.my_wrap--b .button_white { min-height: var(--sony-btn-height-md); padding: 0 24px; background: var(--sony-color-white); color: var(--sony-color-gray-900); font-size: var(--sony-text-base); }
+.my_wrap--b .button_white:hover { background: var(--sony-color-primary); color: var(--sony-color-white); }
+
+.my_wrap--b .care_tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.my_wrap--b .care_tile a {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+  padding: 22px 20px 20px;
+  background: var(--sony-color-neutral-80);
+  color: var(--sony-color-white);
+  transition: background-color var(--sony-duration-base) var(--sony-ease-default), transform var(--sony-duration-base) var(--sony-ease-out-expo);
+}
+.my_wrap--b .care_tile a:hover { background: var(--sony-color-neutral-70); transform: translateY(-2px); }
+.my_wrap--b .care_tile--alert a { background: var(--sony-color-primary); }
+.my_wrap--b .care_tile--alert a:hover { background: var(--sony-color-primary-dark); }
+.my_wrap--b .care_tile__ico { display: block; width: 36px; height: 36px; margin-bottom: 10px; color: var(--sony-color-white); --ms-panel-bg: transparent; }
+.my_wrap--b .care_tile__ico svg { width: 100%; height: 100%; }
+.my_wrap--b .care_tile__label { font-size: var(--sony-text-xs); color: var(--sony-color-gray-300); }
+.my_wrap--b .care_tile--alert .care_tile__label { color: var(--sony-color-white); opacity: 0.85; }
+.my_wrap--b .care_tile__value { font-size: var(--sony-text-xl); font-weight: 700; letter-spacing: 0; line-height: 1.2; color: var(--sony-color-white); }
+.my_wrap--b .care_tile__value em { margin-left: 2px; font-size: var(--sony-text-base); font-weight: 500; font-style: normal; }
+.my_wrap--b .care_tile__action { display: inline-flex; align-items: center; gap: 4px; margin-top: auto; padding-top: 14px; font-size: var(--sony-text-sm); font-weight: 700; color: var(--sony-color-white); }
+.my_wrap--b .care_tile__action::after { content: ""; width: 6px; height: 6px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); }
 
 @media screen and (max-width: 1280px) {
-  .my_wrap--b .care_wrap { grid-template-columns: 1fr; }
-  .my_wrap--b .care_cta { min-height: 0; }
+  .my_wrap--b .care_band { grid-template-columns: 1fr; padding: 32px 24px; }
 }
 @media screen and (max-width: 640px) {
-  .my_wrap--b .care_cta { gap: 20px; padding: 24px 20px; }
-  .my_wrap--b .care_cta__copy { font-size: var(--sony-text-md); }
-  .my_wrap--b .care_cta .button { width: 100%; }
-  .my_wrap--b .care_list { gap: 24px; }
-  .my_wrap--b .care_list li { padding-left: 16px; }
-  .my_wrap--b .care_list li::before { left: 0; top: 9px; }
-  .my_wrap--b .care_list p { font-size: var(--sony-text-md); }
-  .my_wrap--b .care_actions { flex-direction: column; gap: 8px; margin-top: 12px; }
+  .my_wrap--b .care_band { gap: 24px; padding: 24px 16px; }
+  .my_wrap--b .care_intro__copy { font-size: var(--sony-text-2xl); }
+  .my_wrap--b .button_white { width: 100%; }
+  .my_wrap--b .care_tiles { grid-template-columns: 1fr; gap: 8px; }
+  .my_wrap--b .care_tile a { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 16px; }
+  .my_wrap--b .care_tile__ico { width: 28px; height: 28px; margin: 0; }
+  .my_wrap--b .care_tile__label { flex-basis: calc(100% - 40px); }
+  .my_wrap--b .care_tile__value { flex: 1 1 auto; }
+  .my_wrap--b .care_tile__action { margin-top: 0; padding-top: 0; }
 }
