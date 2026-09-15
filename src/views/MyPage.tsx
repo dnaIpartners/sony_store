@@ -234,7 +234,8 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
           </div>
         ) : null}
 
-        {/* ── 마일리지 ─────────────────────────────────────── */}
+        {/* ── 마일리지 (B 에서는 뺀다 — 회원 바 숫자로 충분) ── */}
+        {variant !== "b" ? (
         <div className="cont history_mileage" id="mileage-tit">
           <h3 className="cont_tit">마일리지</h3>
           <div className="history_inner">
@@ -283,6 +284,7 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
             </ul>
           </div>
         </div>
+        ) : null}
 
         {/* ── 쿠폰 ─────────────────────────────────────────── */}
         <div className="cont history_coupon" id="coupon-tit">
