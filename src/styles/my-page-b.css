@@ -34,7 +34,7 @@
   left: 0;
   right: 0;
   top: 0;
-  height: 300px;
+  height: 400px;
   background: var(--sony-color-gray-900);
 }
 .my_wrap--b .my_head > * {
@@ -53,7 +53,7 @@
   color: var(--sony-color-white);
 }
 .my_wrap--b .my_user { margin-top: 0; }
-.my_wrap--b .my_user .user_profile { flex-direction: row; align-items: center; justify-content: space-between; gap: 24px; padding-top: 16px; padding-bottom: 40px; }
+.my_wrap--b .my_user .user_profile { flex-direction: row; align-items: center; justify-content: space-between; gap: 24px; padding-top: 16px; padding-bottom: 32px; }
 .my_wrap--b .my_user .user_name { order: 0; text-align: left; font-size: var(--sony-text-lg); font-weight: 400; color: var(--sony-color-gray-300); }
 .my_wrap--b .my_user .user_name .name { color: var(--sony-color-white); }
 .my_wrap--b .my_user .user_modify_wrap { order: 1; font-size: var(--sony-text-base); color: var(--sony-color-white); }
@@ -61,12 +61,22 @@
 .my_wrap--b .my_user .user_modify_wrap .button-s { min-height: 30px; padding: 0 14px; background: var(--sony-color-white); color: var(--sony-color-gray-900); font-size: var(--sony-text-xs); }
 .my_wrap--b .my_user .user_modify_wrap .button-s:hover { background: var(--sony-color-primary); color: var(--sony-color-white); }
 
+/* 빠른 메뉴 — 히어로 밴드 안, 인사말 아래 */
+.my_wrap--b .quick_menu { padding-bottom: 36px; }
+.my_wrap--b .quick_menu__tit { margin: 0 0 12px; font-size: var(--sony-text-md); font-weight: 700; color: var(--sony-color-white); }
+.my_wrap--b .quick_menu ul { display: flex; flex-wrap: wrap; gap: 8px 32px; }
+.my_wrap--b .quick_menu a { font-size: var(--sony-text-md); color: var(--sony-color-gray-300); transition: color var(--sony-duration-fast) var(--sony-ease-default); }
+.my_wrap--b .quick_menu a:hover { color: var(--sony-color-white); text-decoration: underline; text-underline-offset: 4px; }
+
 /* 지표 카드 4장 — 밴드 아래로 겹쳐 올라온다 */
 .my_wrap--b .my_user .user_info { margin-top: 0; background: none; color: inherit; }
 .my_wrap--b .my_user .user_info ul { gap: 16px; }
 .my_wrap--b .my_user .user_item + .user_item { border-left: 0; }
 .my_wrap--b .my_user .user_tabs {
+  height: 100%;
+  box-sizing: border-box;
   align-items: flex-start;
+  justify-content: space-between;
   gap: 14px;
   padding: 24px 24px 22px;
   background: var(--mpb-card);
@@ -76,6 +86,10 @@
 }
 .my_wrap--b .my_user .user_tabs:hover { background: var(--mpb-card); border-top-color: var(--sony-color-primary); transform: translateY(-2px); }
 .my_wrap--b .my_user .ico_txt { font-size: var(--sony-text-sm); color: var(--sony-color-gray-600); }
+/* 카드 아래 안내 링크 문구 — 카드 전체가 링크이므로 글자만 */
+.my_wrap--b .my_user .guide_txt { display: inline-flex; align-items: center; gap: 4px; font-size: var(--sony-text-sm); font-weight: 700; color: var(--sony-color-gray-900); text-decoration: underline; text-underline-offset: 3px; }
+.my_wrap--b .my_user .guide_txt::after { content: ""; width: 6px; height: 6px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); margin-left: 2px; }
+.my_wrap--b .my_user .user_tabs:hover .guide_txt { color: var(--sony-color-primary); }
 .my_wrap--b .my_user .val_txt { color: var(--sony-color-gray-900); font-size: var(--sony-text-md); }
 .my_wrap--b .my_user .val_txt .val { font-size: var(--sony-text-4xl); letter-spacing: -0.02em; }
 .my_wrap--b .my_user .val_txt .val.family { font-size: var(--sony-text-2xl); }
@@ -147,14 +161,18 @@
 
 /* ── 모바일 ────────────────────────────────────────────────── */
 @media screen and (max-width: 640px) {
-  .my_wrap--b .my_head::before { height: 220px; }
+  .my_wrap--b .my_head::before { height: 320px; }
+  .my_wrap--b .quick_menu { padding-bottom: 24px; }
+  .my_wrap--b .quick_menu ul { gap: 8px 16px; }
+  .my_wrap--b .quick_menu a { font-size: var(--sony-text-sm); }
   .my_wrap--b .my_head .title { padding-top: 32px; font-size: var(--sony-text-3xl); }
-  .my_wrap--b .my_user .user_profile { flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 10px; padding-bottom: 28px; }
+  .my_wrap--b .my_user .user_profile { flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 10px; padding-bottom: 20px; }
   .my_wrap--b .my_user .user_name { font-size: var(--sony-text-base); }
   .my_wrap--b .my_user .user_modify { color: var(--sony-color-gray-300); }
   .my_wrap--b .my_user .user_info ul { gap: 10px; }
   .my_wrap--b .my_user .user_item:nth-child(n + 3) { border-top: 0; }
   .my_wrap--b .my_user .user_tabs { padding: 16px 16px 14px; gap: 8px; }
+  .my_wrap--b .my_user .guide_txt { font-size: var(--sony-text-xs); }
   .my_wrap--b .my_user .val_txt .val { font-size: var(--sony-text-2xl); }
   .my_wrap--b .my_user .val_txt .val.family { font-size: var(--sony-text-lg); }
 

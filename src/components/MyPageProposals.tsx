@@ -13,8 +13,6 @@ const SESSION = {
   input: "약 20분",
   processing: "약 1시간 50분",
   elapsed: "3시간 15분",
-  requests: 56,
-  commits: 43,
   inputShare: 15, // 입력 : 처리 ≈ 15 : 85
 };
 
@@ -32,7 +30,7 @@ const PROPOSALS = [
   {
     no: "02",
     href: "/my-sony",
-    name: "new 마이페이지",
+    name: "기획안",
     tag: "와이어프레임",
     focus: "My Sony 와이어프레임을 화면으로",
     desc: "기획 시안의 항목을 그대로 구현. 회원 패널 + 이벤트 슬라이더, 주문/배송, 아카데미, 나의 소니, My Sony Care.",
@@ -92,8 +90,6 @@ export default function MyPageProposals() {
               <dt>처리 시간 <small>Claude</small></dt>
               <dd>{SESSION.processing}</dd>
             </div>
-            <div><dt>요청</dt><dd>{SESSION.requests}건</dd></div>
-            <div><dt>커밋</dt><dd>{SESSION.commits}개</dd></div>
             <div><dt>경과</dt><dd>{SESSION.elapsed}</dd></div>
           </dl>
           <div className="pp-ratio" role="img" aria-label={`입력 ${SESSION.inputShare}%, 처리 ${100 - SESSION.inputShare}%`}>

@@ -10,7 +10,7 @@ import {
   IconDelivered,
 } from "@/src/components/OrderStepIcons";
 
-// My Sony — new 마이페이지.
+// My Sony — 기획안(와이어프레임 구현).
 //
 // 와이어프레임(2026-09-14 스크린샷 3장)의 항목을 그대로 옮겼다:
 //   머리(할 수 있는 일 메뉴) → 회원 요약 패널 + 전용몰 카드 → 주문/배송 5칸

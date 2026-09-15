@@ -67,6 +67,16 @@ const COUPONS = [
   },
 ];
 
+// B 히어로의 빠른 메뉴 — 와이어프레임 "My Sony에서 할 수 있는 일!"
+const QUICK_MENU = [
+  { href: "/my-page/order-list", label: "주문/배송 조회" },
+  { href: "https://www.sony.co.kr/scs/handler/SCSWarranty-Start?asa=Sa", label: "정품등록/관리", external: true },
+  { href: "/mysonycare", label: "연장서비스 플랜 EPS" },
+  { href: "/my-sony/pickup", label: "픽업서비스 신청/내역" },
+  { href: "#event-tit", label: "이벤트관리" },
+  { href: "#wish-tit", label: "내가 찜한 소니" },
+];
+
 const TODAY = new Date(2026, 8, 14);
 
 function fmt(d: Date) {
@@ -103,6 +113,24 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
               회원정보 수정
             </Link>
           </div>
+          {variant === "b" ? (
+            <nav className="quick_menu" aria-label="My Sony 메뉴">
+              <p className="quick_menu__tit">My Sony에서 할 수 있는 일!</p>
+              <ul>
+                {QUICK_MENU.map((m) => (
+                  <li key={m.label}>
+                    {m.external ? (
+                      <a href={m.href} target="_blank" rel="noopener noreferrer">{m.label}</a>
+                    ) : m.href.startsWith("#") ? (
+                      <a href={m.href}>{m.label}</a>
+                    ) : (
+                      <Link href={m.href}>{m.label}</Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ) : null}
           <div className="user_info">
             <ul>
               <li className="user_item grade">
@@ -113,6 +141,7 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
                   <span className="val_txt">
                     <span className="val family">{USER.grade}</span>
                   </span>
+                  {variant === "b" ? <span className="guide_txt">등급&혜택 안내</span> : null}
                 </Link>
               </li>
               <li className="user_item mileage">
@@ -123,6 +152,7 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
                   <span className="val_txt">
                     <span className="val">{USER.mileage}</span>M
                   </span>
+                  {variant === "b" ? <span className="guide_txt">마일리지 안내</span> : null}
                 </a>
               </li>
               <li className="user_item coupon">
@@ -133,6 +163,7 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
                   <span className="val_txt">
                     <span className="val">{USER.coupons}</span> 장
                   </span>
+                  {variant === "b" ? <span className="guide_txt">쿠폰 안내</span> : null}
                 </a>
               </li>
               <li className="user_item like">
@@ -143,6 +174,7 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
                   <span className="val_txt">
                     <span className="val">{USER.likes}</span>
                   </span>
+                  {variant === "b" ? <span className="guide_txt">찜한 상품 보기</span> : null}
                 </a>
               </li>
             </ul>

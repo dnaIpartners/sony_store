@@ -33,7 +33,7 @@ const ACTION_LINKS = [
     key: "myPage",
     href: "/my-sony",
     icon: "ic_mypage",
-    label: "new 마이페이지",
+    label: "기획안",
   },
   { key: "myPageB", href: "/my-page-b", icon: "ic_mypage", label: "마이페이지 B" },
   {
