@@ -116,7 +116,7 @@
 .my_wrap--b .my_user .val_txt .val.family::before { background: var(--sony-color-gray-900); color: var(--sony-color-white); width: 24px; height: 24px; font-size: 13px; }
 
 /* ── 섹션 = 흰 카드 ────────────────────────────────────────── */
-.my_wrap--b .cont { margin-top: 24px; padding: 32px 36px 36px; background: var(--mpb-card); border-radius: var(--mpb-radius); }
+.my_wrap--b .cont { margin-top: 24px; padding: 32px 36px 36px; background: var(--mpb-card); border-radius: var(--mpb-radius); scroll-margin-top: calc(var(--sony-header-height) + 76px); /* 고정 바 높이만큼 */ }
 .my_wrap--b .cont_inner:last-child .cont:first-child { margin-top: 24px; }
 .my_wrap--b .cont_tit { font-size: var(--sony-text-2xl); line-height: 32px; }
 .my_wrap--b .tit_head,
