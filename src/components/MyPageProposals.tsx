@@ -78,7 +78,7 @@ export default function MyPageProposals() {
           <p className="pp-lead">
             현행 재현에서 출발해, 시안 구현 → 디자인 변주 → 세 페이지 통합 → 개인화까지 단계적으로 확장한 제안입니다.
             <br />
-            요청은 한 줄씩 적고, 만드는 동안은 다른 업무를 봤습니다. 헤더의 마이페이지 아이콘 5개가 각 안으로 연결됩니다.
+            지시는 짧게 남기고 결과만 확인하는 방식으로 진행했습니다. 각 안은 헤더의 마이페이지 아이콘에서 바로 열어볼 수 있습니다.
           </p>
           <dl className="pp-meta">
             <div className="pp-meta__main">
