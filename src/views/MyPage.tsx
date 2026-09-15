@@ -113,24 +113,6 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
               회원정보 수정
             </Link>
           </div>
-          {variant === "b" ? (
-            <nav className="quick_menu" aria-label="My Sony 메뉴">
-              <p className="quick_menu__tit">My Sony에서 할 수 있는 일!</p>
-              <ul>
-                {QUICK_MENU.map((m) => (
-                  <li key={m.label}>
-                    {m.external ? (
-                      <a href={m.href} target="_blank" rel="noopener noreferrer">{m.label}</a>
-                    ) : m.href.startsWith("#") ? (
-                      <a href={m.href}>{m.label}</a>
-                    ) : (
-                      <Link href={m.href}>{m.label}</Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          ) : null}
           <div className="user_info">
             <ul>
               <li className="user_item grade">
@@ -181,6 +163,27 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
           </div>
         </div>
       </div>
+
+      {variant === "b" ? (
+        <nav className="quick_menu" aria-label="My Sony 메뉴">
+          <div className="quick_menu__inner">
+              <p className="quick_menu__tit">My Sony에서 할 수 있는 일!</p>
+              <ul>
+                {QUICK_MENU.map((m) => (
+                  <li key={m.label}>
+                    {m.external ? (
+                      <a href={m.href} target="_blank" rel="noopener noreferrer">{m.label}</a>
+                    ) : m.href.startsWith("#") ? (
+                      <a href={m.href}>{m.label}</a>
+                    ) : (
+                      <Link href={m.href}>{m.label}</Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+          </div>
+        </nav>
+      ) : null}
 
       <div className="cont_inner">
         <div className="b2b_banner" />

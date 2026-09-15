@@ -34,7 +34,7 @@
   left: 0;
   right: 0;
   top: 0;
-  height: 400px;
+  height: 300px;
   background: var(--sony-color-gray-900);
 }
 .my_wrap--b .my_head > * {
@@ -61,12 +61,28 @@
 .my_wrap--b .my_user .user_modify_wrap .button-s { min-height: 30px; padding: 0 14px; background: var(--sony-color-white); color: var(--sony-color-gray-900); font-size: var(--sony-text-xs); }
 .my_wrap--b .my_user .user_modify_wrap .button-s:hover { background: var(--sony-color-primary); color: var(--sony-color-white); }
 
-/* 빠른 메뉴 — 히어로 밴드 안, 인사말 아래 */
-.my_wrap--b .quick_menu { padding-bottom: 36px; }
-.my_wrap--b .quick_menu__tit { margin: 0 0 12px; font-size: var(--sony-text-md); font-weight: 700; color: var(--sony-color-white); }
-.my_wrap--b .quick_menu ul { display: flex; flex-wrap: wrap; gap: 8px 32px; }
-.my_wrap--b .quick_menu a { font-size: var(--sony-text-md); color: var(--sony-color-gray-300); transition: color var(--sony-duration-fast) var(--sony-ease-default); }
-.my_wrap--b .quick_menu a:hover { color: var(--sony-color-white); text-decoration: underline; text-underline-offset: 4px; }
+/* 빠른 메뉴 — 지표 카드 아래 흰 고정 바. 헤더(/my* 에서 핀 고정) 바로 밑에 붙는다 */
+.my_wrap--b .quick_menu {
+  position: sticky;
+  top: var(--sony-header-height);
+  z-index: 10;
+  margin-top: 24px;
+  background: var(--sony-color-white);
+  border-bottom: 1px solid var(--sony-border-default);
+}
+.my_wrap--b .quick_menu__inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  max-width: calc(var(--mp-width) + var(--sony-layout-padding-x) * 2);
+  margin: 0 auto;
+  padding: 0 var(--sony-layout-padding-x);
+}
+.my_wrap--b .quick_menu__tit { flex-shrink: 0; margin: 0; font-size: var(--sony-text-sm); font-weight: 700; color: var(--sony-color-gray-900); }
+.my_wrap--b .quick_menu ul { display: flex; gap: 0 28px; overflow-x: auto; scrollbar-width: none; }
+.my_wrap--b .quick_menu ul::-webkit-scrollbar { display: none; }
+.my_wrap--b .quick_menu a { display: block; padding: 16px 0 14px; border-bottom: 2px solid transparent; font-size: var(--sony-text-base); font-weight: 700; color: var(--sony-color-neutral-50); white-space: nowrap; transition: color var(--sony-duration-fast) var(--sony-ease-default); }
+.my_wrap--b .quick_menu a:hover { color: var(--sony-color-gray-900); border-bottom-color: var(--sony-color-gray-900); }
 
 /* 지표 카드 4장 — 밴드 아래로 겹쳐 올라온다 */
 .my_wrap--b .my_user .user_info { margin-top: 0; background: none; color: inherit; }
@@ -97,9 +113,8 @@
 
 /* ── 섹션 = 흰 카드 ────────────────────────────────────────── */
 .my_wrap--b .cont { margin-top: 24px; padding: 32px 36px 36px; background: var(--mpb-card); border-radius: var(--mpb-radius); }
-.my_wrap--b .cont_inner:last-child .cont:first-child { margin-top: 40px; }
-.my_wrap--b .cont_tit { position: relative; padding-left: 14px; font-size: var(--sony-text-xl); line-height: 28px; }
-.my_wrap--b .cont_tit::before { content: ""; position: absolute; left: 0; top: 4px; width: 4px; height: 20px; background: var(--sony-color-primary); }
+.my_wrap--b .cont_inner:last-child .cont:first-child { margin-top: 24px; }
+.my_wrap--b .cont_tit { font-size: var(--sony-text-2xl); line-height: 32px; }
 .my_wrap--b .tit_head,
 .my_wrap--b .cont_head,
 .my_wrap--b .cont > .cont_tit { padding-bottom: 0; border-bottom: 0; }
@@ -161,10 +176,12 @@
 
 /* ── 모바일 ────────────────────────────────────────────────── */
 @media screen and (max-width: 640px) {
-  .my_wrap--b .my_head::before { height: 320px; }
-  .my_wrap--b .quick_menu { padding-bottom: 24px; }
-  .my_wrap--b .quick_menu ul { gap: 8px 16px; }
-  .my_wrap--b .quick_menu a { font-size: var(--sony-text-sm); }
+  .my_wrap--b .my_head::before { height: 220px; }
+  .my_wrap--b .quick_menu { margin-top: 12px; }
+  .my_wrap--b .quick_menu__inner { gap: 16px; }
+  .my_wrap--b .quick_menu__tit { display: none; }
+  .my_wrap--b .quick_menu ul { gap: 0 18px; }
+  .my_wrap--b .quick_menu a { padding: 12px 0 10px; font-size: var(--sony-text-sm); }
   .my_wrap--b .my_head .title { padding-top: 32px; font-size: var(--sony-text-3xl); }
   .my_wrap--b .my_user .user_profile { flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 10px; padding-bottom: 20px; }
   .my_wrap--b .my_user .user_name { font-size: var(--sony-text-base); }
@@ -177,7 +194,7 @@
   .my_wrap--b .my_user .val_txt .val.family { font-size: var(--sony-text-lg); }
 
   .my_wrap--b .cont { margin-top: 12px; padding: 20px 16px 20px; }
-  .my_wrap--b .cont_inner:last-child .cont:first-child { margin-top: 20px; }
+  .my_wrap--b .cont_inner:last-child .cont:first-child { margin-top: 12px; }
   .my_wrap--b .history_inner { padding-top: 16px; }
 
   .my_wrap--b .my_order .order_list { padding: 0; }
