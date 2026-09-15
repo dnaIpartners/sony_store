@@ -8,6 +8,9 @@ import {
   IconShipping,
   IconDelivered,
 } from "@/src/components/OrderStepIcons";
+import MallSlider from "@/src/components/MallSlider";
+import { SONY_EVENTS } from "@/src/lib/sony-events";
+import { ACADEMY, EVENTS, WISH, won } from "@/src/lib/my-data";
 
 // Sony Store KR 마이페이지.
 //
@@ -77,7 +80,8 @@ function monthsAgo(months: number) {
   return d;
 }
 
-// variant="b" 는 마크업은 그대로 두고 src/styles/my-page-b.css 로 스타일만 바꾼다
+// variant="b" 는 마크업은 그대로 두고 src/styles/my-page-b.css 로 스타일만 바꾼다.
+// B 에만 나의 아카데미 · 이벤트 섹션이 더 붙는다(현행 페이지에는 없는 항목).
 export default function MyPage({ variant }: { variant?: "b" } = {}) {
   return (
     <div className={`my_wrap${variant ? ` my_wrap--${variant}` : ""}`}>
@@ -196,6 +200,40 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
           </div>
         </div>
 
+        {variant === "b" ? (
+          <div className="cont history_academy" id="academy-tit">
+            <div className="tit_head">
+              <h3 className="cont_tit">나의 아카데미</h3>
+              <div className="btn_article right">
+                <a
+                  className="button button_secondary button-s"
+                  href="https://www.sony.co.kr/alpha/handler/NAlphaAcademy-OfflineList"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  아카데미 바로가기
+                </a>
+              </div>
+            </div>
+            <div className="history_inner">
+              <ul className="academy_list">
+                {ACADEMY.map((a) => (
+                  <li key={a.title}>
+                    <div className="academy_thumb">
+                      <img src={a.img} alt="" />
+                      <p className="academy_title">{a.title}</p>
+                    </div>
+                    <div className="academy_meta">
+                      <span>강좌일 {a.date}</span>
+                      <b className={a.status === "결제완료" ? "on" : undefined}>{a.status}</b>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : null}
+
         {/* ── 마일리지 ─────────────────────────────────────── */}
         <div className="cont history_mileage" id="mileage-tit">
           <h3 className="cont_tit">마일리지</h3>
@@ -308,6 +346,32 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
           </div>
         </div>
 
+        {variant === "b" ? (
+          <div className="cont history_event" id="event-tit">
+            <div className="tit_head">
+              <h3 className="cont_tit">이벤트</h3>
+              <div className="btn_article right">
+                <Link className="button button_secondary button-s" href="/event/list?tab=all">
+                  진행 중인 이벤트
+                </Link>
+              </div>
+            </div>
+            <div className="history_inner">
+              <MallSlider items={SONY_EVENTS} tone="band" />
+              <p className="event_sub">응모 내역</p>
+              <ul className="event_list">
+                {EVENTS.map((e) => (
+                  <li key={e.title}>
+                    <span className="event_date">{e.date}</span>
+                    <span className="event_title">{e.title}</span>
+                    <b className={e.status === "당첨" ? "on" : undefined}>{e.status}</b>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : null}
+
         {/* ── 찜 ───────────────────────────────────────────── */}
         <div className="cont history_like" id="wish-tit">
           <div className="cont_head">
@@ -327,9 +391,30 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
           </div>
           <div className="history_inner">
             <div className="history_list">
-              <div className="no_data on">
-                <span>내역이 없습니다.</span>
-              </div>
+              {variant === "b" ? (
+                <ul className="like_list">
+                  {WISH.map((w) => (
+                    <li key={w.model}>
+                      <label className="like_check">
+                        <input type="checkbox" name="like" value={w.model} />
+                        <span aria-hidden="true" />
+                      </label>
+                      <a href="#wish-tit" className="like_item">
+                        <span className="like_thumb" aria-hidden="true">
+                          {w.img ? <img src={w.img} alt="" /> : w.model}
+                        </span>
+                        <span className="like_model">{w.model}</span>
+                        <span className="like_name">{w.name}</span>
+                        <span className="like_price">{won(w.price)}<em>원</em></span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="no_data on">
+                  <span>내역이 없습니다.</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
