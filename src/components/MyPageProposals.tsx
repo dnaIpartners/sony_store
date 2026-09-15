@@ -74,7 +74,7 @@ export default function MyPageProposals() {
       <div className="pp-inner">
         <div className="pp-head">
           <p className="pp-eyebrow">Proposal · My Page</p>
-          <h2 className="pp-title" id="pp-title">마이페이지 5안</h2>
+          <h2 className="pp-title" id="pp-title">마이페이지 3안</h2>
           <p className="pp-lead">
             현행 재현에서 출발해, 시안 구현 → 디자인 변주 → 세 페이지 통합 → 개인화까지 단계적으로 확장한 제안입니다.
             <br />
