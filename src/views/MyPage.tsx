@@ -189,6 +189,32 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
       </div>
 
       <div className="cont_inner">
+        {variant === "b" ? (
+          <div className="cont history_event" id="event-tit">
+            <div className="tit_head">
+              <h3 className="cont_tit">이벤트</h3>
+              <div className="btn_article right">
+                <Link className="button button_secondary button-s" href="/event/list?tab=all">
+                  진행 중인 이벤트
+                </Link>
+              </div>
+            </div>
+            <div className="history_inner">
+              <MallSlider items={SONY_EVENTS} tone="band" />
+              <p className="event_sub">응모 내역</p>
+              <ul className="event_list">
+                {EVENTS.map((e) => (
+                  <li key={e.title}>
+                    <span className="event_date">{e.date}</span>
+                    <span className="event_title">{e.title}</span>
+                    <b className={e.status === "당첨" ? "on" : undefined}>{e.status}</b>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : null}
+
         {/* ── 진행 중인 주문 ────────────────────────────────── */}
         <div className="cont history_order" id="order-tit">
           <div className="tit_head">
@@ -499,31 +525,6 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
           </div>
         </div>
 
-        {variant === "b" ? (
-          <div className="cont history_event" id="event-tit">
-            <div className="tit_head">
-              <h3 className="cont_tit">이벤트</h3>
-              <div className="btn_article right">
-                <Link className="button button_secondary button-s" href="/event/list?tab=all">
-                  진행 중인 이벤트
-                </Link>
-              </div>
-            </div>
-            <div className="history_inner">
-              <MallSlider items={SONY_EVENTS} tone="band" />
-              <p className="event_sub">응모 내역</p>
-              <ul className="event_list">
-                {EVENTS.map((e) => (
-                  <li key={e.title}>
-                    <span className="event_date">{e.date}</span>
-                    <span className="event_title">{e.title}</span>
-                    <b className={e.status === "당첨" ? "on" : undefined}>{e.status}</b>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ) : null}
 
 
         {/* ── 찜 ───────────────────────────────────────────── */}
