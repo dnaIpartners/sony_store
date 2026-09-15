@@ -297,3 +297,32 @@
   .my_wrap--b .mysony_item a { padding: 20px; }
   .my_wrap--b .mysony_thumb { height: 180px; margin-bottom: 12px; }
 }
+
+/* ── B 전용: My Sony Care (CTA + 보증/AS 안내) ───────────────── */
+.my_wrap--b .care_wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 20px 40px; }
+.my_wrap--b .care_cta { display: flex; flex-direction: column; justify-content: center; gap: 36px; min-height: 320px; padding: 40px 32px; background: var(--sony-color-gray-100); }
+.my_wrap--b .care_cta__copy { margin: 0; font-size: var(--sony-text-xl); font-weight: 700; line-height: 1.5; color: var(--sony-color-gray-900); }
+.my_wrap--b .care_cta .button { min-height: var(--sony-btn-height-lg); }
+.my_wrap--b .care_list { display: flex; flex-direction: column; justify-content: center; gap: 40px; }
+.my_wrap--b .care_list li { position: relative; padding-left: 28px; }
+.my_wrap--b .care_list li::before { content: ""; position: absolute; left: 6px; top: 11px; width: 5px; height: 5px; border-radius: 50%; background: var(--sony-color-gray-900); }
+.my_wrap--b .care_list p { margin: 0; font-size: var(--sony-text-lg); font-weight: 700; color: var(--sony-color-gray-900); }
+.my_wrap--b .care_actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+/* 슬레이트 버튼 — 와이어프레임의 회청색, 각지게 */
+.my_wrap--b .button_slate { min-height: 44px; padding: 0 22px; border-radius: 0; background: var(--sony-color-neutral-60); color: var(--sony-color-white); font-size: var(--sony-text-base); font-weight: 500; }
+.my_wrap--b .button_slate:hover { background: var(--sony-color-neutral-80); }
+
+@media screen and (max-width: 1280px) {
+  .my_wrap--b .care_wrap { grid-template-columns: 1fr; }
+  .my_wrap--b .care_cta { min-height: 0; }
+}
+@media screen and (max-width: 640px) {
+  .my_wrap--b .care_cta { gap: 20px; padding: 24px 20px; }
+  .my_wrap--b .care_cta__copy { font-size: var(--sony-text-md); }
+  .my_wrap--b .care_cta .button { width: 100%; }
+  .my_wrap--b .care_list { gap: 24px; }
+  .my_wrap--b .care_list li { padding-left: 16px; }
+  .my_wrap--b .care_list li::before { left: 0; top: 9px; }
+  .my_wrap--b .care_list p { font-size: var(--sony-text-md); }
+  .my_wrap--b .care_actions { flex-direction: column; gap: 8px; margin-top: 12px; }
+}

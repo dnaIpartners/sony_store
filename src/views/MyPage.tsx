@@ -322,6 +322,59 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
           </div>
         ) : null}
 
+        {variant === "b" ? (
+          <div className="cont history_care" id="care-tit">
+            <div className="tit_head">
+              <h3 className="cont_tit">My Sony Care</h3>
+            </div>
+            <div className="history_inner">
+              <div className="care_wrap">
+                <div className="care_cta">
+                  <p className="care_cta__copy">
+                    소니의 공식
+                    <br />
+                    무상수리 연장 서비스
+                  </p>
+                  <Link className="button button_positive" href="/mysonycare">
+                    My Sony Care
+                  </Link>
+                </div>
+                <ul className="care_list">
+                  <li>
+                    <p>보증기간이 만료된 제품이 2건 있습니다.</p>
+                    <div className="care_actions">
+                      <a
+                        className="button button_slate"
+                        href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start?asa=Sa"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        보증기간 수정요청
+                      </a>
+                    </div>
+                  </li>
+                  <li>
+                    <p>A/S가 필요하신가요?</p>
+                    <div className="care_actions">
+                      <Link className="button button_slate" href="/my-sony/pickup">
+                        픽업 서비스 신청
+                      </Link>
+                      <a
+                        className="button button_slate"
+                        href="https://www.sony.co.kr/scs/handler/SCSReservation-Start"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        A/S센터 방문 예약신청
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
         {/* ── 마일리지 (B 에서는 뺀다 — 회원 바 숫자로 충분) ── */}
         {variant !== "b" ? (
         <div className="cont history_mileage" id="mileage-tit">
