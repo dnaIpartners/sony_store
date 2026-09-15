@@ -236,6 +236,40 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
 
 
         {variant === "b" ? (
+          <div className="cont history_academy" id="academy-tit">
+            <div className="tit_head">
+              <h3 className="cont_tit">나의 아카데미</h3>
+              <div className="btn_article right">
+                <a
+                  className="button button_secondary button-s"
+                  href="https://www.sony.co.kr/alpha/handler/NAlphaAcademy-OfflineList"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  아카데미 바로가기
+                </a>
+              </div>
+            </div>
+            <div className="history_inner">
+              <ul className="academy_list">
+                {ACADEMY.map((a) => (
+                  <li key={a.title}>
+                    <div className="academy_thumb">
+                      <img src={a.img} alt="" />
+                      <p className="academy_title">{a.title}</p>
+                    </div>
+                    <div className="academy_meta">
+                      <span>강좌일 {a.date}</span>
+                      <b className={a.status === "결제완료" ? "on" : undefined}>{a.status}</b>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : null}
+
+        {variant === "b" ? (
           <div className="cont history_mysony" id="mysony-tit">
             <div className="tit_head">
               <h3 className="cont_tit">나의 소니</h3>
@@ -491,39 +525,6 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
           </div>
         ) : null}
 
-        {variant === "b" ? (
-          <div className="cont history_academy" id="academy-tit">
-            <div className="tit_head">
-              <h3 className="cont_tit">나의 아카데미</h3>
-              <div className="btn_article right">
-                <a
-                  className="button button_secondary button-s"
-                  href="https://www.sony.co.kr/alpha/handler/NAlphaAcademy-OfflineList"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  아카데미 바로가기
-                </a>
-              </div>
-            </div>
-            <div className="history_inner">
-              <ul className="academy_list">
-                {ACADEMY.map((a) => (
-                  <li key={a.title}>
-                    <div className="academy_thumb">
-                      <img src={a.img} alt="" />
-                      <p className="academy_title">{a.title}</p>
-                    </div>
-                    <div className="academy_meta">
-                      <span>강좌일 {a.date}</span>
-                      <b className={a.status === "결제완료" ? "on" : undefined}>{a.status}</b>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ) : null}
 
         {/* ── 찜 ───────────────────────────────────────────── */}
         <div className="cont history_like" id="wish-tit">
