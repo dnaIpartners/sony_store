@@ -28,13 +28,18 @@ const AI_CRAWLERS = [
   'Daumoa',            // 다음 — 검색
 ];
 
+// 마이페이지 제안 5종은 검색에 걸리지 않게 한다. 각 page.tsx 의
+// robots: noindex 와 이중으로 — 메타는 방문한 뒤 색인만 막고, 여기는 방문 자체를 막는다.
+const NOINDEX_PATHS = ['/my-page', '/my-page-b', '/my-sony', '/my', '/my-personal'];
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: '*', allow: '/' },
+      { userAgent: '*', allow: '/', disallow: NOINDEX_PATHS },
       ...AI_CRAWLERS.map((userAgent) => ({
         userAgent,
         allow: '/',
+        disallow: NOINDEX_PATHS,
       })),
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
