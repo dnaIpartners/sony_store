@@ -177,10 +177,8 @@
 
 /* ── 내 제품 ───────────────────────────────────────────────── */
 .ma-products { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
-.ma-product { display: grid; grid-template-columns: 180px 1fr auto; gap: 28px; align-items: center; padding: 24px; background: var(--sony-color-gray-25); border-left: 4px solid transparent; }
-.ma-product--ok { border-left-color: var(--sony-color-primary); }
-.ma-product--soon { border-left-color: var(--sony-color-sale); }
-.ma-product--none { border-left-color: var(--sony-color-gray-300); background: var(--sony-color-gray-50); }
+.ma-product { display: grid; grid-template-columns: 180px 1fr auto; gap: 28px; align-items: center; padding: 24px; background: var(--sony-color-gray-25); }
+.ma-product--none { background: var(--sony-color-gray-50); }
 .ma-product__img { display: flex; align-items: center; justify-content: center; height: 120px; }
 .ma-product__img img { height: 100%; width: auto; max-width: 100%; object-fit: contain; }
 .ma-product__img span { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: var(--sony-text-xs); letter-spacing: 0; color: var(--sony-color-gray-400); }
