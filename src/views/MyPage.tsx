@@ -10,7 +10,7 @@ import {
 } from "@/src/components/OrderStepIcons";
 import MallSlider from "@/src/components/MallSlider";
 import { SONY_EVENTS } from "@/src/lib/sony-events";
-import { ACADEMY, EVENTS, WISH, won } from "@/src/lib/my-data";
+import { ACADEMY, EVENTS, WISH, PRODUCTS, won } from "@/src/lib/my-data";
 
 // Sony Store KR 마이페이지.
 //
@@ -267,6 +267,54 @@ export default function MyPage({ variant }: { variant?: "b" } = {}) {
                       <span>강좌일 {a.date}</span>
                       <b className={a.status === "결제완료" ? "on" : undefined}>{a.status}</b>
                     </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : null}
+
+        {variant === "b" ? (
+          <div className="cont history_mysony" id="mysony-tit">
+            <div className="tit_head">
+              <h3 className="cont_tit">나의 소니</h3>
+              <div className="btn_article right">
+                <a
+                  className="button button_secondary button-s"
+                  href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start?asa=Sa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  제품 정보/관리
+                </a>
+              </div>
+            </div>
+            <div className="history_inner">
+              <ul className="mysony_list">
+                <li className="mysony_cta">
+                  <p className="mysony_cta__copy">
+                    소니 정품등록하고
+                    <br />
+                    10% 할인쿠폰 받으세요.
+                  </p>
+                  <a
+                    className="button button_positive"
+                    href="https://www.sony.co.kr/scs/handler/SCSWarranty-Start?asa=Sa"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    정품등록하기
+                  </a>
+                </li>
+                {PRODUCTS.filter((p) => p.img).map((p) => (
+                  <li key={p.model} className="mysony_item">
+                    <a href="#mysony-tit">
+                      <span className="mysony_thumb" aria-hidden="true">
+                        <img src={p.img} alt="" />
+                      </span>
+                      <span className="mysony_model">{p.model}</span>
+                      <span className="mysony_copy">{p.name}</span>
+                    </a>
                   </li>
                 ))}
               </ul>

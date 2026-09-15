@@ -271,3 +271,29 @@
 @media screen and (max-width: 640px) {
   .my_wrap--b .like_list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; }
 }
+
+/* ── B 전용: 나의 소니 (정품등록 CTA + 등록 제품) ─────────────── */
+.my_wrap--b .mysony_list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.my_wrap--b .mysony_list > li { min-height: 380px; background: var(--sony-color-gray-25); }
+.my_wrap--b .mysony_cta { display: flex; flex-direction: column; justify-content: center; gap: 36px; padding: 40px 32px; background: var(--sony-color-gray-100); }
+.my_wrap--b .mysony_cta__copy { margin: 0; font-size: var(--sony-text-xl); font-weight: 700; line-height: 1.5; color: var(--sony-color-gray-900); }
+.my_wrap--b .mysony_cta .button { min-height: var(--sony-btn-height-lg); }
+.my_wrap--b .mysony_item a { display: flex; flex-direction: column; justify-content: center; height: 100%; padding: 32px; }
+.my_wrap--b .mysony_thumb { position: relative; display: block; height: 240px; margin-bottom: 20px; overflow: hidden; }
+.my_wrap--b .mysony_thumb img { position: absolute; inset: -12%; width: 124%; height: 124%; object-fit: contain; transition: transform var(--sony-duration-slow) var(--sony-ease-out-expo); }
+.my_wrap--b .mysony_item a:hover .mysony_thumb img { transform: scale(1.04); }
+.my_wrap--b .mysony_model { font-size: var(--sony-text-xl); font-weight: 700; letter-spacing: 0; color: var(--sony-color-gray-900); }
+.my_wrap--b .mysony_copy { margin-top: 6px; font-size: var(--sony-text-md); color: var(--sony-color-gray-600); }
+
+@media screen and (max-width: 1280px) {
+  .my_wrap--b .mysony_list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media screen and (max-width: 640px) {
+  .my_wrap--b .mysony_list { grid-template-columns: 1fr; gap: 12px; }
+  .my_wrap--b .mysony_list > li { min-height: 0; }
+  .my_wrap--b .mysony_cta { gap: 20px; padding: 24px 20px; }
+  .my_wrap--b .mysony_cta__copy { font-size: var(--sony-text-md); }
+  .my_wrap--b .mysony_cta .button { width: 100%; }
+  .my_wrap--b .mysony_item a { padding: 20px; }
+  .my_wrap--b .mysony_thumb { height: 180px; margin-bottom: 12px; }
+}
