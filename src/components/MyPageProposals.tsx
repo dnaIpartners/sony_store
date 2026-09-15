@@ -30,16 +30,6 @@ const PROPOSALS = [
     time: "약 45분",
   },
   {
-    no: "01-B",
-    href: "/my-page-b",
-    name: "마이페이지 B",
-    tag: "같은 구성 · 다른 디자인",
-    focus: "항목은 01 그대로, 카드형으로만 다시",
-    desc: "마크업은 01과 100% 동일하고 스타일시트만 교체. 검정 히어로 밴드 + 겹쳐 오르는 지표 카드, 흰 카드 섹션, 타임라인 주문 단계, 알약 버튼.",
-    points: ["디자인만 바꿔도 되는지 가늠하는 비교군", "CSS 한 장(my-page-b.css)으로 전환"],
-    time: "약 15분",
-  },
-  {
     no: "02",
     href: "/my-sony",
     name: "new 마이페이지",
@@ -51,6 +41,16 @@ const PROPOSALS = [
   },
   {
     no: "03",
+    href: "/my-page-b",
+    name: "마이페이지 B",
+    tag: "같은 구성 · 다른 디자인",
+    focus: "항목은 01 그대로, 카드형으로만 다시",
+    desc: "마크업은 01과 100% 동일하고 스타일시트만 교체. 검정 히어로 밴드 + 겹쳐 오르는 지표 카드, 흰 카드 섹션, 타임라인 주문 단계, 알약 버튼.",
+    points: ["디자인만 바꿔도 되는지 가늠하는 비교군", "CSS 한 장(my-page-b.css)으로 전환"],
+    time: "약 15분",
+  },
+  {
+    no: "04",
     href: "/my",
     name: "통합 마이페이지",
     tag: "세 페이지 통합",
@@ -60,7 +60,7 @@ const PROPOSALS = [
     time: "약 50분",
   },
   {
-    no: "04",
+    no: "05",
     href: "/my-personal",
     name: "개인화 마이페이지",
     tag: "한 화면 · 할 일 중심",
@@ -79,7 +79,7 @@ export default function MyPageProposals() {
           <p className="pp-eyebrow">Proposal · My Page</p>
           <h2 className="pp-title" id="pp-title">마이페이지 5안</h2>
           <p className="pp-lead">
-            현행 재현에서 출발해, 디자인 변주 → 시안 구현 → 세 페이지 통합 → 개인화까지 단계적으로 확장한 제안입니다.
+            현행 재현에서 출발해, 시안 구현 → 디자인 변주 → 세 페이지 통합 → 개인화까지 단계적으로 확장한 제안입니다.
             <br />
             요청은 한 줄씩 적고, 만드는 동안은 다른 업무를 봤습니다. 헤더의 마이페이지 아이콘 5개가 각 안으로 연결됩니다.
           </p>
