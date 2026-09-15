@@ -12,7 +12,6 @@ const SESSION = {
   date: "2026-09-14 ~ 15",
   input: "약 30분",
   processing: "약 3시간 10분",
-  elapsed: "4시간 45분",
   inputShare: 13, // 입력 : 처리 ≈ 12 : 88
 };
 
@@ -90,7 +89,6 @@ export default function MyPageProposals() {
               <dt>처리 시간 <small>Claude</small></dt>
               <dd>{SESSION.processing}</dd>
             </div>
-            <div><dt>경과</dt><dd>{SESSION.elapsed}</dd></div>
           </dl>
           <div className="pp-ratio" role="img" aria-label={`입력 ${SESSION.inputShare}%, 처리 ${100 - SESSION.inputShare}%`}>
             <span className="pp-ratio__input" style={{ width: `${SESSION.inputShare}%` }}>입력</span>
